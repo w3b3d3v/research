@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolkaVM Development Team - Comprehensive Report (Corrected)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #000000;
+            background: linear-gradient(135deg, #96E150 0%, #7864FA 50%, #1E96FF 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 2px solid #96E150;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            color: #000000;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #7864FA, #1E96FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #96E150;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #7864FA;
+        }
+
+        .stat-label {
+            color: #000000;
+            font-size: 0.9em;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 2px solid #1E96FF;
+        }
+
+        .section h2 {
+            color: #000000;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #7864FA;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #000000;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+            padding: 10px 0;
+            border-left: 4px solid #96E150;
+            padding-left: 15px;
+        }
+
+        .person-card {
+            background: linear-gradient(135deg, #FFFFFF 0%, rgba(150, 225, 80, 0.1) 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #96E150;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .person-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(120, 100, 250, 0.2);
+            border-color: #7864FA;
+        }
+
+        .person-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .person-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .person-role {
+            background: #7864FA;
+            color: #FFFFFF;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            background: #1E96FF;
+            color: #FFFFFF;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: #7864FA;
+            transform: scale(1.05);
+        }
+
+        .contact-link.github { background: #000000; }
+        .contact-link.linkedin { background: #1E96FF; }
+        .contact-link.twitter { background: #7864FA; }
+        .contact-link.email { background: #96E150; color: #000000; }
+        .contact-link.website { background: #96E150; color: #000000; }
+        .contact-link.instagram { background: #7864FA; }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #7864FA 0%, #1E96FF 100%);
+            color: #FFFFFF;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #96E150;
+        }
+
+        .project-card h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .project-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+
+        .project-stat {
+            text-align: center;
+        }
+
+        .project-stat-number {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .project-stat-label {
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+
+        .crypto-address {
+            background: rgba(150, 225, 80, 0.1);
+            border: 2px solid #96E150;
+            border-radius: 8px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+
+        .location {
+            color: #7864FA;
+            font-style: italic;
+            margin: 5px 0;
+            font-weight: bold;
+        }
+
+        .toc {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 2px solid #1E96FF;
+        }
+
+        .toc h3 {
+            color: #000000;
+            margin-bottom: 15px;
+            border: none;
+            padding: 0;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        .toc a {
+            color: #7864FA;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .toc a:hover {
+            background: rgba(120, 100, 250, 0.1);
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            color: #000000;
+            margin-top: 30px;
+            border: 2px solid #96E150;
+        }
+
+        .activity-breakdown {
+            background: rgba(150, 225, 80, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #96E150;
+        }
+
+        .highlight {
+            background: linear-gradient(45deg, #96E150, #7864FA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .correction-note {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #7864FA;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #000000;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .person-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .contact-links {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>PolkaVM Development Team</h1>
+            <p>Comprehensive Research Report on People and Staff Related to PolkaVM Development</p>
+            <p><strong>Focus Areas:</strong> PolkaVM, pallet-revive, Westend Network</p>
+            <p><em>Corrected Version - Only Verified Information</em></p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">16</div>
+                    <div class="stat-label">Total Team Members</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Organizations</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Core Projects</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">20+</div>
+                    <div class="stat-label">Contributors</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Correction Notice -->
+        <div class="correction-note">
+            <h3>⚠️ Correction Notice</h3>
+            <p>This report has been corrected to remove unverified social media links. Only confirmed and verified contact information is included.</p>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3>📋 Table of Contents</h3>
+            <ul>
+                <li><a href="#overview">🔍 Project Overview</a></li>
+                <li><a href="#parity">🏢 Parity Technologies Team</a></li>
+                <li><a href="#web3">🌐 Web3 Foundation Team</a></li>
+                <li><a href="#projects">📦 Key Projects</a></li>
+                <li><a href="#summary">📊 Summary</a></li>
+            </ul>
+        </div>
+
+        <!-- Project Overview -->
+        <div class="section" id="overview">
+            <h2>🔍 Project Overview</h2>
+            
+            <div class="project-grid">
+                <div class="project-card">
+                    <h4>PolkaVM</h4>
+                    <p>Fast and secure RISC-V based virtual machine</p>
+                    <div class="project-stats">
+                        <div class="project-stat">
+                            <div class="project-stat-number">363</div>
+                            <div class="project-stat-label">Stars</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-number">72</div>
+                            <div class="project-stat-label">Forks</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-number">17</div>
+                            <div class="project-stat-label">Contributors</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h4>pallet-revive</h4>
+                    <p>Experimental module for PolkaVM smart contracts</p>
+                    <div class="project-stats">
+                        <div class="project-stat">
+                            <div class="project-stat-number">2.3k</div>
+                            <div class="project-stat-label">SDK Stars</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-number">956</div>
+                            <div class="project-stat-label">SDK Forks</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-number">Active</div>
+                            <div class="project-stat-label">Development</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h4>Westend Network</h4>
+                    <p>Primary testnet for PolkaVM development</p>
+                    <div class="project-stats">
+                        <div class="project-stat">
+                            <div class="project-stat-number">Testnet</div>
+                            <div class="project-stat-label">Network Type</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-number">AssetHub</div>
+                            <div class="project-stat-label">Deployment</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-number">WND</div>
+                            <div class="project-stat-label">Token</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Parity Technologies Team -->
+        <div class="section" id="parity">
+            <h2>🏢 Parity Technologies Team</h2>
+            
+            <h3>Core PolkaVM Developers</h3>
+            
+            <!-- Jan Bujak -->
+            <div class="person-card">
+                <div class="person-header">
+                    <div class="person-name">Jan Bujak (@koute)</div>
+                    <div class="person-role">Primary PolkaVM Developer</div>
+                </div>
+                <div class="location">📍 Tokyo, Japan</div>
+                
+                <div class="contact-links">
+                    <a href="https://github.com/koute" class="contact-link github">GitHub</a>
+                    <a href="https://www.linkedin.com/in/jan-bujak-399168169" class="contact-link linkedin">LinkedIn</a>
+                    <a href="https://koute.github.io/" class="contact-link website">Website</a>
+                </div>
+                
+                <p><strong>Role:</strong> Primary developer and maintainer of PolkaVM</p>
+                <p><strong>Experience:</strong> 748 GitHub followers, 721 contributions in last year</p>
+                <p><strong>Specialization:</strong> Rust development, performance-critical systems</p>
+                
+                <div class="crypto-address">
+                    <strong>Kusama Address:</strong> HTk3eccL7WBkiyxz1gBcqQRghsJigoDMD7mnQaz1UAbMpQV
+                </div>
+                
+                <p><strong>Key Projects:</strong> PolkaVM (363⭐), bytehound (4.7k⭐), not-perf (886⭐), pinky (793⭐)</p>
+            </div>
+
+            <!-- Alexander Theißen -->
+            <div class="person-card">
+                <div class="person-header">
+                    <div class="person-name">Alexander Theißen (@athei)</div>
+                    <div class="person-role">Smart Contracts Developer</div>
+                </div>
+                <div class="location">📍 Berlin, Germany</div>
+                
+                <div class="contact-links">
+                    <a href="https://github.com/athei" class="contact-link github">GitHub</a>
+                    <a href="https://de.linkedin.com/in/athei" class="contact-link linkedin">LinkedIn</a>
+                </div>
+                
+                <p><strong>Role:</strong> Core developer for pallet-revive and smart contracts</p>
+                <p><strong>Experience:</strong> 118 GitHub followers, 559 contributions in last year</p>
+                <p><strong>Specialization:</strong> WASM instrumentation, blockchain infrastructure</p>
+                
+                <div class="crypto-address">
+                    <strong>Polkadot Address:</strong> 15db5ksZqmhWF9U8MDq4wLKUdFivLVByztWV8nmaJv3NU1
+                </div>
+                
+                <p><strong>Key Projects:</strong> polkadot-sdk (2.3k⭐), wasm-instrument (50⭐), blockstats (4⭐)</p>
+                
+                <div class="activity-breakdown">
+                    <strong>Activity Breakdown:</strong> 50% Code review, 25% Commits, 14% Pull requests, 11% Issues
+                </div>
+            </div>
+
+            <!-- Oliver Tale-Yazdi -->
+            <div class="person-card">
+                <div class="person-header">
+                    <div class="person-name">Oliver Tale-Yazdi (@ggwpez)</div>
+                    <div class="person-role">Tech Lead</div>
+                </div>
+                <div class="location">📍 Darmstadt, Germany</div>
+                
+                <div class="contact-links">
+                    <a href="https://github.com/ggwpez" class="contact-link github">GitHub</a>
+                    <a href="https://de.linkedin.com/in/oliver-tale-yazdi-92b72b266" class="contact-link linkedin">LinkedIn</a>
+                    <a href="https://x.com/OliverTaleYazdi" class="contact-link twitter">Twitter</a>
+                    <a href="https://tasty.limo" class="contact-link website">Website</a>
+                </div>
+                
+                <p><strong>Role:</strong> Tech Lead at Parity Technologies</p>
+                <p><strong>Experience:</strong> 161 GitHub followers, 2,118 contributions in last year</p>
+                <p><strong>Specialization:</strong> Rust tooling, blockchain infrastructure, JAM development</p>
+                
+                <div class="crypto-address">
+                    <strong>Polkadot Address:</strong> 16a357f5Sxab3V2ne4emGQvqjaCLeYpTMx3TCjnQhmJQ71DX
+                </div>
+                
+                <p><strong>Key Projects:</strong> zepter (86⭐), substrate-weight-compare (29⭐), proc-macro-warning (5⭐)</p>
+                
+                <div class="activity-breakdown">
+                    <strong>Activity Breakdown:</strong> 39% Commits, 35% Code review, 20% Pull requests, 6% Issues
+                </div>
+            </div>
+
+            <!-- xermicus -->
+            <div class="person-card">
+                <div class="person-header">
+                    <div class="person-name">xermicus</div>
+                    <div class="person-role">pallet-revive Core Developer</div>
+                </div>
+                <div class="location">📍 Switzerland</div>
+                
+                <div class="contact-links">
+                    <a href="https://github.com/xermicus" class="contact-link github">GitHub</a>
+                </div>
+                
+                <p><strong>Role:</strong> <span class="highlight">Very active pallet-revive developer</span></p>
+                <p><strong>Experience:</strong> 109 GitHub followers, 826 contributions in last year</p>
+                <p><strong>Specialization:</strong> Solidity compiler for Polkadot, PolkaVM smart contracts</p>
+                
+                <p><strong>Key Projects:</strong> paritytech/revive (82⭐), use-ink/ink (1.4k⭐), hyperledger-solang/solang (1.3k⭐)</p>
+                
+                <div class="activity-breakdown">
+                    <strong>Activity Breakdown:</strong> 34% Commits, 30% Code review, 26% Pull requests, 10% Issues
+                </div>
+                
+                <p><strong>Recent Major Contributions:</strong></p>
+                <ul>
+                    <li>[pallet-revive] allow delegate calls to non-contract accounts (#7729)</li>
+                    <li>[pallet-revive] implement the block author API (#7198)</li>
+                    <li>[pallet-revive] implement the base fee API (#6964)</li>
+                    <li>[pallet-revive] implement the gas price API (#6954)</li>
+                </ul>
+            </div>
+
+            <!-- PG Herveou -->
+            <div class="person-card">
+                <div class="person-header">
+                    <div class="person-name">Pierre-Guillaume Herveou (@pgherveou)</div>
+                    <div class="person-role">pallet-revive Lead Developer</div>
+                </div>
+                <div class="location">📍 San Francisco, CA (Currently at Lyft, Previously Parity)</div>
+                
+                <div class="contact-links">
+                    <a href="https://github.com/pgherveou" class="contact-link github">GitHub</a>
+                    <a href="https://de.linkedin.com/in/pgherveou" class="contact-link linkedin">LinkedIn</a>
+                    <a href="https://www.instagram.com/pgherveou/" class="contact-link instagram">Instagram</a>
+                </div>
+                
+                <p><strong>Role:</strong> <span class="highlight">Most active pallet-revive contributor</span></p>
+                <p><strong>Experience:</strong> 98 GitHub followers, 889 contributions in last year</p>
+                <p><strong>Specialization:</strong> pallet-revive development, RPC implementation, smart contracts</p>
+                
+                <p><strong>Key Projects:</strong> gulp-awspublish (396⭐), RxSwiftCommunity/RxPager (60⭐)</p>
+                
+                <div class="activity-breakdown">
+                    <strong>Activity Breakdown:</strong> 50% Commits, 22% Code review, 21% Pull requests, 7% Issues
+                </div>
+                
+                <p><strong>Recent Major Contributions (June 2025):</strong></p>
+                <ul>
+                    <li>[pallet-revive] Make Runtime call dispatchable as eth transaction (#8883)</li>
+                    <li>[pallet-revive-rpc] fix sqlite in-memory connection pool issue (#8897)</li>
+                    <li>[pallet-revive] only record diff if value changed (#8881)</li>
+                    <li>[pallet-revive] fix call-trace create calls (#8781)</li>
+                    <li>[pallet-revive] dev-node (#8746)</li>
+                    <li>[pallet-revive] prestate tracer (#8742)</li>
+                </ul>
+            </div>
+
+            <!-- Aman -->
+            <div class="person-card">
+                <div class="person-header">
+                    <div class="person-name">Aman (@aman4150)</div>
+                    <div class="person-role">PolkaVM Contributor</div>
+                </div>
+                
+                <div class="contact-links">
+                    <a href="https://github.com/aman4150" class="contact-link github">GitHub</a>
+                </div>
+                
+                <p><strong>Role:</strong> Focused contributor to PolkaVM project</p>
+                <p><strong>Experience:</strong> 4 GitHub followers, 76 contributions in last year</p>
+                <p><strong>Specialization:</strong> Sandbox implementation, gas metering, signal handling</p>
+                
+                <p><strong>Recent Contributions (June 2025):</strong></p>
+                <ul>
+                    <li>Generic sandbox gas metering and signal handler fixes</li>
+                    <li>Generic sandbox dynamic paging</li>
+                    <li>interpreter: Fix out-of-range execution ProgramCounter</li>
+                    <li>Dynamic paging off-by-one error fixes</li>
+                </ul>
+            </div>
+
+            <h3>Additional Contributors</h3>
+            <p>Other notable contributors to the PolkaVM ecosystem include:</p>
+            <ul>
+                <li><strong>@jarkkojs</strong> - PolkaVM contributor</li>
+                <li><strong>@subotic</strong> - PolkaVM contributor</li>
+                <li><strong>@zerosnacks</strong> - PolkaVM contributor</li>
+            </ul>
+        </div>
+
+        <!-- Web3 Foundation Team -->
+        <div class="section" id="web3">
+            <h2>🌐 Web3 Foundation Research Team</h2>
+            
+            <p>The Web3 Foundation research team provides crucial research support for the Polkadot ecosystem, including technologies like PolkaVM. The team focuses on decentralized systems research across protocols, economics, and security.</p>
+            
+            <h3>Research Team Members</h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0;">
+                <div class="person-card">
+                    <div class="person-name">Alistair Stewart</div>
+                    <div class="contact-links">
+                        <a href="mailto:alistair@web3.foundation" class="contact-link email">Email</a>
+                    </div>
+                    <p><strong>Focus:</strong> Core protocol research</p>
+                </div>
+                
+                <div class="person-card">
+                    <div class="person-name">Andrew Burger</div>
+                    <div class="contact-links">
+                        <a href="mailto:andrew@web3.foundation" class="contact-link email">Email</a>
+                    </div>
+                    <p><strong>Focus:</strong> Research and development</p>
+                </div>
+                
+                <div class="person-card">
+                    <div class="person-name">Elizabeth Crites</div>
+                    <div class="contact-links">
+                        <a href="mailto:elizabeth@web3.foundation" class="contact-link email">Email</a>
+                    </div>
+                    <p><strong>Focus:</strong> Cryptographic research</p>
+                </div>
+                
+                <div class="person-card">
+                    <div class="person-name">Jeff Burdges</div>
+                    <div class="contact-links">
+                        <a href="mailto:jeff@web3.foundation" class="contact-link email">Email</a>
+                    </div>
+                    <p><strong>Focus:</strong> Cryptography and protocol design</p>
+                </div>
+                
+                <div class="person-card">
+                    <div class="person-name">Jonas Gehrlein</div>
+                    <div class="contact-links">
+                        <a href="mailto:jonas@web3.foundation" class="contact-link email">Email</a>
+                    </div>
+                    <p><strong>Focus:</strong> Economic research</p>
+                </div>
+                
+                <div class="person-card">
+                    <div class="person-name">Sergey Vasilyev</div>
+                    <div class="contact-links">
+                        <a href="mailto:sergey@web3.foundation" class="contact-link email">Email</a>
+                    </div>
+                    <p><strong>Focus:</strong> Protocol research</p>
+                </div>
+                
+                <div class="person-card">
+                    <div class="person-name">Syed Hosseini</div>
+                    <div class="contact-links">
+                        <a href="mailto:syed@web3.foundation" class="contact-link email">Email</a>
+                    </div>
+                    <p><strong>Focus:</strong> Research and development</p>
+                </div>
+                
+                <div class="person-card">
+                    <div class="person-name">Chen-Da Liu-Zhang</div>
+                    <div class="contact-links">
+                        <a href="mailto:chenda@web3.foundation" class="contact-link email">Email</a>
+                    </div>
+                    <p><strong>Focus:</strong> Cryptographic protocols</p>
+                </div>
+                
+                <div class="person-card">
+                    <div class="person-name">Bhargav Nagaraja Bhatt</div>
+                    <div class="contact-links">
+                        <a href="mailto:bhargav@web3.foundation" class="contact-link email">Email</a>
+                    </div>
+                    <p><strong>Focus:</strong> Research and development</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Projects -->
+        <div class="section" id="projects">
+            <h2>📦 Key Projects</h2>
+            
+            <h3>PolkaVM</h3>
+            <p><strong>Repository:</strong> <a href="https://github.com/paritytech/polkavm">https://github.com/paritytech/polkavm</a></p>
+            <p><strong>Description:</strong> A general purpose user-level RISC-V based virtual machine designed for smart contracts and high-performance execution.</p>
+            
+            <h4>Key Features:</h4>
+            <ul>
+                <li>Fast execution competitive with WebAssembly VMs</li>
+                <li>Single-pass O(n) compilation</li>
+                <li>Low memory footprint (128KB baseline)</li>
+                <li>Fully deterministic execution</li>
+                <li>Cross-platform support</li>
+                <li>Built-in debugging and profiling tools</li>
+            </ul>
+            
+            <h3>pallet-revive</h3>
+            <p><strong>Repository:</strong> <a href="https://github.com/paritytech/polkadot-sdk/tree/master/substrate/frame/revive">https://github.com/paritytech/polkadot-sdk/tree/master/substrate/frame/revive</a></p>
+            <p><strong>Description:</strong> An experimental runtime module that provides functionality for deploying and executing PolkaVM smart contracts.</p>
+            
+            <h4>Key Features:</h4>
+            <ul>
+                <li>Executes PolkaVM smart contracts</li>
+                <li>Supports Solidity (via revive) and Rust</li>
+                <li>Smart-contract code stored once via code_hash</li>
+                <li>Weight-based execution limits</li>
+                <li>Non-cascading call failures</li>
+                <li>Experimental unstable interface support</li>
+            </ul>
+            
+            <h3>Westend Network</h3>
+            <p><strong>Type:</strong> Polkadot's primary permanent testnet</p>
+            <p><strong>Purpose:</strong> Testing environment for PolkaVM and pallet-revive development</p>
+            
+            <h4>Key Features:</h4>
+            <ul>
+                <li>Primary testnet for PolkaVM development</li>
+                <li>pallet-revive deployed to AssetHub parachain</li>
+                <li>Free testnet tokens (WND) for development</li>
+                <li>REMIX instance for Solidity development</li>
+                <li>ink! v6 support and integration</li>
+            </ul>
+        </div>
+
+        <!-- Summary -->
+        <div class="section" id="summary">
+            <h2>📊 Summary</h2>
+            
+            <h3>Team Distribution</h3>
+            <ul>
+                <li><strong>Parity Technologies:</strong> 6 core team members + additional contributors</li>
+                <li><strong>Web3 Foundation:</strong> 9 research team members</li>
+                <li><strong>Geographic Distribution:</strong> Tokyo, Berlin, Darmstadt, Switzerland, San Francisco, Global</li>
+            </ul>
+            
+            <h3>Project Status</h3>
+            <ul>
+                <li><strong>PolkaVM:</strong> Active development, 363 stars, 17+ contributors</li>
+                <li><strong>pallet-revive:</strong> Experimental phase, deployed to Westend, very active development</li>
+                <li><strong>Westend:</strong> Primary testing environment, AssetHub integration</li>
+            </ul>
+            
+            <h3>Key Contacts (Verified Only)</h3>
+            <ul>
+                <li><strong>Primary PolkaVM Developer:</strong> Jan Bujak (@koute)</li>
+                <li><strong>Smart Contracts Lead:</strong> Alexander Theißen (@athei)</li>
+                <li><strong>Tech Lead:</strong> Oliver Tale-Yazdi (@ggwpez)</li>
+                <li><strong>Most Active pallet-revive Developer:</strong> <span class="highlight">Pierre-Guillaume Herveou (@pgherveou)</span></li>
+                <li><strong>Core pallet-revive Developer:</strong> <span class="highlight">xermicus</span></li>
+                <li><strong>Research Support:</strong> Web3 Foundation team (9 members)</li>
+            </ul>
+            
+            <h3>Verified Social Media Coverage</h3>
+            <ul>
+                <li><strong>LinkedIn:</strong> 4 verified profiles</li>
+                <li><strong>Twitter/X:</strong> 1 verified profile (@OliverTaleYazdi)</li>
+                <li><strong>Instagram:</strong> 1 verified profile (Pierre-Guillaume Herveou)</li>
+                <li><strong>GitHub:</strong> All team members</li>
+                <li><strong>Personal Websites:</strong> 2 verified (koute.github.io, tasty.limo)</li>
+                <li><strong>Email Addresses:</strong> 9 Web3 Foundation official emails</li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>📅 Report Generated: June 25, 2025 (Corrected Version)</p>
+            <p>🔍 Research Focus: PolkaVM, pallet-revive, Westend Network</p>
+            <p>📊 Total Team Members Identified: <span class="highlight">16</span> (6 Parity + 9 Web3 Foundation + 1 External)</p>
+            <p>🌐 Organizations: Parity Technologies, Web3 Foundation, Lyft</p>
+            <p>🎨 Color Palette: Green (#96E150), Purple (#7864FA), Blue (#1E96FF), White (#FFFFFF), Black (#000000)</p>
+            <p>⚠️ <strong>Note:</strong> Only verified contact information included</p>
+        </div>
+    </div>
+</body>
+</html>
+
