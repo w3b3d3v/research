@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PolkaVM Development Team - Comprehensive Report</title>
+    <style>
+      body {
+        font-family: "Barlow", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #000000;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+      }
+
+      h1 {
+        color: #000000;
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5em;
+        font-weight: 300;
+      }
+
+      h2 {
+        color: #000000;
+        border-bottom: 2px solid #1e96ff;
+        padding-bottom: 10px;
+        margin-top: 40px;
+        font-size: 1.8em;
+      }
+
+      h3 {
+        color: #7864fa;
+        margin-top: 30px;
+        font-size: 1.4em;
+      }
+
+      h4 {
+        color: #96e150;
+        margin-top: 25px;
+        font-size: 1.2em;
+      }
+
+      .project-overview {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+
+      .project-card {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid #1e96ff;
+      }
+
+      .project-card h4 {
+        margin-top: 0;
+        color: #000000;
+      }
+
+      .contributor-section {
+        background: #ffffff;
+        margin: 30px 0;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .contributor {
+        border-left: 4px solid #7864fa;
+        padding: 20px;
+        margin: 20px 0;
+        background: #fafafa;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .contributor h3 {
+        margin-top: 0;
+        color: #7864fa;
+      }
+
+      .contributor-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin: 15px 0;
+      }
+
+      .detail-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+
+      .detail-label {
+        font-weight: bold;
+        margin-right: 10px;
+        min-width: 100px;
+        color: #000000;
+      }
+
+      .location {
+        background: #1e96ff;
+        color: #ffffff;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+
+      .role {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-bottom: 15px;
+      }
+
+      .highlight {
+        background: #96e150;
+        color: #ffffff;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.9em;
+      }
+
+      .new-discovery {
+        border-left-color: #96e150;
+        background: #f0fff4;
+      }
+
+      .new-discovery h3 {
+        color: #96e150;
+      }
+
+      .social-links {
+        margin-top: 15px;
+      }
+
+      .social-link {
+        display: inline-block;
+        background: #1e96ff;
+        color: #ffffff;
+        padding: 8px 16px;
+        margin: 4px 8px 4px 0;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 0.9em;
+        transition: background-color 0.3s;
+      }
+
+      .social-link:hover {
+        background: #7864fa;
+      }
+
+      .social-link.verified {
+        background: #96e150;
+      }
+
+      .social-link.verified:hover {
+        background: #7864fa;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+      }
+
+      .stat-card {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-number {
+        font-size: 2em;
+        font-weight: bold;
+        color: #7864fa;
+        margin-bottom: 5px;
+      }
+
+      .stat-label {
+        color: #7f8c8d;
+        font-size: 0.9em;
+      }
+
+      .comparison-section {
+        background: #ffffff;
+        padding: 30px;
+        margin: 30px 0;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .comparison-table th {
+        background: #7864fa;
+        color: #ffffff;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .recommendation {
+        background: #d5f4e6;
+        border: 1px solid #96e150;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+
+      .recommendation h3 {
+        color: #96e150;
+        margin-top: 0;
+      }
+
+      .project-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+        margin: 15px 0;
+      }
+
+      .project-stat {
+        text-align: center;
+        background: #ecf0f1;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      .project-stat-number {
+        font-weight: bold;
+        color: #000000;
+      }
+
+      .project-stat-label {
+        font-size: 0.8em;
+        color: #7f8c8d;
+      }
+
+      ul {
+        padding-left: 20px;
+      }
+
+      li {
+        margin-bottom: 8px;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 50px;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        color: #000000;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>PolkaVM Development Team - Comprehensive Report</h1>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">25</div>
+        <div class="stat-label">Total Contributors</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">10</div>
+        <div class="stat-label">Parity Technologies</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">9</div>
+        <div class="stat-label">Web3 Foundation</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Key Projects</div>
+      </div>
+    </div>
+
+    <h2>🔍 Project Overview</h2>
+    <div class="project-overview">
+      <div class="project-card">
+        <h4>PolkaVM</h4>
+        <p>Fast and secure RISC-V based virtual machine</p>
+      </div>
+      <div class="project-card">
+        <h4>pallet-revive</h4>
+        <p>Experimental module for PolkaVM smart contracts</p>
+      </div>
+      <div class="project-card">
+        <h4>Westend Network</h4>
+        <p>Primary testnet for PolkaVM development</p>
+      </div>
+      <div class="project-card">
+        <h4>Passet Hub</h4>
+        <p>Temporary smart contracts testnet with pallet-revive</p>
+      </div>
+      <div class="project-card">
+        <h4>foundry-polkadot</h4>
+        <p>Foundry toolkit adaptation for Polkadot</p>
+      </div>
+      <div class="project-card">
+        <h4>hardhat-polkadot</h4>
+        <p>Hardhat integration for Polkadot smart contracts</p>
+      </div>
+    </div>
+
+    <h2>🏢 Parity Technologies Team</h2>
+
+    <div class="contributor-section">
+      <h3>Core PolkaVM Developers</h3>
+
+      <div class="contributor">
+        <div class="location">📍 Tokyo, Japan</div>
+        <h3>Jan Bujak (@koute)</h3>
+        <div class="role">
+          <strong>Role:</strong> Primary developer and maintainer of PolkaVM
+        </div>
+        <div class="contributor-details">
+          <div>
+            <div class="detail-item">
+              <span class="detail-label">Experience:</span>
+              <span>748 GitHub followers, 721 contributions in last year</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Specialization:</span>
+              <span>Rust development, performance-critical systems</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Kusama Address:</span>
+              <span>HTk3eccL7WBkiyxz1gBcqQRghsJigoDMD7mnQaz1UAbMpQV</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Key Projects:</span>
+              <span
+                >PolkaVM (363⭐), bytehound (4.7k⭐), not-perf (886⭐), pinky
+                (793⭐)</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/koute" class="social-link verified"
+            >GitHub</a
+          >
+          <a
+            href="https://www.linkedin.com/in/jan-bujak-399168169"
+            class="social-link verified"
+            >LinkedIn</a
+          >
+          <a href="https://koute.github.io/" class="social-link verified"
+            >Website</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor">
+        <div class="location">📍 Berlin, Germany</div>
+        <h3>Alexander Theißen (@athei)</h3>
+        <div class="role">
+          <strong>Role:</strong> Core developer for pallet-revive and smart
+          contracts
+        </div>
+        <div class="contributor-details">
+          <div>
+            <div class="detail-item">
+              <span class="detail-label">Experience:</span>
+              <span>118 GitHub followers, 559 contributions in last year</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Specialization:</span>
+              <span>WASM instrumentation, blockchain infrastructure</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Polkadot Address:</span>
+              <span>15db5ksZqmhWF9U8MDq4wLKUdFivLVByztWV8nmaJv3NU1</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Key Projects:</span>
+              <span
+                >polkadot-sdk (2.3k⭐), wasm-instrument (50⭐), blockstats
+                (4⭐)</span
+              >
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Activity Breakdown:</span>
+              <span
+                >50% Code review, 25% Commits, 14% Pull requests, 11%
+                Issues</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/athei" class="social-link verified"
+            >GitHub</a
+          >
+          <a
+            href="https://de.linkedin.com/in/athei"
+            class="social-link verified"
+            >LinkedIn</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor">
+        <div class="location">📍 Darmstadt, Germany</div>
+        <h3>Oliver Tale-Yazdi (@ggwpez)</h3>
+        <div class="role">
+          <strong>Role:</strong> Tech Lead at Parity Technologies
+        </div>
+        <div class="contributor-details">
+          <div>
+            <div class="detail-item">
+              <span class="detail-label">Experience:</span>
+              <span
+                >161 GitHub followers, 2,118 contributions in last year</span
+              >
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Specialization:</span>
+              <span
+                >Rust tooling, blockchain infrastructure, JAM development</span
+              >
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Polkadot Address:</span>
+              <span>16a357f5Sxab3V2ne4emGQvqjaCLeYpTMx3TCjnQhmJQ71DX</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Key Projects:</span>
+              <span
+                >zepter (86⭐), substrate-weight-compare (29⭐),
+                proc-macro-warning (5⭐)</span
+              >
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Activity Breakdown:</span>
+              <span
+                >39% Commits, 35% Code review, 20% Pull requests, 6%
+                Issues</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/ggwpez" class="social-link verified"
+            >GitHub</a
+          >
+          <a
+            href="https://de.linkedin.com/in/oliver-tale-yazdi-92b72b266"
+            class="social-link verified"
+            >LinkedIn</a
+          >
+          <a href="https://x.com/OliverTaleYazdi" class="social-link verified"
+            >Twitter</a
+          >
+          <a href="https://tasty.limo" class="social-link verified">Website</a>
+        </div>
+      </div>
+
+      <div class="contributor">
+        <div class="location">📍 Switzerland</div>
+        <h3>xermicus</h3>
+        <div class="role">
+          <strong>Role:</strong> Very active pallet-revive developer
+        </div>
+        <div class="contributor-details">
+          <div>
+            <div class="detail-item">
+              <span class="detail-label">Experience:</span>
+              <span>109 GitHub followers, 826 contributions in last year</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Specialization:</span>
+              <span
+                >Solidity compiler for Polkadot, PolkaVM smart contracts</span
+              >
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Key Projects:</span>
+              <span
+                >paritytech/revive (82⭐), use-ink/ink (1.4k⭐),
+                hyperledger-solang/solang (1.3k⭐)</span
+              >
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Activity Breakdown:</span>
+              <span
+                >34% Commits, 30% Code review, 26% Pull requests, 10%
+                Issues</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/xermicus" class="social-link verified"
+            >GitHub</a
+          >
+        </div>
+        <p><strong>Recent Major Contributions:</strong></p>
+        <ul>
+          <li>
+            [pallet-revive] allow delegate calls to non-contract accounts
+            (#7729)
+          </li>
+          <li>[pallet-revive] implement the block author API (#7198)</li>
+          <li>[pallet-revive] implement the base fee API (#6964)</li>
+          <li>[pallet-revive] implement the gas price API (#6954)</li>
+        </ul>
+      </div>
+
+      <div class="contributor">
+        <div class="location">
+          📍 San Francisco, CA (Currently at Lyft, Previously Parity)
+        </div>
+        <h3>
+          Pierre-Guillaume Herveou (@pgherveou)
+          <span class="highlight">MOST ACTIVE</span>
+        </h3>
+        <div class="role">
+          <strong>Role:</strong> Most active pallet-revive contributor
+        </div>
+        <div class="contributor-details">
+          <div>
+            <div class="detail-item">
+              <span class="detail-label">Experience:</span>
+              <span>98 GitHub followers, 889 contributions in last year</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Specialization:</span>
+              <span
+                >pallet-revive development, RPC implementation, smart
+                contracts</span
+              >
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Key Projects:</span>
+              <span
+                >gulp-awspublish (396⭐), RxSwiftCommunity/RxPager (60⭐)</span
+              >
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Activity Breakdown:</span>
+              <span
+                >50% Commits, 22% Code review, 21% Pull requests, 7%
+                Issues</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/pgherveou" class="social-link verified"
+            >GitHub</a
+          >
+          <a
+            href="https://de.linkedin.com/in/pgherveou"
+            class="social-link verified"
+            >LinkedIn</a
+          >
+          <a
+            href="https://www.instagram.com/pgherveou/"
+            class="social-link verified"
+            >Instagram</a
+          >
+        </div>
+        <p><strong>Recent Major Contributions (June 2025):</strong></p>
+        <ul>
+          <li>
+            [pallet-revive] Make Runtime call dispatchable as eth transaction
+            (#8883)
+          </li>
+          <li>
+            [pallet-revive-rpc] fix sqlite in-memory connection pool issue
+            (#8897)
+          </li>
+          <li>[pallet-revive] only record diff if value changed (#8881)</li>
+          <li>[pallet-revive] fix call-trace create calls (#8781)</li>
+          <li>[pallet-revive] dev-node (#8746)</li>
+          <li>[pallet-revive] prestate tracer (#8742)</li>
+        </ul>
+      </div>
+
+      <div class="contributor">
+        <h3>Aman (@aman4150)</h3>
+        <div class="role">
+          <strong>Role:</strong> Focused contributor to PolkaVM project
+        </div>
+        <div class="contributor-details">
+          <div>
+            <div class="detail-item">
+              <span class="detail-label">Experience:</span>
+              <span>4 GitHub followers, 76 contributions in last year</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Specialization:</span>
+              <span>Sandbox implementation, gas metering, signal handling</span>
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/aman4150" class="social-link verified"
+            >GitHub</a
+          >
+        </div>
+        <p><strong>Recent Contributions (June 2025):</strong></p>
+        <ul>
+          <li>Generic sandbox gas metering and signal handler fixes</li>
+          <li>Generic sandbox dynamic paging</li>
+          <li>interpreter: Fix out-of-range execution ProgramCounter</li>
+          <li>Dynamic paging off-by-one error fixes</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>🏗️ Passet Hub Development Team</h2>
+
+    <div class="contributor-section">
+      <div class="project-card">
+        <h4>Passet Hub - Smart Contracts Testnet</h4>
+        <p>
+          Temporary second instance of Asset Hub system chain on Polkadot
+          testnet (Paseo) with pallet-revive for testing smart contracts before
+          they are live on Polkadot Hub
+        </p>
+        <div class="project-stats">
+          <div class="project-stat">
+            <div class="project-stat-number">4</div>
+            <div class="project-stat-label">Contributors</div>
+          </div>
+          <div class="project-stat">
+            <div class="project-stat-number">45</div>
+            <div class="project-stat-label">Commits</div>
+          </div>
+          <div class="project-stat">
+            <div class="project-stat-number">Q4 2025</div>
+            <div class="project-stat-label">Decommission</div>
+          </div>
+          <div class="project-stat">
+            <div class="project-stat-number">Stable</div>
+            <div class="project-stat-label">Environment</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contributor new-discovery">
+        <h3>porticodotlabs <span class="highlight">LEAD MAINTAINER</span></h3>
+        <div class="role">
+          <strong>Role:</strong> Lead maintainer of Passet Hub
+        </div>
+        <div class="contributor-details">
+          <div>
+            <div class="detail-item">
+              <span class="detail-label">Organization:</span>
+              <span>Portico (Paseo Core Group)</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Experience:</span>
+              <span>Ex-Parity, 2 years running Rococo</span>
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a
+            href="https://github.com/porticodotlabs"
+            class="social-link verified"
+            >GitHub</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor new-discovery">
+        <h3>Alejandro Martinez (@al3mart)</h3>
+        <div class="role"><strong>Role:</strong> Core Developer</div>
+        <div class="contributor-details">
+          <div>
+            <div class="detail-item">
+              <span class="detail-label">Specialization:</span>
+              <span>Passet Hub runtime development</span>
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/al3mart" class="social-link verified"
+            >GitHub</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor new-discovery">
+        <h3>Julián Toledano (@JulianToledano)</h3>
+        <div class="role"><strong>Role:</strong> Infrastructure Developer</div>
+        <div class="contributor-details">
+          <div>
+            <div class="detail-item">
+              <span class="detail-label">Specialization:</span>
+              <span>CI/CD and build infrastructure</span>
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a
+            href="https://github.com/JulianToledano"
+            class="social-link verified"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <h2>🔧 Foundry-Polkadot Development Team</h2>
+
+    <div class="contributor-section">
+      <div class="project-card">
+        <h4>Foundry-Polkadot</h4>
+        <p>
+          Blazing fast, portable and modular toolkit for Ethereum application
+          development adapted for Polkadot with PolkaVM compatibility
+        </p>
+        <div class="project-stats">
+          <div class="project-stat">
+            <div class="project-stat-number">12</div>
+            <div class="project-stat-label">Stars</div>
+          </div>
+          <div class="project-stat">
+            <div class="project-stat-number">60</div>
+            <div class="project-stat-label">Commits Ahead</div>
+          </div>
+          <div class="project-stat">
+            <div class="project-stat-number">4,759</div>
+            <div class="project-stat-label">Total Commits</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contributor new-discovery">
+        <h3>
+          Sebastian Miasojed (@smiasojed)
+          <span class="highlight">PROJECT LEAD</span>
+        </h3>
+        <div class="role">
+          <strong>Role:</strong> Manager, project leader and solution architect
+        </div>
+        <div class="contributor-details">
+          <div>
+            <div class="detail-item">
+              <span class="detail-label">Contributions:</span>
+              <span>518 in last year</span>
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/smiasojed" class="social-link verified"
+            >GitHub</a
+          >
+          <a
+            href="https://www.linkedin.com/in/sebastian-miasojed-83b6123"
+            class="social-link verified"
+            >LinkedIn</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor new-discovery">
+        <h3>Pavlo Khrystenko (@pkhry)</h3>
+        <div class="role">
+          <strong>Role:</strong> Compiler Integration Specialist
+        </div>
+        <div class="contributor-details">
+          <div>
+            <div class="detail-item">
+              <span class="detail-label">Contributions:</span>
+              <span>288 in last year</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Expertise:</span>
+              <span>OCaml, TypeScript, Rust, WASM</span>
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/pkhry" class="social-link verified"
+            >GitHub</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor new-discovery">
+        <h3>Filip (@filip-parity)</h3>
+        <div class="role">
+          <strong>Role:</strong> Release & Documentation Specialist
+        </div>
+        <div class="contributor-details">
+          <div>
+            <div class="detail-item">
+              <span class="detail-label">Contributions:</span>
+              <span>45 in last year</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Company:</span>
+              <span>Parity Technologies</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Focus:</span>
+              <span>Release automation and compiler metadata</span>
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/filip-parity" class="social-link verified"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <h2>⚡ Hardhat-Polkadot Development Team</h2>
+
+    <div class="contributor-section">
+      <div class="project-card">
+        <h4>Hardhat-Polkadot</h4>
+        <p>
+          Plugin for using Hardhat with Polkadot - integrates with the Hardhat
+          environment for developing and deploying Ethereum-compatible smart
+          contracts on the Polkadot network
+        </p>
+        <div class="project-stats">
+          <div class="project-stat">
+            <div class="project-stat-number">10</div>
+            <div class="project-stat-label">Stars</div>
+          </div>
+          <div class="project-stat">
+            <div class="project-stat-number">455</div>
+            <div class="project-stat-label">Commits</div>
+          </div>
+          <div class="project-stat">
+            <div class="project-stat-number">28</div>
+            <div class="project-stat-label">Issues</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contributor new-discovery">
+        <div class="location">📍 Buenos Aires, Argentina</div>
+        <h3>
+          Alberto Nicolas Penayo (@bee344)
+          <span class="highlight">LEAD DEVELOPER</span>
+        </h3>
+        <div class="role">
+          <strong>Role:</strong> Lead developer for hardhat-polkadot
+        </div>
+        <div class="contributor-details">
+          <div>
+            <div class="detail-item">
+              <span class="detail-label">Company:</span>
+              <span>@paritytech</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Contributions:</span>
+              <span>942 in last year</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Philosophy:</span>
+              <span>"build, break, fix, learn, rinse and repeat"</span>
+            </div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/bee344" class="social-link verified"
+            >GitHub</a
+          >
+          <a href="https://sugarcube.ar" class="social-link verified"
+            >Website</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <h2>🌐 Web3 Foundation Research Team</h2>
+
+    <div class="contributor-section">
+      <p>
+        The Web3 Foundation research team provides crucial research support for
+        the Polkadot ecosystem, including technologies like PolkaVM. The team
+        focuses on decentralized systems research across protocols, economics,
+        and security.
+      </p>
+
+      <h3>Research Team Members</h3>
+
+      <div class="contributor">
+        <h3>Alistair Stewart</h3>
+        <div class="role"><strong>Focus:</strong> Core protocol research</div>
+        <div class="social-links">
+          <a href="mailto:alistair@web3.foundation" class="social-link verified"
+            >Email</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor">
+        <h3>Andrew Burger</h3>
+        <div class="role"><strong>Focus:</strong> Research and development</div>
+        <div class="social-links">
+          <a href="mailto:andrew@web3.foundation" class="social-link verified"
+            >Email</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor">
+        <h3>Elizabeth Crites</h3>
+        <div class="role"><strong>Focus:</strong> Cryptographic research</div>
+        <div class="social-links">
+          <a
+            href="mailto:elizabeth@web3.foundation"
+            class="social-link verified"
+            >Email</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor">
+        <h3>Jeff Burdges</h3>
+        <div class="role">
+          <strong>Focus:</strong> Cryptography and protocol design
+        </div>
+        <div class="social-links">
+          <a href="mailto:jeff@web3.foundation" class="social-link verified"
+            >Email</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor">
+        <h3>Jonas Gehrlein</h3>
+        <div class="role"><strong>Focus:</strong> Economic research</div>
+        <div class="social-links">
+          <a href="mailto:jonas@web3.foundation" class="social-link verified"
+            >Email</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor">
+        <h3>Sergey Vasilyev</h3>
+        <div class="role"><strong>Focus:</strong> Protocol research</div>
+        <div class="social-links">
+          <a href="mailto:sergey@web3.foundation" class="social-link verified"
+            >Email</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor">
+        <h3>Syed Hosseini</h3>
+        <div class="role"><strong>Focus:</strong> Research and development</div>
+        <div class="social-links">
+          <a href="mailto:syed@web3.foundation" class="social-link verified"
+            >Email</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor">
+        <h3>Chen-Da Liu-Zhang</h3>
+        <div class="role"><strong>Focus:</strong> Cryptographic protocols</div>
+        <div class="social-links">
+          <a href="mailto:chen-da@web3.foundation" class="social-link verified"
+            >Email</a
+          >
+        </div>
+      </div>
+
+      <div class="contributor">
+        <h3>Bhargav Nagaraja Bhatt</h3>
+        <div class="role"><strong>Focus:</strong> Research and development</div>
+        <div class="social-links">
+          <a href="mailto:bhargav@web3.foundation" class="social-link verified"
+            >Email</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <h2>🔍 Testnet Comparison: Passet Hub vs Westend</h2>
+
+    <div class="comparison-section">
+      <div class="recommendation">
+        <h3>
+          🎯 Recommendation: Use Passet Hub for Smart Contract Development
+        </h3>
+        <p>
+          Passet Hub is specifically designed for PolkaVM smart contract testing
+          and provides a stable, production-like environment with a clear path
+          to mainnet deployment.
+        </p>
+      </div>
+
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Passet Hub</th>
+            <th>Westend</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Stability</strong></td>
+            <td>✅ Stable</td>
+            <td>❌ Unstable</td>
+          </tr>
+          <tr>
+            <td><strong>Purpose</strong></td>
+            <td>✅ Smart Contracts</td>
+            <td>❌ Protocol Development</td>
+          </tr>
+          <tr>
+            <td><strong>Runtime</strong></td>
+            <td>✅ Asset Hub + pallet-revive</td>
+            <td>⚠️ Latest Protocol Changes</td>
+          </tr>
+          <tr>
+            <td><strong>Sync Speed</strong></td>
+            <td>✅ Fast</td>
+            <td>❌ Slow</td>
+          </tr>
+          <tr>
+            <td><strong>Community Support</strong></td>
+            <td>✅ High</td>
+            <td>⚠️ Limited</td>
+          </tr>
+          <tr>
+            <td><strong>Documentation</strong></td>
+            <td>✅ Comprehensive</td>
+            <td>⚠️ Technical</td>
+          </tr>
+          <tr>
+            <td><strong>Breaking Changes</strong></td>
+            <td>✅ Minimal</td>
+            <td>❌ Frequent</td>
+          </tr>
+          <tr>
+            <td><strong>Production Similarity</strong></td>
+            <td>✅ High</td>
+            <td>⚠️ Variable</td>
+          </tr>
+          <tr>
+            <td><strong>Timeline</strong></td>
+            <td>⚠️ Until Q4 2025</td>
+            <td>✅ Ongoing</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>📋 Use Case Guidelines</h3>
+      <div
+        style="
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+          margin-top: 15px;
+        "
+      >
+        <div
+          style="
+            background: #d5f4e6;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #27ae60;
+          "
+        >
+          <h4 style="color: #27ae60; margin-top: 0">
+            ✅ Choose Passet Hub If You Are:
+          </h4>
+          <ul style="color: #333; line-height: 1.8">
+            <li>Smart Contract Developer</li>
+            <li>dApp Developer</li>
+            <li>Parachain Team (with smart contracts)</li>
+            <li>End-User Focused Developer</li>
+            <li>New to Polkadot</li>
+            <li>Testing pallet-revive/PolkaVM</li>
+          </ul>
+        </div>
+        <div
+          style="
+            background: rgba(30, 150, 255, 0.15);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #1e96ff;
+            color: #1e96ff;
+          "
+        >
+          <h4 style="color: #1e96ff; margin-top: 0">
+            ⚠️ <span style="color: #1e96ff">Choose Westend If You Are:</span>
+          </h4>
+          <ul style="color: #000; line-height: 1.8">
+            <li>Core Protocol Developer</li>
+            <li>Validator</li>
+            <li>Infrastructure Provider</li>
+            <li>Parity Partner</li>
+            <li>Need Bleeding Edge Features</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h2>📦 Key Projects</h2>
+
+    <div class="contributor-section">
+      <h3>PolkaVM</h3>
+      <p>
+        <strong>Repository:</strong>
+        <a href="https://github.com/paritytech/polkavm"
+          >https://github.com/paritytech/polkavm</a
+        >
+      </p>
+      <p>
+        <strong>Description:</strong> A general purpose user-level RISC-V based
+        virtual machine designed for smart contracts and high-performance
+        execution.
+      </p>
+
+      <h4>Key Features:</h4>
+      <ul>
+        <li>Fast execution competitive with WebAssembly VMs</li>
+        <li>Single-pass O(n) compilation</li>
+        <li>Low memory footprint (128KB baseline)</li>
+        <li>Fully deterministic execution</li>
+        <li>Cross-platform support</li>
+        <li>Built-in debugging and profiling tools</li>
+      </ul>
+
+      <h3>pallet-revive</h3>
+      <p>
+        <strong>Repository:</strong>
+        <a
+          href="https://github.com/paritytech/polkadot-sdk/tree/master/substrate/frame/revive"
+          >https://github.com/paritytech/polkadot-sdk/tree/master/substrate/frame/revive</a
+        >
+      </p>
+      <p>
+        <strong>Description:</strong> An experimental runtime module that
+        provides functionality for deploying and executing PolkaVM smart
+        contracts.
+      </p>
+
+      <h4>Key Features:</h4>
+      <ul>
+        <li>Executes PolkaVM smart contracts</li>
+        <li>Supports Solidity (via revive) and Rust</li>
+        <li>Smart-contract code stored once via code_hash</li>
+        <li>Weight-based execution limits</li>
+        <li>Non-cascading call failures</li>
+        <li>Experimental unstable interface support</li>
+      </ul>
+
+      <h3>Westend Network</h3>
+      <p><strong>Type:</strong> Polkadot's primary permanent testnet</p>
+      <p>
+        <strong>Purpose:</strong> Testing environment for PolkaVM and
+        pallet-revive development
+      </p>
+
+      <h4>Key Features:</h4>
+      <ul>
+        <li>Primary testnet for PolkaVM development</li>
+        <li>pallet-revive deployed to AssetHub parachain</li>
+        <li>Free testnet tokens (WND) for development</li>
+        <li>REMIX instance for Solidity development</li>
+        <li>ink! v6 support and integration</li>
+      </ul>
+
+      <h3>Passet Hub</h3>
+      <p><strong>Type:</strong> Temporary smart contracts testnet</p>
+      <p>
+        <strong>Purpose:</strong> Testing environment specifically for
+        pallet-revive smart contracts
+      </p>
+
+      <h4>Key Features:</h4>
+      <ul>
+        <li>Second instance of Asset Hub system chain</li>
+        <li>Contains pallet-revive for PolkaVM smart contracts</li>
+        <li>Stable, community-managed environment</li>
+        <li>Regular updates from Westend Asset Hub</li>
+        <li>Will be decommissioned in Q4 2025</li>
+      </ul>
+    </div>
+
+    <h2>📊 Summary</h2>
+
+    <div class="contributor-section">
+      <h3>Team Distribution</h3>
+      <ul>
+        <li>
+          <strong>Parity Technologies:</strong> 10 core team members +
+          additional contributors
+        </li>
+        <li><strong>Web3 Foundation:</strong> 9 research team members</li>
+        <li><strong>Paseo Core Group:</strong> 4 Passet Hub maintainers</li>
+        <li>
+          <strong>Geographic Distribution:</strong> Tokyo, Berlin, Darmstadt,
+          Switzerland, San Francisco, Buenos Aires, Global
+        </li>
+      </ul>
+
+      <h3>Project Status</h3>
+      <ul>
+        <li>
+          <strong>PolkaVM:</strong> Active development, 363 stars, 17+
+          contributors
+        </li>
+        <li>
+          <strong>pallet-revive:</strong> Experimental phase, deployed to
+          Westend, very active development
+        </li>
+        <li>
+          <strong>Westend:</strong> Primary testing environment, AssetHub
+          integration
+        </li>
+        <li>
+          <strong>Passet Hub:</strong> Temporary smart contracts testnet, stable
+          environment
+        </li>
+        <li>
+          <strong>foundry-polkadot:</strong> Active development, 12 stars,
+          Foundry adaptation
+        </li>
+        <li>
+          <strong>hardhat-polkadot:</strong> Active development, 10 stars,
+          Hardhat integration
+        </li>
+      </ul>
+
+      <h3>Key Contacts (Verified Only)</h3>
+      <ul>
+        <li><strong>Primary PolkaVM Developer:</strong> Jan Bujak (@koute)</li>
+        <li>
+          <strong>Smart Contracts Lead:</strong> Alexander Theißen (@athei)
+        </li>
+        <li><strong>Tech Lead:</strong> Oliver Tale-Yazdi (@ggwpez)</li>
+        <li>
+          <strong>Most Active pallet-revive Developer:</strong> Pierre-Guillaume
+          Herveou (@pgherveou)
+        </li>
+        <li><strong>Core pallet-revive Developer:</strong> xermicus</li>
+        <li><strong>Passet Hub Lead:</strong> porticodotlabs</li>
+        <li>
+          <strong>Foundry-Polkadot Lead:</strong> Sebastian Miasojed
+          (@smiasojed)
+        </li>
+        <li>
+          <strong>Hardhat-Polkadot Lead:</strong> Alberto Nicolas Penayo
+          (@bee344)
+        </li>
+        <li>
+          <strong>Research Support:</strong> Web3 Foundation team (9 members)
+        </li>
+      </ul>
+
+      <h3>Verified Social Media Coverage</h3>
+      <ul>
+        <li><strong>LinkedIn:</strong> 6 verified profiles</li>
+        <li>
+          <strong>Twitter/X:</strong> 1 verified profile (@OliverTaleYazdi)
+        </li>
+        <li>
+          <strong>Instagram:</strong> 1 verified profile (Pierre-Guillaume
+          Herveou)
+        </li>
+        <li><strong>GitHub:</strong> All team members</li>
+        <li>
+          <strong>Personal Websites:</strong> 3 verified (koute.github.io,
+          tasty.limo, sugarcube.ar)
+        </li>
+        <li>
+          <strong>Email Addresses:</strong> 9 Web3 Foundation official emails
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <p>
+        <strong
+          >PolkaVM Development Team - Comprehensive Research Report</strong
+        >
+      </p>
+      <p>
+        Complete analysis of the PolkaVM ecosystem including all verified
+        contributors, social media profiles, and testnet recommendations
+      </p>
+      <p>
+        Generated: June 25, 2025 | Total Contributors: 25 | Projects Analyzed: 6
+        | Verified Contacts: 20+
+      </p>
+    </div>
+  </body>
+</html>
