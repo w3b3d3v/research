@@ -1,0 +1,2605 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quantum Computing Communities & Tech Stacks - Enhanced Report</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --green: #96e150;
+        --purple: #7864fa;
+        --blue: #1e96ff;
+        --white: #ffffff;
+        --black: #000000;
+        --gray-light: #f8f9fa;
+        --gray-medium: #6c757d;
+        --gray-dark: #343a40;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Barlow", sans-serif;
+        line-height: 1.6;
+        color: var(--black);
+        background-color: var(--white);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--purple), var(--blue));
+        color: var(--white);
+        padding: 60px 0;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        font-weight: 300;
+        opacity: 0.9;
+      }
+
+      .toc {
+        background-color: var(--gray-light);
+        padding: 40px 0;
+        border-bottom: 3px solid var(--green);
+      }
+
+      .toc h2 {
+        color: var(--purple);
+        font-size: 2rem;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .toc-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .toc-item {
+        background: var(--white);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .toc-item:hover {
+        transform: translateY(-5px);
+      }
+
+      .toc-item a {
+        text-decoration: none;
+        color: var(--black);
+        font-weight: 500;
+      }
+
+      .toc-item h3 {
+        color: var(--blue);
+        margin-bottom: 10px;
+      }
+
+      main {
+        padding: 60px 0;
+      }
+
+      section {
+        margin-bottom: 80px;
+      }
+
+      h2 {
+        color: var(--purple);
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        border-bottom: 3px solid var(--green);
+        padding-bottom: 10px;
+      }
+
+      h3 {
+        color: var(--blue);
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        margin-top: 40px;
+      }
+
+      h4 {
+        color: var(--gray-dark);
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        margin-top: 30px;
+      }
+
+      p {
+        margin-bottom: 20px;
+        font-size: 1.1rem;
+        line-height: 1.7;
+      }
+
+      .card {
+        background: var(--white);
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .card h4 {
+        color: var(--purple);
+        margin-top: 0;
+      }
+
+      .highlight-box {
+        background: linear-gradient(135deg, var(--green), var(--blue));
+        color: var(--white);
+        padding: 30px;
+        border-radius: 15px;
+        margin: 30px 0;
+      }
+
+      .highlight-box h3 {
+        color: var(--white);
+        margin-top: 0;
+      }
+
+      .tech-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+      }
+
+      .tech-card {
+        background: var(--gray-light);
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 4px solid var(--purple);
+      }
+
+      .tech-card h5 {
+        color: var(--purple);
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+
+      .community-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+      }
+
+      .community-card {
+        background: var(--white);
+        border: 2px solid var(--blue);
+        border-radius: 10px;
+        padding: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .community-card:hover {
+        border-color: var(--green);
+        transform: translateY(-3px);
+      }
+
+      .community-card h5 {
+        color: var(--blue);
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .platform-badge {
+        display: inline-block;
+        background: var(--purple);
+        color: var(--white);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+
+      .discord-badge {
+        background: #5865f2;
+      }
+
+      .telegram-badge {
+        background: #0088cc;
+      }
+
+      .job-card {
+        background: var(--white);
+        border: 2px solid var(--green);
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .job-card:hover {
+        border-color: var(--purple);
+        transform: translateY(-3px);
+      }
+
+      .job-title {
+        color: var(--purple);
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .salary-range {
+        background: var(--green);
+        color: var(--white);
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: 500;
+        display: inline-block;
+        margin-bottom: 15px;
+      }
+
+      .difficulty-badge {
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-left: 10px;
+      }
+
+      .easy {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .external-link {
+        color: var(--blue);
+        text-decoration: none;
+        font-weight: 500;
+        border-bottom: 1px dotted var(--blue);
+        transition: all 0.3s ease;
+      }
+
+      .external-link:hover {
+        color: var(--purple);
+        border-bottom-color: var(--purple);
+      }
+
+      .external-link::after {
+        content: " ↗";
+        font-size: 0.8em;
+      }
+
+      ul {
+        margin: 20px 0;
+        padding-left: 30px;
+      }
+
+      li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .conclusion {
+        background: var(--gray-light);
+        padding: 40px;
+        border-radius: 15px;
+        margin-top: 60px;
+        border-left: 5px solid var(--green);
+      }
+
+      footer {
+        background: var(--gray-dark);
+        color: var(--white);
+        text-align: center;
+        padding: 30px 0;
+        margin-top: 60px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+      }
+
+      .stat-card {
+        background: var(--white);
+        border: 2px solid var(--blue);
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--purple);
+        display: block;
+      }
+
+      .stat-label {
+        color: var(--gray-dark);
+        font-weight: 500;
+        margin-top: 5px;
+      }
+
+      .new-section {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border: 2px solid var(--green);
+        border-radius: 15px;
+        padding: 30px;
+        margin: 40px 0;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        h2 {
+          font-size: 2rem;
+        }
+
+        .toc-grid,
+        .tech-grid,
+        .community-list,
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Quantum Computing Jobs, Communities & Tech Stacks</h1>
+      </div>
+    </header>
+
+    <section class="toc">
+      <div class="container">
+        <h2>Table of Contents</h2>
+        <div class="toc-grid">
+          <div class="toc-item">
+            <a href="#job-market">
+              <h3>💼 Job Market & Careers</h3>
+              <p>
+                <strong>NEW!</strong> Salary ranges, demand analysis, and
+                easiest entry points into quantum computing careers
+              </p>
+            </a>
+          </div>
+          <div class="toc-item">
+            <a href="#communities">
+              <h3>🌐 Learning Communities</h3>
+              <p>Discord servers, Telegram channels with direct links</p>
+            </a>
+          </div>
+          <div class="toc-item">
+            <a href="#programming-languages">
+              <h3>💻 Programming Languages</h3>
+              <p>Essential frameworks with documentation links</p>
+            </a>
+          </div>
+          <div class="toc-item">
+            <a href="#cloud-platforms">
+              <h3>☁️ Cloud Platforms</h3>
+              <p>Major quantum services with access links</p>
+            </a>
+          </div>
+          <div class="toc-item">
+            <a href="#hardware-providers">
+              <h3>🔧 Hardware & Simulators</h3>
+              <p>Quantum hardware providers and simulation tools</p>
+            </a>
+          </div>
+          <div class="toc-item">
+            <a href="#rust-quantum">
+              <h3>🦀 Rust in Quantum Computing</h3>
+              <p>Why Rust is becoming important in quantum development</p>
+            </a>
+          </div>
+          <div class="toc-item">
+            <a href="#getting-started">
+              <h3>🚀 Getting Started</h3>
+              <p>Recommended learning path and resources</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <div class="container">
+        <section id="job-market" class="new-section">
+          <h2>💼 Job Market Analysis & Career Opportunities</h2>
+
+          <p>
+            The quantum computing job market is experiencing explosive growth,
+            with opportunities spanning from entry-level positions to senior
+            research roles. Based on comprehensive market research, here's your
+            guide to breaking into this high-growth field:
+          </p>
+
+          <h3>📈 Market Overview & Growth Statistics</h3>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-number">180%</span>
+              <div class="stat-label">Job growth 2020-2024</div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">400%</span>
+              <div class="stat-label">Software engineer demand increase</div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">10,000+</span>
+              <div class="stat-label">New jobs expected annually by 2025</div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">12%</span>
+              <div class="stat-label">Average salary growth (2023)</div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h3>🎯 Key Market Insights</h3>
+            <ul>
+              <li>
+                <strong>Rapid Growth:</strong> Quantum computing jobs have
+                surged 180% from 2020-2024
+              </li>
+              <li>
+                <strong>High Demand:</strong> Software engineering roles show
+                400% increase in demand
+              </li>
+              <li>
+                <strong>Salary Growth:</strong> 8-12% annual increases vs 3-5%
+                in traditional tech
+              </li>
+              <li>
+                <strong>Entry Opportunities:</strong> Less than 50% of quantum
+                jobs require PhDs
+              </li>
+              <li>
+                <strong>Remote Work:</strong> 25% of junior roles now offer
+                remote/hybrid options
+              </li>
+              <li>
+                <strong>Skills Gap:</strong> High demand for developers willing
+                to learn quantum concepts
+              </li>
+            </ul>
+          </div>
+
+          <h3>🎯 Easiest Career Paths to Break Into (Ranked by Difficulty)</h3>
+
+          <div class="job-card">
+            <div class="job-title">
+              1. Quantum Software Engineer
+              <span class="difficulty-badge easy">Easiest Entry</span>
+            </div>
+            <div class="salary-range">$105,000 - $180,000</div>
+            <p>
+              <strong>Why it's the easiest path:</strong> Leverages existing
+              software development skills. Many companies hire traditional
+              developers and provide quantum training on the job.
+            </p>
+
+            <p><strong>Key Skills Needed:</strong></p>
+            <ul>
+              <li>Python programming (most critical skill)</li>
+              <li>Software engineering best practices</li>
+              <li>Basic understanding of quantum concepts</li>
+              <li>Familiarity with Qiskit or similar frameworks</li>
+              <li>Problem-solving and analytical thinking</li>
+            </ul>
+
+            <p><strong>Job Opportunities & Boards:</strong></p>
+            <ul>
+              <li>
+                <a href="https://www.quantumjobs.us/" class="external-link"
+                  >QuantumJobs.us</a
+                >
+                - 500+ quantum industry jobs
+              </li>
+              <li>
+                <a
+                  href="https://www.indeed.com/q-quantum-software-engineer-jobs.html"
+                  class="external-link"
+                  >Indeed Quantum Software Jobs</a
+                >
+                - 149+ current openings
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/jobs/quantum-computing-jobs"
+                  class="external-link"
+                  >LinkedIn Quantum Jobs</a
+                >
+                - 985+ positions in US
+              </li>
+              <li>
+                <a
+                  href="https://www.ziprecruiter.com/Jobs/Quantum-Software-Engineer"
+                  class="external-link"
+                  >ZipRecruiter Quantum Jobs</a
+                >
+                - $120k-$225k range
+              </li>
+            </ul>
+
+            <p>
+              <strong>Top Hiring Companies:</strong> IBM, Google, Microsoft,
+              Amazon, IonQ, Rigetti, Quantinuum
+            </p>
+            <p>
+              <strong>Growth Potential:</strong> Entry: $105K → Mid-level: $150K
+              → Senior: $200K+
+            </p>
+          </div>
+
+          <div class="job-card">
+            <div class="job-title">
+              2. Quantum Machine Learning Engineer
+              <span class="difficulty-badge easy">Easy Entry</span>
+            </div>
+            <div class="salary-range">$90,000 - $210,000</div>
+            <p>
+              <strong>Why it's accessible:</strong> Combines classical ML skills
+              with quantum concepts. Growing field with many entry-level
+              opportunities and high research interest.
+            </p>
+
+            <p><strong>Key Skills Needed:</strong></p>
+            <ul>
+              <li>Machine learning and data science experience</li>
+              <li>Python and ML frameworks (TensorFlow, PyTorch)</li>
+              <li>Basic quantum algorithms knowledge</li>
+              <li>Research and experimentation mindset</li>
+              <li>Statistical analysis and data visualization</li>
+            </ul>
+
+            <p><strong>Job Opportunities:</strong></p>
+            <ul>
+              <li>
+                <a
+                  href="https://www.quantumjobs.us/jobs/quantum-ai-machine-learning"
+                  class="external-link"
+                  >Quantum AI & ML Jobs</a
+                >
+                - Specialized job board
+              </li>
+              <li>
+                <a
+                  href="https://www.indeed.com/q-quantum-machine-learning-jobs.html"
+                  class="external-link"
+                  >Indeed QML Jobs</a
+                >
+                - 323+ current openings
+              </li>
+              <li>
+                <a
+                  href="https://www.ziprecruiter.com/Jobs/Quantum-Machine-Learning"
+                  class="external-link"
+                  >ZipRecruiter QML</a
+                >
+                - $32k-$210k range
+              </li>
+            </ul>
+
+            <p>
+              <strong>Salary Progression:</strong> Entry: $90K-$130K → Senior
+              researchers: $150K-$210K
+            </p>
+          </div>
+
+          <div class="job-card">
+            <div class="job-title">
+              3. Technical Support & Customer Success
+              <span class="difficulty-badge easy">Easy Entry</span>
+            </div>
+            <div class="salary-range">$70,000 - $120,000</div>
+            <p>
+              <strong>Why it's accessible:</strong> Requires technical
+              communication skills rather than deep quantum expertise. Perfect
+              stepping stone into the quantum industry.
+            </p>
+
+            <p><strong>Responsibilities:</strong></p>
+            <ul>
+              <li>Help customers use quantum cloud platforms</li>
+              <li>Create documentation and tutorials</li>
+              <li>Support quantum software users</li>
+              <li>Bridge technical teams and business users</li>
+              <li>Conduct training sessions and webinars</li>
+            </ul>
+
+            <p>
+              <strong>Companies Actively Hiring:</strong> IBM Quantum, Amazon
+              Braket, Microsoft Azure Quantum, D-Wave, IonQ
+            </p>
+            <p>
+              <strong>Career Path:</strong> Support → Product Management →
+              Technical Sales → Engineering
+            </p>
+          </div>
+
+          <div class="job-card">
+            <div class="job-title">
+              4. Quantum Applications Developer
+              <span class="difficulty-badge medium">Medium Entry</span>
+            </div>
+            <div class="salary-range">$120,000 - $160,000</div>
+            <p>
+              <strong>Strategy:</strong> Combine your existing industry
+              expertise with quantum computing knowledge. High demand in
+              specific sectors.
+            </p>
+
+            <p><strong>Focus Areas & Applications:</strong></p>
+            <ul>
+              <li>
+                <strong>Finance:</strong> Portfolio optimization, risk analysis,
+                fraud detection
+              </li>
+              <li>
+                <strong>Pharmaceuticals:</strong> Drug discovery, molecular
+                simulation
+              </li>
+              <li>
+                <strong>Logistics:</strong> Supply chain optimization, routing
+                problems
+              </li>
+              <li>
+                <strong>Energy:</strong> Grid optimization, renewable energy
+                planning
+              </li>
+              <li>
+                <strong>AI/ML:</strong> Quantum-enhanced machine learning
+                algorithms
+              </li>
+            </ul>
+
+            <p>
+              <strong>Entry Strategy:</strong> Leverage domain expertise + learn
+              quantum applications in your field
+            </p>
+          </div>
+
+          <div class="job-card">
+            <div class="job-title">
+              5. Quantum Algorithm Developer
+              <span class="difficulty-badge medium">Medium Entry</span>
+            </div>
+            <div class="salary-range">$130,000 - $200,000</div>
+            <p>
+              <strong>Requirements:</strong> Strong mathematical background and
+              understanding of quantum mechanics and algorithms.
+            </p>
+
+            <p><strong>Key Skills:</strong></p>
+            <ul>
+              <li>Advanced mathematics (linear algebra, complex analysis)</li>
+              <li>Quantum mechanics fundamentals</li>
+              <li>Algorithm design and optimization</li>
+              <li>Research and publication experience</li>
+              <li>Multiple quantum programming frameworks</li>
+            </ul>
+
+            <p>
+              <strong>Career Path:</strong> Research → Algorithm Development →
+              Technical Leadership
+            </p>
+          </div>
+
+          <div class="job-card">
+            <div class="job-title">
+              6. Quantum Hardware Engineer
+              <span class="difficulty-badge hard">Hardest Entry</span>
+            </div>
+            <div class="salary-range">$123,000 - $190,000</div>
+            <p>
+              <strong>Why it's challenging:</strong> Requires specialized
+              physics/engineering background, limited positions, and high
+              technical requirements.
+            </p>
+
+            <p><strong>Requirements:</strong></p>
+            <ul>
+              <li>
+                Physics or electrical engineering degree (often PhD required)
+              </li>
+              <li>Experience with cryogenics and control systems</li>
+              <li>Understanding of quantum mechanics at hardware level</li>
+              <li>Specialized laboratory experience</li>
+              <li>Knowledge of superconducting circuits or ion traps</li>
+            </ul>
+
+            <p>
+              <strong>Job Opportunities:</strong>
+              <a
+                href="https://www.quantumjobs.us/jobs/quantum-hardware-engineering"
+                class="external-link"
+                >Hardware Engineering Jobs</a
+              >
+            </p>
+            <p>
+              <strong>Note:</strong> Limited positions but well-compensated and
+              cutting-edge work
+            </p>
+          </div>
+
+          <h3>💰 Comprehensive Salary Analysis</h3>
+          <div class="card">
+            <h4>Entry Level (0-2 years experience)</h4>
+            <ul>
+              <li>
+                <strong>Software Engineer:</strong>
+                <span class="salary-range">$70,000 - $130,000</span>
+              </li>
+              <li>
+                <strong>Technical Support:</strong>
+                <span class="salary-range">$60,000 - $90,000</span>
+              </li>
+              <li>
+                <strong>QML Engineer:</strong>
+                <span class="salary-range">$90,000 - $130,000</span>
+              </li>
+              <li>
+                <strong>Research Assistant:</strong>
+                <span class="salary-range">$65,000 - $85,000</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h4>Mid-Level (3-5 years experience)</h4>
+            <ul>
+              <li>
+                <strong>Software Engineer:</strong>
+                <span class="salary-range">$120,000 - $180,000</span>
+              </li>
+              <li>
+                <strong>Algorithm Developer:</strong>
+                <span class="salary-range">$130,000 - $200,000</span>
+              </li>
+              <li>
+                <strong>Applications Developer:</strong>
+                <span class="salary-range">$120,000 - $160,000</span>
+              </li>
+              <li>
+                <strong>Product Manager:</strong>
+                <span class="salary-range">$140,000 - $190,000</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h4>Senior Level (5+ years experience)</h4>
+            <ul>
+              <li>
+                <strong>Senior Engineer:</strong>
+                <span class="salary-range">$150,000 - $250,000+</span>
+              </li>
+              <li>
+                <strong>Research Scientist:</strong>
+                <span class="salary-range">$180,000 - $300,000+</span>
+              </li>
+              <li>
+                <strong>Hardware Engineer:</strong>
+                <span class="salary-range">$160,000 - $220,000</span>
+              </li>
+              <li>
+                <strong>Technical Lead:</strong>
+                <span class="salary-range">$200,000 - $350,000+</span>
+              </li>
+            </ul>
+          </div>
+
+          <h3>🏢 Top Companies Actively Hiring</h3>
+          <div class="community-list">
+            <div class="community-card">
+              <h5>🔵 IBM Quantum</h5>
+              <p>
+                Largest quantum team globally, hiring across all levels and
+                specializations.
+              </p>
+              <p>
+                <strong>Careers:</strong>
+                <a href="https://www.ibm.com/careers/" class="external-link"
+                  >ibm.com/careers</a
+                >
+              </p>
+              <p>
+                <strong>Focus:</strong> Software, hardware, research,
+                applications
+              </p>
+            </div>
+
+            <div class="community-card">
+              <h5>🟢 Google Quantum AI</h5>
+              <p>
+                Research-focused positions, competitive compensation,
+                cutting-edge projects.
+              </p>
+              <p>
+                <strong>Careers:</strong>
+                <a
+                  href="https://www.google.com/about/careers/applications/jobs/results?q=quantum"
+                  class="external-link"
+                  >Google Quantum Jobs</a
+                >
+              </p>
+              <p><strong>Recent:</strong> Willow quantum chip breakthrough</p>
+            </div>
+
+            <div class="community-card">
+              <h5>🔷 Microsoft Quantum</h5>
+              <p>Azure Quantum team, Q# development, enterprise solutions.</p>
+              <p>
+                <strong>Careers:</strong>
+                <a href="https://careers.microsoft.com/" class="external-link"
+                  >careers.microsoft.com</a
+                >
+              </p>
+              <p>
+                <strong>Focus:</strong> Cloud services, software development
+              </p>
+            </div>
+
+            <div class="community-card">
+              <h5>🟠 Amazon Braket</h5>
+              <p>Quantum cloud services, AWS integration, growing team.</p>
+              <p>
+                <strong>Careers:</strong>
+                <a href="https://www.amazon.jobs/" class="external-link"
+                  >amazon.jobs</a
+                >
+              </p>
+              <p><strong>Program:</strong> Quantum Embark for beginners</p>
+            </div>
+
+            <div class="community-card">
+              <h5>⚡ IonQ</h5>
+              <p>Pure-play quantum company, fastest growing quantum stock.</p>
+              <p>
+                <strong>Careers:</strong>
+                <a href="https://ionq.com/careers" class="external-link"
+                  >ionq.com/careers</a
+                >
+              </p>
+              <p><strong>Tech:</strong> Trapped ion quantum computers</p>
+            </div>
+
+            <div class="community-card">
+              <h5>🔧 Rigetti Computing</h5>
+              <p>
+                Quantum cloud services, hybrid computing, engineering roles.
+              </p>
+              <p>
+                <strong>Careers:</strong>
+                <a href="https://www.rigetti.com/careers" class="external-link"
+                  >rigetti.com/careers</a
+                >
+              </p>
+              <p><strong>Focus:</strong> Superconducting quantum processors</p>
+            </div>
+          </div>
+
+          <h3>🚀 Your Action Plan to Get Your First Quantum Job</h3>
+          <div class="highlight-box">
+            <h4>Phase 1: Foundation Building (2-3 months)</h4>
+            <ul>
+              <li>
+                <strong>Master Python:</strong> If not already proficient, focus
+                on Python fundamentals
+              </li>
+              <li>
+                <strong>Qiskit Certification:</strong> Complete
+                <a
+                  href="https://www.ibm.com/training/badge/qiskit-developer"
+                  class="external-link"
+                  >IBM Qiskit Developer Certification</a
+                >
+              </li>
+              <li>
+                <strong>Join Communities:</strong>
+                <a href="https://discord.me/indiquantum" class="external-link"
+                  >Indi Quantum Discord</a
+                >,
+                <a href="https://t.me/s/quantumu" class="external-link"
+                  >Quantum Universe Telegram</a
+                >
+              </li>
+              <li>
+                <strong>Free Learning:</strong>
+                <a href="https://qiskit.org/textbook/" class="external-link"
+                  >Qiskit Textbook</a
+                >,
+                <a href="https://quantum.ibm.com/" class="external-link"
+                  >IBM Quantum Experience</a
+                >
+              </li>
+              <li>
+                <strong>Basic Concepts:</strong> Understand qubits,
+                superposition, entanglement
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <h4>Phase 2: Portfolio Development (2-3 months)</h4>
+            <ul>
+              <li>
+                <strong>GitHub Projects:</strong> Build 3-5 quantum computing
+                projects with clear documentation
+              </li>
+              <li>
+                <strong>Algorithm Implementation:</strong> Code Grover's,
+                Shor's, VQE algorithms from scratch
+              </li>
+              <li>
+                <strong>Cloud Experience:</strong> Use IBM Quantum, Amazon
+                Braket platforms extensively
+              </li>
+              <li>
+                <strong>Documentation:</strong> Write clear explanations and
+                tutorials for your projects
+              </li>
+              <li>
+                <strong>Contribute:</strong> Make contributions to open-source
+                quantum projects
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <h4>Phase 3: Job Application Strategy (1-2 months)</h4>
+            <ul>
+              <li>
+                <strong>Target Software Roles:</strong> Focus on quantum
+                software engineer positions first
+              </li>
+              <li>
+                <strong>Network Actively:</strong> Attend quantum meetups,
+                conferences, join professional groups
+              </li>
+              <li>
+                <strong>Apply Strategically:</strong> Start with entry-level
+                positions at quantum companies
+              </li>
+              <li>
+                <strong>Highlight Transferable Skills:</strong> Emphasize
+                programming and problem-solving abilities
+              </li>
+              <li>
+                <strong>Prepare for Interviews:</strong> Practice explaining
+                quantum concepts simply
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h4>🎯 Success Tips from Industry Professionals</h4>
+            <ul>
+              <li>
+                <strong
+                  >"Start with software engineering roles - they're the most
+                  accessible entry point"</strong
+                >
+                - Quantum industry recruiter
+              </li>
+              <li>
+                <strong
+                  >"Build a strong GitHub portfolio showing quantum projects
+                  with clear documentation"</strong
+                >
+                - IBM Quantum hiring manager
+              </li>
+              <li>
+                <strong
+                  >"Many companies will train you in quantum concepts if you
+                  have strong programming skills"</strong
+                >
+                - IonQ engineer
+              </li>
+              <li>
+                <strong
+                  >"Join the community early - networking is crucial in this
+                  small but growing field"</strong
+                >
+                - Quantum startup founder
+              </li>
+              <li>
+                <strong
+                  >"Don't be intimidated by the physics - focus on the
+                  computational aspects first"</strong
+                >
+                - Google Quantum AI researcher
+              </li>
+              <li>
+                <strong
+                  >"Show curiosity and willingness to learn - that's more
+                  valuable than deep quantum knowledge initially"</strong
+                >
+                - Microsoft Quantum team lead
+              </li>
+            </ul>
+          </div>
+
+          <h3>📊 Job Market Outlook & Trends</h3>
+          <div class="card">
+            <h4>🟢 Positive Market Indicators</h4>
+            <ul>
+              <li>Over 10,000 new quantum jobs expected annually by 2025</li>
+              <li>
+                Major tech companies increasing quantum investments
+                significantly
+              </li>
+              <li>
+                Government funding driving research and development globally
+              </li>
+              <li>Growing enterprise adoption of quantum solutions</li>
+              <li>Venture capital flowing into quantum startups</li>
+              <li>Academic programs expanding quantum computing curricula</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h4>🌍 Best Locations for Quantum Jobs</h4>
+            <ul>
+              <li>
+                <strong>San Francisco Bay Area:</strong> Google, IBM, quantum
+                startups, highest salaries
+              </li>
+              <li>
+                <strong>Boston/Cambridge:</strong> MIT, Harvard, IonQ, strong
+                academic connections
+              </li>
+              <li>
+                <strong>New York:</strong> IBM Research, financial applications,
+                growing ecosystem
+              </li>
+              <li>
+                <strong>Seattle:</strong> Microsoft, Amazon Braket, tech hub
+              </li>
+              <li>
+                <strong>Austin:</strong> IBM, emerging quantum hub, lower cost
+                of living
+              </li>
+              <li>
+                <strong>Chicago:</strong> Growing quantum network, university
+                partnerships
+              </li>
+              <li>
+                <strong>Remote:</strong> 25% of entry-level positions offer
+                remote work options
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <h3>🎯 Key Takeaway for Job Seekers</h3>
+            <p>
+              <strong
+                >The quantum software engineering path offers the best entry
+                opportunity</strong
+              >
+              with high demand, competitive salaries ($105K-$180K), and the
+              ability to leverage existing programming skills. The field is
+              growing rapidly with excellent long-term prospects, and many
+              companies are willing to train talented developers in quantum
+              concepts.
+            </p>
+
+            <p>
+              <strong>Start today:</strong> Learn Python, get Qiskit certified,
+              build quantum projects on GitHub, join the community, and apply
+              for quantum software engineering roles. The industry needs
+              talented developers more than quantum physics experts!
+            </p>
+
+            <p>
+              <strong>Remember:</strong> Less than 50% of quantum jobs require
+              PhDs. Your programming skills, curiosity, and willingness to learn
+              are your biggest assets in this emerging field.
+            </p>
+          </div>
+        </section>
+
+        <section id="communities">
+          <h2>🌐 Learning Communities with Direct Access Links</h2>
+
+          <p>
+            Connecting with the quantum computing community is essential for
+            learning, networking, and staying updated with the latest
+            developments. Here are the most active and valuable communities with
+            direct access links:
+          </p>
+
+          <h3>Discord Communities</h3>
+          <div class="community-list">
+            <div class="community-card">
+              <span class="platform-badge discord-badge">Discord</span>
+              <h5>Indi Quantum Community</h5>
+              <p>
+                Public quantum community that grew out of the
+                <a
+                  href="https://qiskit.org/events/summer-school/"
+                  class="external-link"
+                  >Qiskit Global Summer School 2020</a
+                >. Welcomes undergrads, postgrads, and high school students.
+                Very active and beginner-friendly.
+              </p>
+              <p>
+                <strong>Join:</strong>
+                <a href="https://discord.me/indiquantum" class="external-link"
+                  >discord.me/indiquantum</a
+                >
+              </p>
+              <p><strong>Members:</strong> 1000+ active quantum enthusiasts</p>
+              <p>
+                <strong>Best for:</strong> Beginners, students, career advice
+              </p>
+            </div>
+
+            <div class="community-card">
+              <span class="platform-badge discord-badge">Discord</span>
+              <h5>Physics Discord</h5>
+              <p>
+                Large community (56,692+ members) dedicated to advanced physics
+                discussions. Includes quantum physics channels and expert-level
+                conversations.
+              </p>
+              <p>
+                <strong>Join:</strong>
+                <a
+                  href="https://discord.com/invite/physics"
+                  class="external-link"
+                  >discord.com/invite/physics</a
+                >
+              </p>
+              <p>
+                <strong>Focus:</strong> Academic-level discussions, research
+                topics
+              </p>
+              <p>
+                <strong>Best for:</strong> Advanced learners, researchers,
+                academics
+              </p>
+            </div>
+
+            <div class="community-card">
+              <span class="platform-badge discord-badge">Discord</span>
+              <h5>QML (Quantum Machine Learning) Community</h5>
+              <p>
+                Specialized community for quantum machine learning neophytes and
+                experts to share wisdom and experience.
+              </p>
+              <p>
+                <strong>Focus:</strong> Quantum ML algorithms, research papers,
+                applications
+              </p>
+              <p>
+                <strong>Best for:</strong> ML practitioners interested in
+                quantum applications
+              </p>
+            </div>
+
+            <div class="community-card">
+              <span class="platform-badge discord-badge">Discord</span>
+              <h5>Error Correction Zoo</h5>
+              <p>
+                Focused on quantum error correction, one of the most critical
+                aspects of practical quantum computing.
+              </p>
+              <p>
+                <strong>Website:</strong>
+                <a href="https://errorcorrectionzoo.org/" class="external-link"
+                  >errorcorrectionzoo.org</a
+                >
+              </p>
+              <p>
+                <strong>Best for:</strong> Advanced topics, hardware-focused
+                discussions
+              </p>
+            </div>
+          </div>
+
+          <h3>Telegram Communities</h3>
+          <div class="community-list">
+            <div class="community-card">
+              <span class="platform-badge telegram-badge">Telegram</span>
+              <h5>Quantum Universe</h5>
+              <p>
+                Active channel sharing quantum computing research, job
+                opportunities, and academic positions. Great for staying updated
+                with industry developments.
+              </p>
+              <p>
+                <strong>Join:</strong>
+                <a href="https://t.me/s/quantumu" class="external-link"
+                  >t.me/s/quantumu</a
+                >
+              </p>
+              <p>
+                <strong>Content:</strong> Research updates, job postings,
+                academic positions
+              </p>
+              <p>
+                <strong>Best for:</strong> Job seekers, industry news, research
+                updates
+              </p>
+            </div>
+
+            <div class="community-card">
+              <span class="platform-badge telegram-badge">Telegram</span>
+              <h5>Quantum Computing Jobs</h5>
+              <p>
+                Dedicated channel for quantum computing job opportunities,
+                helping connect talent with companies and startups in the
+                emerging industry.
+              </p>
+              <p>
+                <strong>Join:</strong>
+                <a
+                  href="https://telegram.me/quantumcomputingjobs"
+                  class="external-link"
+                  >telegram.me/quantumcomputingjobs</a
+                >
+              </p>
+              <p><strong>Subscribers:</strong> 49+ and growing rapidly</p>
+              <p>
+                <strong>Best for:</strong> Job hunting, career opportunities
+              </p>
+            </div>
+
+            <div class="community-card">
+              <span class="platform-badge telegram-badge">Telegram</span>
+              <h5>Quantum Mechanics Channel</h5>
+              <p>
+                Educational content and discussions about quantum physics
+                fundamentals, perfect for building theoretical understanding.
+              </p>
+              <p>
+                <strong>Join:</strong>
+                <a href="https://t.me/s/quantum_space" class="external-link"
+                  >t.me/s/quantum_space</a
+                >
+              </p>
+              <p>
+                <strong>Best for:</strong> Learning fundamentals, physics
+                background
+              </p>
+            </div>
+
+            <div class="community-card">
+              <span class="platform-badge telegram-badge">Telegram</span>
+              <h5>Everything Quantum</h5>
+              <p>
+                Building a comprehensive quantum computing community with
+                diverse content and discussions.
+              </p>
+              <p>
+                <strong>Join:</strong>
+                <a href="https://t.me/s/everythingquantum" class="external-link"
+                  >t.me/s/everythingquantum</a
+                >
+              </p>
+              <p>
+                <strong>Best for:</strong> General quantum computing discussions
+              </p>
+            </div>
+          </div>
+
+          <h3>Professional Networks & Organizations</h3>
+          <div class="community-list">
+            <div class="community-card">
+              <h5>QWorld</h5>
+              <p>
+                Global network of individuals, groups, and communities
+                collaborating on quantum education and research activities.
+              </p>
+              <p>
+                <strong>Website:</strong>
+                <a href="https://qworld.net/" class="external-link"
+                  >qworld.net</a
+                >
+              </p>
+              <p>
+                <strong>Programs:</strong>
+                <a href="https://qworld.net/qproject_101/" class="external-link"
+                  >QProject 101</a
+                >
+                (12-week research program), QBronze workshops
+              </p>
+              <p>
+                <strong>Best for:</strong> Structured learning, research
+                projects
+              </p>
+            </div>
+
+            <div class="community-card">
+              <h5>Quantum Economic Development Consortium (QED-C)</h5>
+              <p>
+                Industry consortium focused on quantum technology development
+                and workforce.
+              </p>
+              <p>
+                <strong>Website:</strong>
+                <a href="https://quantumconsortium.org/" class="external-link"
+                  >quantumconsortium.org</a
+                >
+              </p>
+              <p>
+                <strong>Job Board:</strong>
+                <a
+                  href="https://quantumconsortium.org/quantum-jobs/"
+                  class="external-link"
+                  >QED-C Quantum Jobs</a
+                >
+              </p>
+              <p>
+                <strong>Best for:</strong> Industry connections, job
+                opportunities
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h3>💡 Community Strategy Tips</h3>
+            <ul>
+              <li>
+                <strong>Start with Indi Quantum Community</strong> - most
+                beginner-friendly Discord server
+              </li>
+              <li>
+                <strong>Join both Discord and Telegram</strong> - different
+                types of content and discussions
+              </li>
+              <li>
+                <strong>Participate actively</strong> - ask questions, share
+                your learning journey, help others
+              </li>
+              <li>
+                <strong>Follow job boards</strong> - Quantum Universe and QC
+                Jobs channels for opportunities
+              </li>
+              <li>
+                <strong>Connect with QWorld</strong> - for structured learning
+                programs and research projects
+              </li>
+              <li>
+                <strong>Network professionally</strong> - QED-C for industry
+                connections and formal opportunities
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="programming-languages">
+          <h2>💻 Programming Languages & Frameworks with Resources</h2>
+
+          <p>
+            The quantum computing ecosystem has developed around several key
+            programming languages and frameworks. Here's what you should focus
+            on learning with direct links to resources:
+          </p>
+
+          <h3>Essential Programming Languages</h3>
+          <div class="tech-grid">
+            <div class="tech-card">
+              <h5>🐍 Python</h5>
+              <p>
+                <strong>Priority: HIGHEST</strong><br />
+                The most versatile and widely used language in quantum
+                computing. Base language for most quantum frameworks.
+              </p>
+              <p>
+                <strong>Learn:</strong>
+                <a
+                  href="https://www.python.org/about/gettingstarted/"
+                  class="external-link"
+                  >Python.org Getting Started</a
+                >
+              </p>
+            </div>
+
+            <div class="tech-card">
+              <h5>🦀 Rust</h5>
+              <p>
+                <strong>Priority: MEDIUM-HIGH</strong><br />
+                Growing importance due to performance, safety, and natural
+                alignment with quantum concepts.
+              </p>
+              <p>
+                <strong>Learn:</strong>
+                <a href="https://doc.rust-lang.org/book/" class="external-link"
+                  >The Rust Book</a
+                >
+              </p>
+            </div>
+
+            <div class="tech-card">
+              <h5>⚡ C++</h5>
+              <p>
+                <strong>Priority: MEDIUM</strong><br />
+                Used for high-performance quantum simulations and low-level
+                hardware control.
+              </p>
+              <p>
+                <strong>Learn:</strong>
+                <a href="https://isocpp.org/get-started" class="external-link"
+                  >ISO C++ Getting Started</a
+                >
+              </p>
+            </div>
+
+            <div class="tech-card">
+              <h5>🌐 JavaScript</h5>
+              <p>
+                <strong>Priority: LOW-MEDIUM</strong><br />
+                Useful for web-based quantum visualizations and educational
+                tools.
+              </p>
+              <p>
+                <strong>Learn:</strong>
+                <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+                  class="external-link"
+                  >MDN JavaScript Guide</a
+                >
+              </p>
+            </div>
+          </div>
+
+          <h3>Major Quantum Frameworks</h3>
+          <div class="card">
+            <h4>🔵 Qiskit (IBM) - Most Popular</h4>
+            <p>
+              <strong>Language:</strong> Python<br />
+              <strong>Focus:</strong> Most popular quantum computing framework
+              worldwide. Excellent for beginners and professionals alike.
+            </p>
+
+            <p><strong>Essential Links:</strong></p>
+            <ul>
+              <li>
+                <strong>Main Website:</strong>
+                <a
+                  href="https://www.ibm.com/quantum/qiskit"
+                  class="external-link"
+                  >ibm.com/quantum/qiskit</a
+                >
+              </li>
+              <li>
+                <strong>Documentation:</strong>
+                <a href="https://docs.qiskit.org/" class="external-link"
+                  >docs.qiskit.org</a
+                >
+              </li>
+              <li>
+                <strong>Textbook (FREE):</strong>
+                <a href="https://qiskit.org/textbook/" class="external-link"
+                  >qiskit.org/textbook</a
+                >
+              </li>
+              <li>
+                <strong>GitHub:</strong>
+                <a href="https://github.com/Qiskit/qiskit" class="external-link"
+                  >github.com/Qiskit/qiskit</a
+                >
+              </li>
+              <li>
+                <strong>Certification:</strong>
+                <a
+                  href="https://www.ibm.com/training/badge/qiskit-developer"
+                  class="external-link"
+                  >IBM Qiskit Developer Certification</a
+                >
+              </li>
+              <li>
+                <strong>Learning Platform:</strong>
+                <a href="https://qiskit.org/learn/" class="external-link"
+                  >qiskit.org/learn</a
+                >
+              </li>
+            </ul>
+
+            <p>
+              <strong>Key Features:</strong> Circuit building, quantum
+              algorithms, hardware access, extensive tutorials
+            </p>
+          </div>
+
+          <div class="card">
+            <h4>🟢 Cirq (Google)</h4>
+            <p>
+              <strong>Language:</strong> Python<br />
+              <strong>Focus:</strong> Designed for NISQ devices. Excellent for
+              research and algorithm development.
+            </p>
+
+            <p><strong>Essential Links:</strong></p>
+            <ul>
+              <li>
+                <strong>Main Website:</strong>
+                <a href="https://quantumai.google/qsim" class="external-link"
+                  >quantumai.google/qsim</a
+                >
+              </li>
+              <li>
+                <strong>Documentation:</strong>
+                <a href="https://quantumai.google/cirq" class="external-link"
+                  >quantumai.google/cirq</a
+                >
+              </li>
+              <li>
+                <strong>GitHub:</strong>
+                <a
+                  href="https://github.com/quantumlib/Cirq"
+                  class="external-link"
+                  >github.com/quantumlib/Cirq</a
+                >
+              </li>
+              <li>
+                <strong>Tutorials:</strong>
+                <a
+                  href="https://quantumai.google/cirq/tutorials"
+                  class="external-link"
+                  >Cirq Tutorials</a
+                >
+              </li>
+            </ul>
+
+            <p>
+              <strong>Key Features:</strong> Fine-grained control, noise
+              modeling, Google hardware integration
+            </p>
+          </div>
+
+          <div class="card">
+            <h4>🔷 Q# (Microsoft)</h4>
+            <p>
+              <strong>Language:</strong> Q# (Domain-specific language)<br />
+              <strong>Focus:</strong> High-level quantum programming with strong
+              type system.
+            </p>
+
+            <p><strong>Essential Links:</strong></p>
+            <ul>
+              <li>
+                <strong>Documentation:</strong>
+                <a
+                  href="https://learn.microsoft.com/en-us/azure/quantum/qsharp-overview"
+                  class="external-link"
+                  >Microsoft Q# Overview</a
+                >
+              </li>
+              <li>
+                <strong>GitHub:</strong>
+                <a
+                  href="https://github.com/microsoft/qsharp"
+                  class="external-link"
+                  >github.com/microsoft/qsharp</a
+                >
+              </li>
+              <li>
+                <strong>Quantum Katas:</strong>
+                <a
+                  href="https://github.com/microsoft/QuantumKatas"
+                  class="external-link"
+                  >Interactive Q# Exercises</a
+                >
+              </li>
+              <li>
+                <strong>Azure Quantum:</strong>
+                <a
+                  href="https://azure.microsoft.com/en-us/solutions/quantum-computing"
+                  class="external-link"
+                  >azure.microsoft.com/solutions/quantum-computing</a
+                >
+              </li>
+            </ul>
+
+            <p>
+              <strong>Key Features:</strong> Quantum-specific constructs, strong
+              typing, .NET integration
+            </p>
+          </div>
+
+          <div class="card">
+            <h4>🌊 Ocean (D-Wave)</h4>
+            <p>
+              <strong>Language:</strong> Python<br />
+              <strong>Focus:</strong> Quantum annealing and optimization
+              problems.
+            </p>
+
+            <p><strong>Essential Links:</strong></p>
+            <ul>
+              <li>
+                <strong>Main Website:</strong>
+                <a
+                  href="https://www.dwavequantum.com/solutions-and-products/cloud-platform/"
+                  class="external-link"
+                  >D-Wave Leap Platform</a
+                >
+              </li>
+              <li>
+                <strong>Documentation:</strong>
+                <a href="https://docs.ocean.dwavesys.com/" class="external-link"
+                  >Ocean SDK Documentation</a
+                >
+              </li>
+              <li>
+                <strong>GitHub:</strong>
+                <a
+                  href="https://github.com/dwavesystems/dwave-ocean-sdk"
+                  class="external-link"
+                  >Ocean SDK Repository</a
+                >
+              </li>
+            </ul>
+
+            <p>
+              <strong>Key Features:</strong> Optimization algorithms, hybrid
+              workflows, annealing access
+            </p>
+          </div>
+
+          <h3>Emerging Languages & Tools</h3>
+          <div class="tech-grid">
+            <div class="tech-card">
+              <h5>Silq</h5>
+              <p>High-level quantum programming language from ETH Zürich.</p>
+              <p>
+                <a href="https://silq.ethz.ch/" class="external-link"
+                  >silq.ethz.ch</a
+                >
+              </p>
+            </div>
+
+            <div class="tech-card">
+              <h5>Twist (MIT)</h5>
+              <p>Language for quantum entanglement verification.</p>
+              <p>
+                <a
+                  href="https://news.mit.edu/2022/new-language-quantum-computing-twist-0124"
+                  class="external-link"
+                  >MIT News Article</a
+                >
+              </p>
+            </div>
+
+            <div class="tech-card">
+              <h5>ProjectQ</h5>
+              <p>Open-source framework from ETH Zurich.</p>
+              <p>
+                <a
+                  href="https://github.com/ProjectQ-Framework/ProjectQ"
+                  class="external-link"
+                  >GitHub Repository</a
+                >
+              </p>
+            </div>
+
+            <div class="tech-card">
+              <h5>Qrisp</h5>
+              <p>High-level quantum programming interface.</p>
+              <p>
+                <a href="https://www.qrisp.eu/" class="external-link"
+                  >qrisp.eu</a
+                >
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="cloud-platforms">
+          <h2>☁️ Cloud Platforms with Access Links</h2>
+
+          <p>
+            Quantum cloud platforms provide access to real quantum hardware and
+            powerful simulators. Here are the major platforms with direct access
+            links:
+          </p>
+
+          <div class="card">
+            <h4>🔵 IBM Quantum Platform</h4>
+            <p>
+              <strong>Access:</strong> Free tier available (10 minutes
+              runtime/month)<br />
+              <strong>Hardware:</strong> Superconducting quantum processors<br />
+              <strong>Strengths:</strong> Most mature platform, excellent
+              documentation
+            </p>
+
+            <p><strong>Access Links:</strong></p>
+            <ul>
+              <li>
+                <strong>Platform:</strong>
+                <a href="https://quantum.ibm.com/" class="external-link"
+                  >quantum.ibm.com</a
+                >
+                (Sign up for free)
+              </li>
+              <li>
+                <strong>Documentation:</strong>
+                <a
+                  href="https://cloud.ibm.com/docs/quantum-computing"
+                  class="external-link"
+                  >IBM Cloud Quantum Docs</a
+                >
+              </li>
+              <li>
+                <strong>Learning:</strong>
+                <a href="https://qiskit.org/learn/" class="external-link"
+                  >Qiskit Learning Platform</a
+                >
+              </li>
+              <li>
+                <strong>Community:</strong>
+                <a href="https://qiskit.slack.com/" class="external-link"
+                  >Qiskit Slack</a
+                >
+              </li>
+            </ul>
+
+            <p>
+              <strong>What you get:</strong> Access to 100+ qubit computers,
+              Circuit Composer, Qiskit Runtime
+            </p>
+          </div>
+
+          <div class="card">
+            <h4>🟠 Amazon Braket</h4>
+            <p>
+              <strong>Access:</strong> Pay-per-use model<br />
+              <strong>Hardware:</strong> Multiple providers (IonQ, Rigetti,
+              QuEra, IQM)<br />
+              <strong>Strengths:</strong> Hardware diversity, AWS ecosystem
+              integration
+            </p>
+
+            <p><strong>Access Links:</strong></p>
+            <ul>
+              <li>
+                <strong>Platform:</strong>
+                <a href="https://aws.amazon.com/braket/" class="external-link"
+                  >aws.amazon.com/braket</a
+                >
+              </li>
+              <li>
+                <strong>Documentation:</strong>
+                <a
+                  href="https://docs.aws.amazon.com/braket/"
+                  class="external-link"
+                  >AWS Braket Documentation</a
+                >
+              </li>
+              <li>
+                <strong>Examples:</strong>
+                <a
+                  href="https://github.com/amazon-braket/amazon-braket-examples"
+                  class="external-link"
+                  >GitHub Examples Repository</a
+                >
+              </li>
+              <li>
+                <strong>Beginner Program:</strong>
+                <a
+                  href="https://aws.amazon.com/blogs/quantum-computing/aws-announces-the-quantum-embark-program-to-help-customers-get-ready-for-quantum-computing/"
+                  class="external-link"
+                  >Quantum Embark Program</a
+                >
+              </li>
+            </ul>
+
+            <p>
+              <strong>What you get:</strong> Multiple quantum technologies,
+              Jupyter notebooks, AWS integration
+            </p>
+          </div>
+
+          <div class="card">
+            <h4>🔷 Azure Quantum</h4>
+            <p>
+              <strong>Access:</strong> Free credits available<br />
+              <strong>Hardware:</strong> Multiple providers (IonQ, Quantinuum,
+              Rigetti)<br />
+              <strong>Strengths:</strong> Q# language, Microsoft ecosystem
+            </p>
+
+            <p><strong>Access Links:</strong></p>
+            <ul>
+              <li>
+                <strong>Platform:</strong>
+                <a
+                  href="https://azure.microsoft.com/en-us/solutions/quantum-computing"
+                  class="external-link"
+                  >azure.microsoft.com/solutions/quantum-computing</a
+                >
+              </li>
+              <li>
+                <strong>Documentation:</strong>
+                <a
+                  href="https://learn.microsoft.com/en-us/azure/quantum/"
+                  class="external-link"
+                  >Azure Quantum Documentation</a
+                >
+              </li>
+              <li>
+                <strong>Q# Learning:</strong>
+                <a
+                  href="https://quantum.microsoft.com/en-us/experience/quantum-katas"
+                  class="external-link"
+                  >Microsoft Quantum Katas</a
+                >
+              </li>
+            </ul>
+
+            <p>
+              <strong>What you get:</strong> Q# development environment,
+              multiple hardware providers
+            </p>
+          </div>
+
+          <div class="card">
+            <h4>🌊 D-Wave Leap</h4>
+            <p>
+              <strong>Access:</strong> Free tier available<br />
+              <strong>Hardware:</strong> Quantum annealers<br />
+              <strong>Strengths:</strong> Specialized for optimization problems
+            </p>
+
+            <p><strong>Access Links:</strong></p>
+            <ul>
+              <li>
+                <strong>Platform:</strong>
+                <a
+                  href="https://www.dwavequantum.com/solutions-and-products/cloud-platform/"
+                  class="external-link"
+                  >D-Wave Leap Platform</a
+                >
+              </li>
+              <li>
+                <strong>Documentation:</strong>
+                <a href="https://docs.ocean.dwavesys.com/" class="external-link"
+                  >Ocean SDK Documentation</a
+                >
+              </li>
+              <li>
+                <strong>Examples:</strong>
+                <a
+                  href="https://github.com/dwave-examples"
+                  class="external-link"
+                  >D-Wave Examples</a
+                >
+              </li>
+            </ul>
+
+            <p>
+              <strong>What you get:</strong> Real-time quantum annealer access,
+              optimization tools
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <h3>🎯 Platform Recommendations</h3>
+            <ul>
+              <li>
+                <strong>Beginners:</strong> Start with
+                <a href="https://quantum.ibm.com/" class="external-link"
+                  >IBM Quantum Platform</a
+                >
+                (free + excellent tutorials)
+              </li>
+              <li>
+                <strong>Researchers:</strong> IBM Quantum + Amazon Braket for
+                hardware diversity
+              </li>
+              <li>
+                <strong>Optimization problems:</strong>
+                <a
+                  href="https://www.dwavequantum.com/solutions-and-products/cloud-platform/"
+                  class="external-link"
+                  >D-Wave Leap</a
+                >
+              </li>
+              <li>
+                <strong>Microsoft ecosystem:</strong>
+                <a
+                  href="https://azure.microsoft.com/en-us/solutions/quantum-computing"
+                  class="external-link"
+                  >Azure Quantum</a
+                >
+                with Q#
+              </li>
+              <li>
+                <strong>Multi-cloud approach:</strong>
+                <a href="https://aws.amazon.com/braket/" class="external-link"
+                  >Amazon Braket</a
+                >
+                for accessing multiple providers
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="hardware-providers">
+          <h2>🔧 Hardware Providers & Simulators</h2>
+
+          <p>
+            Understanding the quantum hardware landscape is crucial for choosing
+            the right platform for your applications. Different technologies
+            excel at different types of problems.
+          </p>
+
+          <h3>Major Hardware Providers</h3>
+          <div class="card">
+            <h4>🔵 IBM Quantum</h4>
+            <p>
+              <strong>Technology:</strong> Superconducting qubits<br />
+              <strong>Scale:</strong> 100+ qubits (roadmap to 1000+ qubits)<br />
+              <strong>Strengths:</strong> Mature platform, excellent error
+              rates, strong ecosystem
+            </p>
+            <p>
+              <strong>Website:</strong>
+              <a
+                href="https://research.ibm.com/quantum-computing"
+                class="external-link"
+                >research.ibm.com/quantum-computing</a
+              >
+            </p>
+            <p>
+              <strong>Latest:</strong>
+              <a
+                href="https://www.ibm.com/quantum/roadmap"
+                class="external-link"
+                >IBM Quantum Roadmap 2025</a
+              >
+            </p>
+          </div>
+
+          <div class="card">
+            <h4>⚡ IonQ</h4>
+            <p>
+              <strong>Technology:</strong> Trapped ion qubits<br />
+              <strong>Scale:</strong> 32+ qubits<br />
+              <strong>Strengths:</strong> High fidelity, room temperature
+              operation, all-to-all connectivity
+            </p>
+            <p>
+              <strong>Website:</strong>
+              <a href="https://ionq.com/" class="external-link">ionq.com</a>
+            </p>
+            <p>
+              <strong>Careers:</strong>
+              <a href="https://ionq.com/careers" class="external-link"
+                >ionq.com/careers</a
+              >
+            </p>
+          </div>
+
+          <div class="card">
+            <h4>🔧 Rigetti Computing</h4>
+            <p>
+              <strong>Technology:</strong> Superconducting qubits<br />
+              <strong>Scale:</strong> 80+ qubits<br />
+              <strong>Strengths:</strong> Hybrid classical-quantum computing,
+              Forest SDK
+            </p>
+            <p>
+              <strong>Website:</strong>
+              <a href="https://www.rigetti.com/" class="external-link"
+                >rigetti.com</a
+              >
+            </p>
+            <p>
+              <strong>Documentation:</strong>
+              <a href="https://pyquil-docs.rigetti.com/" class="external-link"
+                >PyQuil Documentation</a
+              >
+            </p>
+          </div>
+
+          <div class="card">
+            <h4>🟢 Google Quantum AI</h4>
+            <p>
+              <strong>Technology:</strong> Superconducting qubits<br />
+              <strong>Scale:</strong> 70+ qubits (Sycamore), 105 qubits
+              (Willow)<br />
+              <strong>Strengths:</strong> Quantum supremacy achievements,
+              advanced error correction
+            </p>
+            <p>
+              <strong>Website:</strong>
+              <a href="https://quantumai.google/" class="external-link"
+                >quantumai.google</a
+              >
+            </p>
+            <p>
+              <strong>Latest:</strong>
+              <a
+                href="https://blog.google/technology/research/google-willow-quantum-chip/"
+                class="external-link"
+                >Willow Quantum Chip</a
+              >
+            </p>
+          </div>
+
+          <div class="card">
+            <h4>🏢 Quantinuum (Honeywell)</h4>
+            <p>
+              <strong>Technology:</strong> Trapped ion qubits<br />
+              <strong>Scale:</strong> 56+ qubits<br />
+              <strong>Strengths:</strong> High-fidelity operations, enterprise
+              focus
+            </p>
+            <p>
+              <strong>Website:</strong>
+              <a href="https://www.quantinuum.com/" class="external-link"
+                >quantinuum.com</a
+              >
+            </p>
+            <p>
+              <strong>Careers:</strong>
+              <a
+                href="https://www.quantinuum.com/company/careers"
+                class="external-link"
+                >quantinuum.com/careers</a
+              >
+            </p>
+          </div>
+
+          <h3>Quantum Simulators</h3>
+          <div class="tech-grid">
+            <div class="tech-card">
+              <h5>🔵 BlueQubit</h5>
+              <p>Free CPU and GPU quantum simulators with high performance.</p>
+              <p>
+                <a href="https://www.bluequbit.io/" class="external-link"
+                  >bluequbit.io</a
+                >
+              </p>
+            </div>
+
+            <div class="tech-card">
+              <h5>🎯 Quirk</h5>
+              <p>Open-source drag-and-drop quantum circuit simulator.</p>
+              <p>
+                <a href="https://algassert.com/quirk" class="external-link"
+                  >algassert.com/quirk</a
+                >
+              </p>
+            </div>
+
+            <div class="tech-card">
+              <h5>🔧 Qiskit Aer</h5>
+              <p>
+                High-performance quantum circuit simulators with noise modeling.
+              </p>
+              <p>
+                <a
+                  href="https://github.com/Qiskit/qiskit-aer"
+                  class="external-link"
+                  >GitHub Repository</a
+                >
+              </p>
+            </div>
+
+            <div class="tech-card">
+              <h5>🌐 qSim (Google)</h5>
+              <p>
+                Quantum simulator optimized for Cirq, useful up to ~20 qubits.
+              </p>
+              <p>
+                <a href="https://quantumai.google/qsim" class="external-link"
+                  >quantumai.google/qsim</a
+                >
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="rust-quantum">
+          <h2>🦀 Rust in Quantum Computing</h2>
+
+          <p>
+            Rust is emerging as an important language in quantum computing due
+            to its unique features that align well with quantum principles and
+            performance requirements.
+          </p>
+
+          <div class="highlight-box">
+            <h3>Why Rust for Quantum Computing?</h3>
+            <ul>
+              <li>
+                <strong>Memory Safety:</strong> Prevents common bugs that could
+                affect quantum simulations
+              </li>
+              <li>
+                <strong>Performance:</strong> Near C++ performance for intensive
+                quantum calculations
+              </li>
+              <li>
+                <strong>Concurrency:</strong> Fearless concurrency aligns with
+                quantum parallelism
+              </li>
+              <li>
+                <strong>Type System:</strong> Borrow checker mirrors quantum
+                no-cloning theorem
+              </li>
+              <li>
+                <strong>WebAssembly:</strong> Enables quantum computing in web
+                browsers
+              </li>
+            </ul>
+          </div>
+
+          <h3>Rust Quantum Projects</h3>
+          <div class="card">
+            <h4>RustQIP</h4>
+            <p>
+              Quantum computing library that uses graph building for efficient
+              quantum circuit simulations.
+            </p>
+            <p>
+              <strong>GitHub:</strong>
+              <a
+                href="https://github.com/Renmusxd/RustQIP"
+                class="external-link"
+                >github.com/Renmusxd/RustQIP</a
+              >
+            </p>
+          </div>
+
+          <div class="card">
+            <h4>Qiskit Rust Components</h4>
+            <p>
+              IBM has started incorporating Rust into Qiskit for
+              performance-critical components.
+            </p>
+            <p>
+              <strong>More Info:</strong>
+              <a href="https://www.ibm.com/quantum/qiskit" class="external-link"
+                >Qiskit Performance Improvements</a
+              >
+            </p>
+          </div>
+
+          <h3>Learning Path for Rust + Quantum</h3>
+          <div class="tech-grid">
+            <div class="tech-card">
+              <h5>1. Rust Fundamentals</h5>
+              <p>Master ownership, borrowing, and the type system.</p>
+              <p>
+                <a href="https://doc.rust-lang.org/book/" class="external-link"
+                  >The Rust Book</a
+                >
+              </p>
+            </div>
+
+            <div class="tech-card">
+              <h5>2. Linear Algebra in Rust</h5>
+              <p>Learn nalgebra and ndarray crates for quantum operations.</p>
+              <p>
+                <a href="https://nalgebra.org/" class="external-link"
+                  >nalgebra.org</a
+                >
+              </p>
+            </div>
+
+            <div class="tech-card">
+              <h5>3. Quantum Concepts</h5>
+              <p>
+                Understand how Rust's borrow checker enforces quantum
+                principles.
+              </p>
+            </div>
+
+            <div class="tech-card">
+              <h5>4. Performance Optimization</h5>
+              <p>
+                Leverage Rust's zero-cost abstractions for quantum simulations.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="getting-started">
+          <h2>🚀 Getting Started - Complete Learning Path with Resources</h2>
+
+          <p>
+            Here's a structured approach to begin your quantum computing
+            journey, focusing on the most practical and widely-used
+            technologies:
+          </p>
+
+          <div class="highlight-box">
+            <h3>🎯 Phase 1: Foundations (2-3 months)</h3>
+            <ul>
+              <li>
+                <strong>Python Programming:</strong> Master Python basics if not
+                already familiar
+              </li>
+              <li>
+                <strong>Linear Algebra:</strong> Vectors, matrices, eigenvalues,
+                complex numbers
+              </li>
+              <li>
+                <strong>Quantum Mechanics Basics:</strong> Superposition,
+                entanglement, measurement
+              </li>
+              <li>
+                <strong>Join Communities:</strong> Start with Indi Quantum
+                Community on Discord
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h4>📚 Essential Learning Resources</h4>
+            <ul>
+              <li>
+                <strong>Qiskit Textbook:</strong>
+                <a href="https://qiskit.org/textbook/" class="external-link"
+                  >qiskit.org/textbook</a
+                >
+                - Free, comprehensive, hands-on approach
+              </li>
+              <li>
+                <strong>IBM Quantum Experience:</strong>
+                <a href="https://quantum.ibm.com/" class="external-link"
+                  >quantum.ibm.com</a
+                >
+                - Free access to real quantum computers
+              </li>
+              <li>
+                <strong>Microsoft Quantum Katas:</strong>
+                <a
+                  href="https://github.com/microsoft/QuantumKatas"
+                  class="external-link"
+                  >github.com/microsoft/QuantumKatas</a
+                >
+                - Interactive exercises
+              </li>
+              <li>
+                <strong>Quantum Computing: An Applied Approach:</strong>
+                <a
+                  href="https://www.springer.com/gp/book/9783030239213"
+                  class="external-link"
+                  >Academic textbook</a
+                >
+              </li>
+              <li>
+                <strong>Coursera Quantum Courses:</strong>
+                <a
+                  href="https://www.coursera.org/partners/google-quantum-ai"
+                  class="external-link"
+                  >Google Quantum AI Courses</a
+                >
+              </li>
+              <li>
+                <strong>edX Quantum Courses:</strong>
+                <a
+                  href="https://www.edx.org/learn/quantum-computing"
+                  class="external-link"
+                  >edX Quantum Computing</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <h3>🔧 Phase 2: Practical Skills (3-4 months)</h3>
+            <ul>
+              <li>
+                <strong>Qiskit Mastery:</strong> Build and run quantum circuits
+              </li>
+              <li>
+                <strong>Quantum Algorithms:</strong> Implement Grover's, Shor's,
+                VQE
+              </li>
+              <li>
+                <strong>Cloud Platforms:</strong> Use IBM Quantum, try Amazon
+                Braket
+              </li>
+              <li>
+                <strong>Projects:</strong> Build quantum games, optimization
+                solvers
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <h3>🚀 Phase 3: Specialization (6+ months)</h3>
+            <ul>
+              <li>
+                <strong>Choose Focus:</strong> Algorithms, hardware,
+                applications, or theory
+              </li>
+              <li>
+                <strong>Advanced Frameworks:</strong> Explore Cirq, Q#, or
+                specialized tools
+              </li>
+              <li>
+                <strong>Research Projects:</strong> Contribute to open-source
+                quantum projects
+              </li>
+              <li>
+                <strong>Industry Connections:</strong> Attend quantum
+                conferences, join professional networks
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h4>🎯 Certification Programs</h4>
+            <ul>
+              <li>
+                <strong>IBM Qiskit Developer Certification:</strong>
+                <a
+                  href="https://www.ibm.com/training/badge/qiskit-developer"
+                  class="external-link"
+                  >ibm.com/training/badge/qiskit-developer</a
+                >
+                - Industry recognized
+              </li>
+              <li>
+                <strong>Qiskit Advocate Program:</strong>
+                <a
+                  href="https://www.credly.com/org/ibm/badge/qiskit-advocate"
+                  class="external-link"
+                  >Qiskit Advocate Badge</a
+                >
+                - Community recognition
+              </li>
+              <li>
+                <strong>Microsoft Azure Quantum Certifications:</strong>
+                <a
+                  href="https://azure.microsoft.com/en-us/products/quantum"
+                  class="external-link"
+                  >Azure Quantum Learning</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <h3>💼 Career Paths with Entry Difficulty</h3>
+          <div class="tech-grid">
+            <div class="tech-card">
+              <h5>Quantum Software Engineer</h5>
+              <p>
+                Focus: Python, Qiskit, cloud platforms, software development
+              </p>
+              <p>
+                <strong>Entry Difficulty:</strong>
+                <span class="difficulty-badge easy">Easy</span>
+              </p>
+              <p><strong>Salary:</strong> $105K-$180K</p>
+            </div>
+
+            <div class="tech-card">
+              <h5>Quantum ML Engineer</h5>
+              <p>Focus: ML + quantum algorithms, research applications</p>
+              <p>
+                <strong>Entry Difficulty:</strong>
+                <span class="difficulty-badge easy">Easy</span>
+              </p>
+              <p><strong>Salary:</strong> $90K-$210K</p>
+            </div>
+
+            <div class="tech-card">
+              <h5>Quantum Algorithm Developer</h5>
+              <p>Focus: Mathematics, algorithm design, multiple frameworks</p>
+              <p>
+                <strong>Entry Difficulty:</strong>
+                <span class="difficulty-badge medium">Medium</span>
+              </p>
+              <p><strong>Salary:</strong> $130K-$200K</p>
+            </div>
+
+            <div class="tech-card">
+              <h5>Quantum Hardware Engineer</h5>
+              <p>Focus: Physics, electrical engineering, control systems</p>
+              <p>
+                <strong>Entry Difficulty:</strong>
+                <span class="difficulty-badge hard">Hard</span>
+              </p>
+              <p><strong>Salary:</strong> $123K-$190K</p>
+            </div>
+          </div>
+
+          <div class="conclusion">
+            <h3>🎯 Key Takeaways & Action Plan</h3>
+            <p>
+              The quantum computing field offers exceptional career
+              opportunities with rapid growth (180% job increase 2020-2024) and
+              competitive salaries. The most accessible entry point is
+              <strong>quantum software engineering</strong>, which leverages
+              existing programming skills and offers excellent growth potential.
+            </p>
+
+            <p><strong>Your Next Steps:</strong></p>
+            <ol>
+              <li>
+                <strong>Start Learning:</strong> Begin with
+                <a href="https://qiskit.org/textbook/" class="external-link"
+                  >Qiskit Textbook</a
+                >
+                and
+                <a href="https://quantum.ibm.com/" class="external-link"
+                  >IBM Quantum Platform</a
+                >
+              </li>
+              <li>
+                <strong>Join Community:</strong> Connect with
+                <a href="https://discord.me/indiquantum" class="external-link"
+                  >Indi Quantum Discord</a
+                >
+                for support and networking
+              </li>
+              <li>
+                <strong>Get Certified:</strong> Complete
+                <a
+                  href="https://www.ibm.com/training/badge/qiskit-developer"
+                  class="external-link"
+                  >IBM Qiskit Developer Certification</a
+                >
+              </li>
+              <li>
+                <strong>Build Portfolio:</strong> Create quantum projects on
+                GitHub with clear documentation
+              </li>
+              <li>
+                <strong>Apply for Jobs:</strong> Target quantum software
+                engineering roles at
+                <a href="https://www.quantumjobs.us/" class="external-link"
+                  >QuantumJobs.us</a
+                >
+              </li>
+            </ol>
+
+            <p>
+              <strong>Remember:</strong> Less than 50% of quantum jobs require
+              PhDs. Your programming skills, curiosity, and willingness to learn
+              are your biggest assets in this emerging field. The industry needs
+              talented developers more than quantum physics experts!
+            </p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>
+          &copy; 2025 Enhanced Quantum Computing Communities & Tech Stacks
+          Report
+        </p>
+        <p>
+          Complete with external links, job market analysis, and career guidance
+          | Last updated: January 2025
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Add scroll-to-top functionality
+      window.addEventListener("scroll", function () {
+        const scrollTop = document.documentElement.scrollTop;
+        if (scrollTop > 300) {
+          if (!document.querySelector(".scroll-top")) {
+            const scrollButton = document.createElement("button");
+            scrollButton.className = "scroll-top";
+            scrollButton.innerHTML = "↑";
+            scrollButton.style.cssText = `
+                        position: fixed;
+                        bottom: 20px;
+                        right: 20px;
+                        background: var(--purple);
+                        color: white;
+                        border: none;
+                        border-radius: 50%;
+                        width: 50px;
+                        height: 50px;
+                        font-size: 20px;
+                        cursor: pointer;
+                        z-index: 1000;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                    `;
+            scrollButton.addEventListener("click", () => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+            scrollButton.addEventListener("mouseenter", () => {
+              scrollButton.style.background = "var(--green)";
+            });
+            scrollButton.addEventListener("mouseleave", () => {
+              scrollButton.style.background = "var(--purple)";
+            });
+            document.body.appendChild(scrollButton);
+          }
+        } else {
+          const scrollButton = document.querySelector(".scroll-top");
+          if (scrollButton) {
+            scrollButton.remove();
+          }
+        }
+      });
+
+      // Add animation to cards on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      // Observe all cards for animation
+      document
+        .querySelectorAll(".card, .community-card, .tech-card, .job-card")
+        .forEach((card) => {
+          card.style.opacity = "0";
+          card.style.transform = "translateY(20px)";
+          card.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+          observer.observe(card);
+        });
+    </script>
+  </body>
+</html>
