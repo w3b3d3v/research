@@ -1,0 +1,76 @@
+Thirdweb Prebuilt Contracts
+Generated: 2025-07-29T23:54:38.243Z
+Total Contracts: 5
+Successful: 5
+Failed: 0
+
+================================================================================
+
+JSON Data:
+[
+  {
+    "contractId": "AccountExtension",
+    "metadataUri": "ipfs://AccountExtension",
+    "bytecodeUri": "ipfs://QmNq7JMDZk1p3jzfKCwtcCxAP6vzYtRNrPxwtD9WcN7bo2/0",
+    "publishMetadataUri": "ipfs://QmXRLeyqjnXh4Qh9FwdArbPMn4y2wMoMm3EMrrWnYv3jEg/0"
+  },
+  {
+    "contractId": "LoyaltyCard",
+    "metadataUri": "ipfs://LoyaltyCard",
+    "bytecodeUri": "ipfs://QmdTjRdJMEMWp3rzU5fiq4HxwsTKPoFk1j7JoQVYv2wG5W/0",
+    "publishMetadataUri": "ipfs://QmWhDX8DimQ4Fq5p8hqm8kuXSxSu7jbMea3Ug8DRXzAu23/0"
+  },
+  {
+    "contractId": "Multiwrap",
+    "metadataUri": "ipfs://Multiwrap",
+    "bytecodeUri": "ipfs://QmS3scBwf7tyv7Kimnuk5kdh4b1Y7dP44qqoH4UBy1H8fp/0",
+    "publishMetadataUri": "ipfs://Qme3vHnwyPAkgEx7ysPkrfrq7UucDPhqY1DgkJRp5Hexnj/0"
+  },
+  {
+    "contractId": "DropERC1155",
+    "metadataUri": "ipfs://DropERC1155",
+    "bytecodeUri": "ipfs://QmZTp1Sb4BFFurGijFxDPhSsbfeRZS4kdJqdmLvPdByFp1/0",
+    "publishMetadataUri": "ipfs://QmQgWbZdKjJRy6MW21FsfzDBEK254zHKG6A5kmjKtsUjfu/0"
+  },
+  {
+    "contractId": "AirdropERC20",
+    "metadataUri": "ipfs://AirdropERC20",
+    "bytecodeUri": "ipfs://QmRT3pA2nTq71K1uPDWvmQBcEj9KhUsR1cSyWdyyCLWNeE/2",
+    "publishMetadataUri": "ipfs://QmQzRYhJr2Gap8LwFAfsVpnBSPBDC6yeej2UusBKrRjmf8/0"
+  }
+]
+
+================================================================================
+
+Human Readable Summary:
+
+1. Contract ID: AccountExtension
+   Metadata URI: ipfs://AccountExtension
+   Bytecode URI: ipfs://QmNq7JMDZk1p3jzfKCwtcCxAP6vzYtRNrPxwtD9WcN7bo2/0
+   Publish Metadata URI: ipfs://QmXRLeyqjnXh4Qh9FwdArbPMn4y2wMoMm3EMrrWnYv3jEg/0
+   ✅ Success
+
+2. Contract ID: LoyaltyCard
+   Metadata URI: ipfs://LoyaltyCard
+   Bytecode URI: ipfs://QmdTjRdJMEMWp3rzU5fiq4HxwsTKPoFk1j7JoQVYv2wG5W/0
+   Publish Metadata URI: ipfs://QmWhDX8DimQ4Fq5p8hqm8kuXSxSu7jbMea3Ug8DRXzAu23/0
+   ✅ Success
+
+3. Contract ID: Multiwrap
+   Metadata URI: ipfs://Multiwrap
+   Bytecode URI: ipfs://QmS3scBwf7tyv7Kimnuk5kdh4b1Y7dP44qqoH4UBy1H8fp/0
+   Publish Metadata URI: ipfs://Qme3vHnwyPAkgEx7ysPkrfrq7UucDPhqY1DgkJRp5Hexnj/0
+   ✅ Success
+
+4. Contract ID: DropERC1155
+   Metadata URI: ipfs://DropERC1155
+   Bytecode URI: ipfs://QmZTp1Sb4BFFurGijFxDPhSsbfeRZS4kdJqdmLvPdByFp1/0
+   Publish Metadata URI: ipfs://QmQgWbZdKjJRy6MW21FsfzDBEK254zHKG6A5kmjKtsUjfu/0
+   ✅ Success
+
+5. Contract ID: AirdropERC20
+   Metadata URI: ipfs://AirdropERC20
+   Bytecode URI: ipfs://QmRT3pA2nTq71K1uPDWvmQBcEj9KhUsR1cSyWdyyCLWNeE/2
+   Publish Metadata URI: ipfs://QmQzRYhJr2Gap8LwFAfsVpnBSPBDC6yeej2UusBKrRjmf8/0
+   ✅ Success
+
