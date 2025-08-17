@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="public/w3d.svg" />
+    <title>
+      SoftLaw Project Report - Intellectual Property Licensing & Tokenization
+      Platform
+    </title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --green: #96e150;
+        --purple: #7864fa;
+        --blue: #1e96ff;
+        --white: #ffffff;
+        --black: #000000;
+        --dark-bg: #0a0a0a;
+        --card-bg: #1a1a1a;
+        --border: #333;
+        --text-primary: #ffffff;
+        --text-secondary: #b0b0b0;
+        --text-muted: #808080;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Barlow", sans-serif;
+        background: var(--dark-bg);
+        color: var(--text-primary);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header */
+      .header {
+        background: linear-gradient(135deg, var(--purple), var(--blue));
+        padding: 60px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.3;
+      }
+
+      .header-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .header h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        background: linear-gradient(45deg, var(--white), var(--green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .header .subtitle {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 30px;
+      }
+
+      .status-badge {
+        display: inline-block;
+        background: var(--green);
+        color: var(--black);
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      /* Navigation */
+      .nav {
+        background: var(--card-bg);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px 0;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 10px 15px;
+        border-radius: 8px;
+      }
+
+      .nav-links a:hover {
+        color: var(--green);
+        background: rgba(150, 225, 80, 0.1);
+      }
+
+      /* Main Content */
+      .main {
+        padding: 60px 0;
+      }
+
+      .section {
+        margin-bottom: 80px;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 30px;
+        color: var(--green);
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--green), var(--blue));
+        border-radius: 2px;
+      }
+
+      /* Fix spacing after section titles */
+      .section > .stats,
+      .section > .grid,
+      .section > .card,
+      .section > .timeline,
+      .section > .expandable {
+        margin-top: 40px;
+      }
+
+      /* Cards */
+      .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--purple),
+          var(--blue),
+          var(--green)
+        );
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        border-color: var(--green);
+        box-shadow: 0 20px 40px rgba(150, 225, 80, 0.1);
+      }
+
+      .card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: var(--white);
+      }
+
+      .card-content {
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      /* Grid Layout */
+      .grid {
+        display: grid;
+        gap: 30px;
+      }
+
+      .grid-2 {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+
+      /* Stats */
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        margin: 40px 0;
+      }
+
+      .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: scale(1.05);
+        border-color: var(--blue);
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--green);
+        margin-bottom: 10px;
+      }
+
+      .stat-label {
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+
+      /* Team Cards */
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+      }
+
+      .team-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .team-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--purple);
+        box-shadow: 0 20px 40px rgba(120, 100, 250, 0.2);
+      }
+
+      .team-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--purple), var(--blue));
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--white);
+      }
+
+      .team-name {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--white);
+      }
+
+      .team-role {
+        color: var(--green);
+        font-weight: 500;
+        margin-bottom: 15px;
+      }
+
+      .team-description {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      /* Timeline */
+      .timeline {
+        position: relative;
+        padding-left: 30px;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 15px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(
+          180deg,
+          var(--green),
+          var(--blue),
+          var(--purple)
+        );
+      }
+
+      .timeline-item {
+        position: relative;
+        margin-bottom: 40px;
+        padding-left: 40px;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -8px;
+        top: 10px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--green);
+        border: 3px solid var(--dark-bg);
+      }
+
+      .timeline-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--white);
+        margin-bottom: 10px;
+      }
+
+      .timeline-period {
+        color: var(--green);
+        font-weight: 500;
+        margin-bottom: 15px;
+      }
+
+      .timeline-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      /* Code Block */
+      .code-block {
+        background: #0d1117;
+        border: 1px solid #30363d;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        overflow-x: auto;
+        font-family: "Courier New", monospace;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .code-block code {
+        color: #e6edf3;
+      }
+
+      /* Expandable Sections */
+      .expandable {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        margin-bottom: 20px;
+        overflow: hidden;
+      }
+
+      .expandable-header {
+        background: var(--card-bg);
+        padding: 20px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+
+      .expandable-header:hover {
+        background: rgba(150, 225, 80, 0.1);
+      }
+
+      .expandable-title {
+        font-weight: 600;
+        color: var(--white);
+      }
+
+      .expandable-icon {
+        transition: transform 0.3s ease;
+        color: var(--green);
+      }
+
+      .expandable.active .expandable-icon {
+        transform: rotate(180deg);
+      }
+
+      .expandable-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+
+      .expandable.active .expandable-content {
+        max-height: 1000px;
+      }
+
+      .expandable-body {
+        padding: 20px;
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background: var(--green);
+        color: var(--black);
+      }
+
+      .btn-primary:hover {
+        background: #7bc142;
+        transform: translateY(-2px);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--green);
+        border: 2px solid var(--green);
+      }
+
+      .btn-secondary:hover {
+        background: var(--green);
+        color: var(--black);
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--card-bg);
+        border-top: 1px solid var(--border);
+        padding: 40px 0;
+        text-align: center;
+        color: var(--text-secondary);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 2.5rem;
+        }
+
+        .nav-links {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .grid-2,
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .team-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in-up {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      /* Scroll animations */
+      .scroll-animate {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+      }
+
+      .scroll-animate.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content fade-in-up">
+          <h1>SoftLaw</h1>
+          <p class="subtitle">
+            Intellectual Property Licensing & Tokenization Platform
+          </p>
+          <span class="status-badge">✅ Treasury Approved - $50,000 USDC</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="container">
+        <div class="nav-container">
+          <ul class="nav-links">
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#technical">Technical</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#roadmap">Roadmap</a></li>
+            <li><a href="#legal">Legal Framework</a></li>
+            <li><a href="#resources">Resources</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="container">
+        <!-- Overview Section -->
+        <section id="overview" class="section scroll-animate">
+          <h2 class="section-title">Project Overview</h2>
+
+          <div class="stats">
+            <div class="stat-card">
+              <div class="stat-number">$50K</div>
+              <div class="stat-label">Treasury Funding</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">6</div>
+              <div class="stat-label">Months Timeline</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">3</div>
+              <div class="stat-label">Core Milestones</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">4</div>
+              <div class="stat-label">Team Members</div>
+            </div>
+          </div>
+
+          <div class="grid grid-2">
+            <div class="card">
+              <h3 class="card-title">🎯 Mission</h3>
+              <div class="card-content">
+                SoftLaw revolutionizes intellectual property management by
+                bridging traditional legal frameworks with blockchain
+                technology. Our platform provides legally compliant IP
+                tokenization, automated licensing, and AI-powered legal
+                assistance within the Polkadot ecosystem.
+              </div>
+            </div>
+            <div class="card">
+              <h3 class="card-title">🚀 Vision</h3>
+              <div class="card-content">
+                To establish the gold standard for intellectual property
+                management in blockchain ecosystems, serving as a bridge between
+                traditional legal systems and decentralized governance
+                structures while empowering creators globally.
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🔍 Problem Statement</h3>
+            <div class="card-content">
+              <p>The Polkadot ecosystem currently lacks:</p>
+              <ul
+                style="
+                  margin: 15px 0;
+                  padding-left: 20px;
+                  color: var(--text-secondary);
+                "
+              >
+                <li>Formal legal presence in the United States</li>
+                <li>Legal framework for enforceable treasury proposals</li>
+                <li>Sophisticated IP rights management for creators</li>
+                <li>
+                  Bridge between DAO governance and traditional legal systems
+                </li>
+              </ul>
+              <p>
+                This creates barriers for institutional adoption and limits the
+                ecosystem's ability to scale public goods and services
+                effectively.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Technical Section -->
+        <section id="technical" class="section scroll-animate">
+          <h2 class="section-title">Technical Architecture</h2>
+
+          <div class="grid grid-2">
+            <div class="card">
+              <h3 class="card-title">🔗 Blockchain Infrastructure</h3>
+              <div class="card-content">
+                <strong>Network:</strong> Polkadot Asset Hub (Passet Hub)<br />
+                <strong>Chain ID:</strong> 420420422<br />
+                <strong>RPC:</strong>
+                testnet-passet-hub-eth-rpc.polkadot.io<br />
+                <strong>Explorer:</strong>
+                blockscout-passet-hub.parity-testnet.parity.io<br />
+                <strong>Framework:</strong> Hardhat + Solidity 0.8.19
+              </div>
+            </div>
+            <div class="card">
+              <h3 class="card-title">🤖 AI Integration</h3>
+              <div class="card-content">
+                Advanced AI systems provide automated legal analysis, compliance
+                checking, and user guidance. The AI legal assistant functions as
+                both a legal advisor and technical engineer, leveraging pattern
+                recognition and machine intelligence.
+              </div>
+            </div>
+          </div>
+
+          <div class="expandable">
+            <div class="expandable-header" onclick="toggleExpandable(this)">
+              <span class="expandable-title">Smart Contract Architecture</span>
+              <span class="expandable-icon">▼</span>
+            </div>
+            <div class="expandable-content">
+              <div class="expandable-body">
+                <h4 style="color: var(--green); margin-bottom: 15px">
+                  Core Contracts
+                </h4>
+                <ul style="margin-bottom: 20px">
+                  <li>
+                    <strong>Registry.sol:</strong> Central hub for IP asset
+                    management
+                  </li>
+                  <li>
+                    <strong>Register.sol:</strong> Asset registration workflows
+                  </li>
+                  <li>
+                    <strong>Validation contracts:</strong> Authenticity
+                    verification
+                  </li>
+                  <li>
+                    <strong>Licensing contracts:</strong> Automated rights
+                    management
+                  </li>
+                  <li>
+                    <strong>NFT contracts:</strong> Tokenized asset
+                    representation
+                  </li>
+                </ul>
+
+                <h4 style="color: var(--green); margin-bottom: 15px">
+                  Key Features
+                </h4>
+                <ul>
+                  <li>Separation of moral rights from economic rights</li>
+                  <li>Granular control over 10 different economic rights</li>
+                  <li>Automated royalty distribution</li>
+                  <li>Cross-chain interoperability via XCM</li>
+                  <li>Emergency pause mechanisms</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="expandable">
+            <div class="expandable-header" onclick="toggleExpandable(this)">
+              <span class="expandable-title">Economic Rights Structure</span>
+              <span class="expandable-icon">▼</span>
+            </div>
+            <div class="expandable-content">
+              <div class="expandable-body">
+                <div class="code-block">
+                  <code
+                    >struct EconomicCopyrights { bool reproduction; // Right to
+                    prevent copying bool distribution; // Right to control/sell
+                    copies bool rental; // Right to rent bool publicDisplay; //
+                    Right to publicly display bool publicPerformance; // Right
+                    to publicly perform bool derivativeWorks; // Right to create
+                    derivatives bool commercialUse; // Commercial usage rights
+                    bool broadcasting; // Broadcasting rights bool translation;
+                    // Translation rights bool adaptation; // Right to
+                    adapt/modify }</code
+                  >
+                </div>
+                <p>
+                  This granular structure enables sophisticated licensing
+                  scenarios where creators can license specific rights while
+                  retaining others, maximizing monetization opportunities.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="team" class="section scroll-animate">
+          <h2 class="section-title">Team & Stakeholders</h2>
+
+          <div class="card">
+            <h3 class="card-title">🏢 SOFTLAW S.A. DE C.V.</h3>
+            <div class="card-content">
+              A Mexican legaltech corporation focused on the evolution of law
+              through technology. Established as a "LEGALTECH & BLOCKCHAIN LAB"
+              with a mission to empower legal advancement in the digital era.
+            </div>
+          </div>
+
+          <div class="team-grid">
+            <div class="team-card">
+              <div class="team-avatar">W</div>
+              <div class="team-name">Wario</div>
+              <div class="team-role">CEO & Founder</div>
+              <div class="team-description">
+                Legaltech Wizard with 6+ years in Web3. DAO activist and LATAM
+                Builder. Based in Guadalajara, Mexico. Active in Polkadot Mexico
+                community.
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-avatar">L</div>
+              <div class="team-name">Luke</div>
+              <div class="team-role">Polkadot Developer</div>
+              <div class="team-description">
+                Specialized in Polkadot ecosystem development, smart contracts,
+                XCM integration, and Asset Hub functionality.
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-avatar">P</div>
+              <div class="team-name">Pat</div>
+              <div class="team-role">Product Designer</div>
+              <div class="team-description">
+                Leads UX design efforts, ensuring complex IP management is
+                accessible to creators regardless of technical expertise.
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-avatar">Y</div>
+              <div class="team-name">Yahir</div>
+              <div class="team-role">Front-End Developer</div>
+              <div class="team-description">
+                Implements user-facing applications with responsive design,
+                blockchain integration, and performance optimization.
+              </div>
+            </div>
+          </div>
+
+          <div class="expandable">
+            <div class="expandable-header" onclick="toggleExpandable(this)">
+              <span class="expandable-title">Contact Information & Links</span>
+              <span class="expandable-icon">▼</span>
+            </div>
+            <div class="expandable-content">
+              <div class="expandable-body">
+                <div class="grid grid-2">
+                  <div>
+                    <h4 style="color: var(--green); margin-bottom: 10px">
+                      Primary Contacts
+                    </h4>
+                    <p><strong>Email:</strong> wario@soft.law</p>
+                    <p><strong>Matrix:</strong> @wario_mx:matrix.org</p>
+                    <p><strong>Location:</strong> Guadalajara, Mexico</p>
+                  </div>
+                  <div>
+                    <h4 style="color: var(--green); margin-bottom: 10px">
+                      Online Presence
+                    </h4>
+                    <p><strong>Website:</strong> soft.law</p>
+                    <p><strong>GitHub:</strong> github.com/soft-law</p>
+                    <p>
+                      <strong>LATAM Builders:</strong>
+                      latambuilders.xyz/user/wario
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Roadmap Section -->
+        <section id="roadmap" class="section scroll-animate">
+          <h2 class="section-title">Implementation Roadmap</h2>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-title">Phase 1: Foundation & Research</div>
+              <div class="timeline-period">Months 1-3</div>
+              <div class="timeline-description">
+                Complete legal research on DAO governance under US law,
+                establish technical foundation, implement core Registry.sol
+                functionality, and begin AI system integration.
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-title">
+                Phase 2: Core Platform Development
+              </div>
+              <div class="timeline-period">Months 4-8</div>
+              <div class="timeline-description">
+                Deploy smart contracts to Asset Hub testnet, develop user
+                interfaces, integrate AI legal assistance, and implement
+                comprehensive IP management features.
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-title">Phase 3: Testing & Validation</div>
+              <div class="timeline-period">Months 9-11</div>
+              <div class="timeline-description">
+                Conduct security audits, beta testing with creator communities,
+                legal validation with experts, and comprehensive platform
+                testing.
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-title">Phase 4: Launch & Integration</div>
+              <div class="timeline-period">Months 12-15</div>
+              <div class="timeline-description">
+                Migrate to mainnet, establish ecosystem partnerships, implement
+                XCM cross-chain functionality, and launch creator onboarding
+                programs.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Legal Framework Section -->
+        <section id="legal" class="section scroll-animate">
+          <h2 class="section-title">Legal Framework & Compliance</h2>
+
+          <div class="grid grid-2">
+            <div class="card">
+              <h3 class="card-title">⚖️ Research Objectives</h3>
+              <div class="card-content">
+                <ul style="color: var(--text-secondary); line-height: 1.8">
+                  <li>Legal analysis of DAO structures under US law</li>
+                  <li>Treasury proposal enforceability mechanisms</li>
+                  <li>Alternative dispute resolution (ADR) integration</li>
+                  <li>Commercial contract templates for Polkadot ecosystem</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <h3 class="card-title">📋 Compliance Strategy</h3>
+              <div class="card-content">
+                Comprehensive regulatory compliance addressing intellectual
+                property law, contract law, data protection, financial services
+                regulations, and emerging blockchain-specific requirements
+                across multiple jurisdictions.
+              </div>
+            </div>
+          </div>
+
+          <div class="expandable">
+            <div class="expandable-header" onclick="toggleExpandable(this)">
+              <span class="expandable-title">Treasury Proposal Details</span>
+              <span class="expandable-icon">▼</span>
+            </div>
+            <div class="expandable-content">
+              <div class="expandable-body">
+                <h4 style="color: var(--green); margin-bottom: 15px">
+                  Proposal #181 - Approved ✅
+                </h4>
+                <div class="grid grid-2">
+                  <div>
+                    <p><strong>Total Funding:</strong> $50,000 USDC</p>
+                    <p><strong>Referendum:</strong> #1676</p>
+                    <p><strong>Status:</strong> Paid</p>
+                    <p><strong>Beneficiary:</strong> SOFTLAW S.A. DE C.V.</p>
+                  </div>
+                  <div>
+                    <p><strong>Research Part 1:</strong> $24,500</p>
+                    <p><strong>Research Part 2:</strong> $24,500</p>
+                    <p><strong>Digital Portal:</strong> $1,000</p>
+                    <p><strong>Timeline:</strong> 3 months execution</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🎯 Expected Outcomes</h3>
+            <div class="card-content">
+              <p>The research will produce:</p>
+              <ul
+                style="
+                  margin: 15px 0;
+                  padding-left: 20px;
+                  color: var(--text-secondary);
+                "
+              >
+                <li>Analysis of Polkadot DAO under US Law</li>
+                <li>Landing page for Polkadot.law</li>
+                <li>Open-source legal framework documentation</li>
+                <li>Contract templates for ecosystem use</li>
+                <li>Dispute resolution mechanisms</li>
+              </ul>
+              <p>
+                All research will be published under open license and made
+                available through the Polkadot.law portal for ecosystem-wide
+                adoption.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="section scroll-animate">
+          <h2 class="section-title">Resources & References</h2>
+
+          <div class="grid grid-2">
+            <div class="card">
+              <h3 class="card-title">📚 Primary Sources</h3>
+              <div class="card-content">
+                <ul style="color: var(--text-secondary); line-height: 1.8">
+                  <li>
+                    <a
+                      href="https://github.com/soft-law/W3F_Grant/tree/milestone-2-contracts-solidity"
+                      style="color: var(--green)"
+                      >SoftLaw GitHub Repository</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://forum.polkadot.network/t/polkadot-law-a-polkadot-dao-research-under-us-law/13587"
+                      style="color: var(--green)"
+                      >Polkadot Forum Discussion</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://polkadot.subsquare.io/treasury/spends/181"
+                      style="color: var(--green)"
+                      >Treasury Proposal #181</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://www.soft.law/" style="color: var(--green)"
+                      >SoftLaw Official Website</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <h3 class="card-title">🔗 Technical Resources</h3>
+              <div class="card-content">
+                <ul style="color: var(--text-secondary); line-height: 1.8">
+                  <li>
+                    <a
+                      href="https://testnet-passet-hub-eth-rpc.polkadot.io"
+                      style="color: var(--blue)"
+                      >Polkadot Asset Hub RPC</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://blockscout-passet-hub.parity-testnet.parity.io/"
+                      style="color: var(--blue)"
+                      >Asset Hub Block Explorer</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.latambuilders.xyz/user/wario/"
+                      style="color: var(--blue)"
+                      >Wario's LATAM Builders Profile</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://warpcast.com/wario-mx"
+                      style="color: var(--blue)"
+                      >Wario's Farcaster Profile</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">📋 Research Methodology</h3>
+            <div class="card-content">
+              <p>This comprehensive analysis was conducted through:</p>
+              <ul
+                style="
+                  margin: 15px 0;
+                  padding-left: 20px;
+                  color: var(--text-secondary);
+                "
+              >
+                <li>
+                  In-depth code review of smart contracts in the SoftLaw
+                  repository
+                </li>
+                <li>
+                  Analysis of community discussions and treasury proposal
+                  documentation
+                </li>
+                <li>Research into team backgrounds and company information</li>
+                <li>
+                  Technical architecture assessment and legal framework
+                  evaluation
+                </li>
+                <li>
+                  Cross-referencing multiple sources for accuracy and
+                  completeness
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+          "
+        >
+          <img
+            src="public/w3d.svg"
+            alt="web3dev logo"
+            style="width: 30px; height: 30px"
+          />
+          <span style="color: var(--text-primary); font-weight: 600"
+            >Research conducted by WEB3DEV</span
+          >
+        </div>
+        <p style="margin-top: 10px; font-size: 0.9rem">
+          Report generated on August 16, 2025 • Based on publicly available
+          information from the Polkadot ecosystem and SoftLaw project
+          documentation.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Expandable sections
+      function toggleExpandable(header) {
+        const expandable = header.parentElement;
+        expandable.classList.toggle("active");
+      }
+
+      // Scroll animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".scroll-animate").forEach((el) => {
+        observer.observe(el);
+      });
+
+      // Active navigation highlighting
+      window.addEventListener("scroll", () => {
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll(".nav-links a");
+
+        let current = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop - 100;
+          if (scrollY >= sectionTop) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.style.color = "";
+          link.style.background = "";
+          if (link.getAttribute("href") === `#${current}`) {
+            link.style.color = "var(--green)";
+            link.style.background = "rgba(150, 225, 80, 0.1)";
+          }
+        });
+      });
+
+      // Add loading animation
+      window.addEventListener("load", () => {
+        document.body.style.opacity = "0";
+        document.body.style.transition = "opacity 0.5s ease";
+        setTimeout(() => {
+          document.body.style.opacity = "1";
+        }, 100);
+      });
+    </script>
+  </body>
+</html>
