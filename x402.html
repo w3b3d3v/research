@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X402 Payment Protocol - Architecture & Roadmap for Passet Hub</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --green: #96E150;
+            --purple: #7864FA;
+            --blue: #1E96FF;
+            --white: #FFFFFF;
+            --black: #000000;
+            --gray-light: #F5F5F5;
+            --gray-medium: #E0E0E0;
+            --gray-dark: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Barlow', sans-serif;
+            line-height: 1.6;
+            color: var(--gray-dark);
+            background-color: var(--white);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            color: var(--white);
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        
+        .toc {
+            background-color: var(--gray-light);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+        
+        .toc h2 {
+            color: var(--purple);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .toc ul {
+            list-style: none;
+        }
+        
+        .toc li {
+            margin-bottom: 10px;
+        }
+        
+        .toc a {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .toc a:hover {
+            color: var(--purple);
+        }
+        
+        section {
+            margin-bottom: 50px;
+        }
+        
+        h2 {
+            color: var(--purple);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--green);
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: var(--blue);
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        h4 {
+            color: var(--gray-dark);
+            font-size: 1.2rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background-color: var(--purple);
+            color: var(--white);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--gray-medium);
+        }
+        
+        tr:hover {
+            background-color: var(--gray-light);
+        }
+        
+        .highlight-box {
+            background-color: var(--gray-light);
+            border-left: 4px solid var(--green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .warning-box {
+            background-color: #FFF3CD;
+            border-left: 4px solid #FFC107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .success-box {
+            background-color: #D4EDDA;
+            border-left: 4px solid var(--green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .error-box {
+            background-color: #F8D7DA;
+            border-left: 4px solid #DC3545;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .phase-card {
+            background-color: var(--white);
+            border: 2px solid var(--gray-medium);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .phase-card h4 {
+            color: var(--purple);
+            margin-top: 0;
+        }
+        
+        .milestone-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .milestone-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .milestone-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .tag-success {
+            background-color: var(--green);
+            color: var(--black);
+        }
+        
+        .tag-warning {
+            background-color: #FFC107;
+            color: var(--black);
+        }
+        
+        .tag-error {
+            background-color: #DC3545;
+            color: var(--white);
+        }
+        
+        .tag-info {
+            background-color: var(--blue);
+            color: var(--white);
+        }
+        
+        pre {
+            background-color: var(--gray-dark);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+        
+        code {
+            font-family: 'Courier New', monospace;
+        }
+        
+        footer {
+            background-color: var(--gray-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+        
+        ol {
+            padding-left: 20px;
+        }
+        
+        ol li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>X402 Payment Protocol</h1>
+        <p>Architecture & Implementation Roadmap for Passet Hub</p>
+        <p style="font-size: 0.9rem; margin-top: 10px;">Including USDT Integration Research | Prepared by Manus AI | November 2025</p>
+    </header>
+
+    <div class="container">
+        <nav class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#executive-summary">Executive Summary</a></li>
+                <li><a href="#what-is-x402">What is X402?</a></li>
+                <li><a href="#protocol-architecture">Protocol Architecture</a></li>
+                <li><a href="#usdt-research">USDT Integration Research</a></li>
+                <li><a href="#eip3009-implementation">EIP-3009 Implementation</a></li>
+                <li><a href="#facilitator-development">Facilitator Development</a></li>
+                <li><a href="#passet-hub-integration">Passet Hub Integration</a></li>
+                <li><a href="#implementation-roadmap">Implementation Roadmap</a></li>
+                <li><a href="#testing-strategy">Testing Strategy</a></li>
+            </ul>
+        </nav>
+
+        <section id="executive-summary">
+            <h2>Executive Summary</h2>
+            
+            <div class="highlight-box">
+                <p><strong>Goal:</strong> Implement HTTP-native payments on Passet Hub using the X402 protocol, enabling seamless programmatic payments for AI agents, APIs, and web services using USDT and DOT tokens.</p>
+            </div>
+
+            <p>The X402 protocol represents a revolutionary approach to internet payments by leveraging the HTTP 402 "Payment Required" status code to enable instant, programmatic payments without registration, OAuth, or complex authentication flows. Developed by Coinbase and supported by major infrastructure providers including Cloudflare, X402 provides a blockchain-agnostic payment standard that works seamlessly with existing HTTP infrastructure.</p>
+
+            <p>This report presents a comprehensive architecture and implementation roadmap for deploying X402 payments on Passet Hub, Polkadot's EVM-compatible smart contract platform. The implementation faces unique challenges due to Passet Hub's PolkaVM architecture and the lack of native EIP-3009 support in standard USDT. Through extensive research and analysis, we have identified viable paths forward including deploying custom EIP-3009 compatible tokens and building a self-hosted facilitator adapted for PolkaVM's constraints.</p>
+
+            <div class="error-box">
+                <h4>Critical Finding: Standard USDT Incompatible</h4>
+                <p>Standard Tether USDT (0xdac17f958d2ee523a2206206994597c13d831ec7) does NOT implement EIP-3009 and cannot be used directly with X402. A custom implementation is required.</p>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Status</th>
+                        <th>Timeline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Custom USDT Token</strong></td>
+                        <td><span class="tag tag-warning">Design Ready</span></td>
+                        <td>Weeks 1-2</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Self-Hosted Facilitator</strong></td>
+                        <td><span class="tag tag-warning">Adaptation Required</span></td>
+                        <td>Weeks 1-2</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Payment Escrow Contract</strong></td>
+                        <td><span class="tag tag-info">Planned</span></td>
+                        <td>Weeks 3-4</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HTTP 402 Server</strong></td>
+                        <td><span class="tag tag-info">Planned</span></td>
+                        <td>Weeks 3-4</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Frontend & UX</strong></td>
+                        <td><span class="tag tag-info">Planned</span></td>
+                        <td>Weeks 5-6</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="what-is-x402">
+            <h2>What is X402?</h2>
+
+            <h3>Overview</h3>
+
+            <p>X402 is an open standard for internet-native payments built around the HTTP 402 "Payment Required" status code. The protocol enables users and autonomous agents to pay for resources via API without requiring registration, email addresses, OAuth flows, or complex cryptographic operations. By leveraging standard HTTP headers and blockchain settlement, X402 provides a seamless payment experience that feels natural to both Web2 and Web3 developers.</p>
+
+            <h3>Core Principles</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Principle</th>
+                        <th>Description</th>
+                        <th>Benefit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Zero Fees</strong></td>
+                        <td>Protocol charges 0% fees for merchants and customers</td>
+                        <td>Maximum value retention, no rent extraction</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Instant Settlement</strong></td>
+                        <td>Payments settle in ~6 seconds at blockchain speed</td>
+                        <td>Real-time commerce without T+2 delays</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Blockchain Agnostic</strong></td>
+                        <td>Not tied to any specific blockchain or token</td>
+                        <td>Flexibility and future-proofing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Frictionless</strong></td>
+                        <td>As little as 1 line of middleware code</td>
+                        <td>Rapid integration and deployment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Web Native</strong></td>
+                        <td>Works with existing HTTP stacks via headers</td>
+                        <td>No infrastructure overhaul required</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Use Cases</h3>
+
+            <div class="highlight-box">
+                <h4>AI Agent Payments</h4>
+                <p>Enable AI agents to autonomously pay for API calls, data access, and computational resources. Agents can operate without human intervention, making micro-payments for each request.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Content Monetization</h4>
+                <p>Allow content creators to charge per-article, per-video, or per-download without subscriptions. Users pay only for what they consume, with instant settlement to creators.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>API Metering</h4>
+                <p>Implement pay-per-use pricing for APIs without complex billing systems. Each API call includes a micro-payment, eliminating the need for monthly subscriptions or credit card processing.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>IoT Device Payments</h4>
+                <p>Enable IoT devices to pay for services automatically. Smart devices can purchase data, storage, or computational resources as needed without human intervention.</p>
+            </div>
+
+            <h3>Payment Flow</h3>
+
+            <div class="phase-card">
+                <h4>11-Step X402 Payment Process</h4>
+                <ol>
+                    <li><strong>Initial Request:</strong> Client makes HTTP request to protected resource</li>
+                    <li><strong>Payment Challenge:</strong> Server responds with HTTP 402 status and payment details in X-PAYMENT-REQUIRED header</li>
+                    <li><strong>Payment Creation:</strong> Client creates payment payload using wallet and EIP-3009 signature</li>
+                    <li><strong>Payment Submission:</strong> Client resubmits request with X-PAYMENT header containing signed authorization</li>
+                    <li><strong>Server Verification:</strong> Server verifies payment locally or via facilitator</li>
+                    <li><strong>Facilitator Validation:</strong> Facilitator validates payment against scheme requirements (amount, token, expiration)</li>
+                    <li><strong>Request Processing:</strong> Server processes request if payment is valid</li>
+                    <li><strong>Settlement Initiation:</strong> Server initiates blockchain settlement via facilitator</li>
+                    <li><strong>On-Chain Submission:</strong> Facilitator submits transferWithAuthorization transaction to blockchain</li>
+                    <li><strong>Settlement Confirmation:</strong> Blockchain confirms transaction, tokens transferred</li>
+                    <li><strong>Resource Delivery:</strong> Server delivers resource with X-PAYMENT-RESPONSE header containing settlement details</li>
+                </ol>
+            </div>
+
+            <h3>Key Components</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Role</th>
+                        <th>Responsibilities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Client</strong></td>
+                        <td>Payment initiator</td>
+                        <td>Create payment signatures, submit requests</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Server</strong></td>
+                        <td>Resource provider</td>
+                        <td>Challenge for payment, verify signatures, deliver resources</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Facilitator</strong></td>
+                        <td>Payment processor</td>
+                        <td>Validate payments, submit to blockchain, confirm settlement</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Blockchain</strong></td>
+                        <td>Settlement layer</td>
+                        <td>Execute token transfers, provide finality</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Token Contract</strong></td>
+                        <td>Payment medium</td>
+                        <td>Handle EIP-3009 transferWithAuthorization</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="protocol-architecture">
+            <h2>Protocol Architecture</h2>
+
+            <h3>Facilitator Models</h3>
+
+            <p>The X402 protocol supports three facilitator deployment models, each with different trade-offs in terms of control, complexity, and network support. The facilitator is responsible for payment verification and blockchain settlement, acting as a bridge between the HTTP layer and the blockchain layer.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Networks Supported</th>
+                        <th>Production Ready</th>
+                        <th>Requirements</th>
+                        <th>Passet Hub Compatible</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CDP-Hosted</strong></td>
+                        <td>Base, Base Sepolia, Solana, Solana Devnet</td>
+                        <td><span class="tag tag-success">Yes</span></td>
+                        <td>CDP API keys</td>
+                        <td><span class="tag tag-error">No</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Community-Maintained</strong></td>
+                        <td>Base Sepolia, Solana Devnet (testnet only)</td>
+                        <td><span class="tag tag-warning">No</span></td>
+                        <td>None</td>
+                        <td><span class="tag tag-error">No</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Self-Hosted</strong></td>
+                        <td>Any EVM or Solana network</td>
+                        <td><span class="tag tag-success">Yes</span></td>
+                        <td>RPC endpoint, gas wallet</td>
+                        <td><span class="tag tag-success">Yes</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <h4>Passet Hub Requirement: Self-Hosted Facilitator</h4>
+                <p>Since Passet Hub is not currently supported by CDP-hosted or community-maintained facilitators, the <strong>self-hosted facilitator model</strong> is the only viable option. This provides full control and the ability to implement PolkaVM-specific adaptations.</p>
+            </div>
+
+            <h3>EIP-3009 Token Requirements</h3>
+
+            <p>All X402 facilitators require EIP-3009 compatible tokens on their supported networks. EIP-3009 is a standard that enables gasless token transfers through signature-based authorization, eliminating the need for separate approval transactions. This is critical for X402's seamless payment experience.</p>
+
+            <div class="phase-card">
+                <h4>EIP-3009 Core Functions</h4>
+                <pre><code>// Transfer tokens with signature authorization
+function transferWithAuthorization(
+    address from,
+    address to,
+    uint256 value,
+    uint256 validAfter,
+    uint256 validBefore,
+    bytes32 nonce,
+    uint8 v,
+    bytes32 r,
+    bytes32 s
+) external;
+
+// Receive tokens with signature authorization
+function receiveWithAuthorization(
+    address from,
+    address to,
+    uint256 value,
+    uint256 validAfter,
+    uint256 validBefore,
+    bytes32 nonce,
+    uint8 v,
+    bytes32 r,
+    bytes32 s
+) external;
+
+// EIP-712 domain separator for signature verification
+function DOMAIN_SEPARATOR() external view returns (bytes32);
+
+// Token metadata for EIP-712
+function name() external view returns (string memory);
+function version() external view returns (string memory);</code></pre>
+            </div>
+
+            <h3>Payment Verification Flow</h3>
+
+            <p>The facilitator performs several critical verification steps before submitting transactions to the blockchain. This multi-layered validation ensures payment integrity and prevents common attack vectors.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Verification Step</th>
+                        <th>Purpose</th>
+                        <th>Failure Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Signature Validation</strong></td>
+                        <td>Ensure payment authorized by token holder</td>
+                        <td>Reject payment, return error</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Amount Verification</strong></td>
+                        <td>Confirm payment amount matches requirement</td>
+                        <td>Reject payment, return error</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Token Check</strong></td>
+                        <td>Validate correct token contract used</td>
+                        <td>Reject payment, return error</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Expiration Check</strong></td>
+                        <td>Ensure payment within valid time window</td>
+                        <td>Reject payment, return error</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nonce Validation</strong></td>
+                        <td>Prevent replay attacks</td>
+                        <td>Reject payment, return error</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Balance Check</strong></td>
+                        <td>Verify sender has sufficient tokens</td>
+                        <td>Reject payment, return error</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="usdt-research">
+            <h2>USDT Integration Research</h2>
+
+            <h3>Standard USDT Analysis</h3>
+
+            <p>Through comprehensive research including source code review and documentation analysis, we have identified critical limitations with standard Tether USDT that prevent direct X402 integration.</p>
+
+            <div class="error-box">
+                <h4>Critical Finding: No EIP-3009 Support</h4>
+                <p><strong>Standard Tether USDT does NOT implement EIP-3009.</strong> The contract was deployed in 2017 using Solidity 0.4.17, before EIP-3009 existed. It lacks all required functions for X402 integration.</p>
+            </div>
+
+            <h4>USDT Contract Details</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Contract Address</strong></td>
+                        <td>0xdac17f958d2ee523a2206206994597c13d831ec7</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Solidity Version</strong></td>
+                        <td>0.4.17 (from 2017)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>EIP-3009 Support</strong></td>
+                        <td><span class="tag tag-error">No</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>EIP-2612 (Permit)</strong></td>
+                        <td><span class="tag tag-error">No</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>transferWithAuthorization</strong></td>
+                        <td><span class="tag tag-error">Not Implemented</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>DOMAIN_SEPARATOR</strong></td>
+                        <td><span class="tag tag-error">Not Implemented</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Alternative USDT Implementations</h3>
+
+            <p>Research has identified several modern USDT implementations that DO support EIP-3009, providing potential templates for Passet Hub deployment.</p>
+
+            <h4>1. USDT0 (OpenZeppelin Audited)</h4>
+
+            <div class="success-box">
+                <p><strong>Status:</strong> Production-ready, OpenZeppelin audited (January 2025)</p>
+                <p><strong>Features:</strong> Full EIP-3009 support, EIP-2612 (permit), modern Solidity, security-focused</p>
+                <p><strong>Use Case:</strong> Deployed on Arbitrum as USDT upgrade</p>
+                <p><strong>Advantage:</strong> Audited by industry leader, proven in production</p>
+                <p><strong>Challenge:</strong> May require adaptation for PolkaVM constraints</p>
+            </div>
+
+            <h4>2. txfusion/tether-l2</h4>
+
+            <div class="success-box">
+                <p><strong>Status:</strong> Open source, designed for L2 networks</p>
+                <p><strong>Features:</strong> EIP-3009 compatible, EIP-1271 smart account support, optimized for L2</p>
+                <p><strong>Use Case:</strong> Shared bridge infrastructure for L2 deployments</p>
+                <p><strong>Advantage:</strong> Designed for L2 constraints, similar to PolkaVM</p>
+                <p><strong>Challenge:</strong> May still require PolkaVM-specific modifications</p>
+            </div>
+
+            <h4>3. Polygon Bridged USDT</h4>
+
+            <div class="error-box">
+                <p><strong>Status:</strong> Production on Polygon</p>
+                <p><strong>EIP-3009 Support:</strong> <span class="tag tag-error">No</span></p>
+                <p><strong>Note:</strong> Explicitly documented as NOT compatible with EIP-3009, similar to Polygon USDC</p>
+                <p><strong>Conclusion:</strong> Not suitable as a template</p>
+            </div>
+
+            <h3>USDT Integration Options for Passet Hub</h3>
+
+            <h4>Option 1: Deploy Custom EIP-3009 USDT (Recommended)</h4>
+
+            <div class="phase-card">
+                <h4>Approach</h4>
+                <p>Deploy a custom USDT implementation with full EIP-3009 support, optimized for PolkaVM constraints.</p>
+
+                <h4>Implementation Strategy</h4>
+                <ul class="milestone-list">
+                    <li>Base on USDT0 or txfusion/tether-l2 implementation</li>
+                    <li>Simplify for PolkaVM (no constructor storage operations)</li>
+                    <li>Use immutable variables and inline logic</li>
+                    <li>Implement all EIP-3009 required functions</li>
+                    <li>Add PolkaVM-specific optimizations</li>
+                    <li>Thorough testing on Passet Hub</li>
+                </ul>
+
+                <h4>Advantages</h4>
+                <ul class="milestone-list">
+                    <li>Full control over implementation</li>
+                    <li>Optimized for PolkaVM specifics</li>
+                    <li>Can avoid constructor storage issues</li>
+                    <li>Complete X402 compatibility</li>
+                </ul>
+
+                <h4>Disadvantages</h4>
+                <ul class="milestone-list">
+                    <li>Not "official" Tether USDT</li>
+                    <li>Requires bridge or liquidity mechanism</li>
+                    <li>Trust and adoption challenges</li>
+                    <li>Need backing/redemption strategy</li>
+                </ul>
+            </div>
+
+            <h4>Option 2: Wrapper Contract Approach</h4>
+
+            <div class="phase-card">
+                <h4>Approach</h4>
+                <p>Create a wrapper contract around standard USDT that adds EIP-3009 functionality through a deposit/withdraw mechanism.</p>
+
+                <h4>Implementation Strategy</h4>
+                <ul class="milestone-list">
+                    <li>Deploy standard USDT (or bridge from Ethereum)</li>
+                    <li>Create wrapper contract with EIP-3009 interface</li>
+                    <li>Users deposit USDT, receive wrapped USDT</li>
+                    <li>Wrapped version supports transferWithAuthorization</li>
+                    <li>Redeem mechanism to unwrap back to standard USDT</li>
+                </ul>
+
+                <h4>Advantages</h4>
+                <ul class="milestone-list">
+                    <li>Can use "real" USDT if bridged</li>
+                    <li>Modular design, easier to update</li>
+                    <li>Clear separation of concerns</li>
+                </ul>
+
+                <h4>Disadvantages</h4>
+                <ul class="milestone-list">
+                    <li>Additional complexity</li>
+                    <li>Extra gas costs for wrap/unwrap</li>
+                    <li>Two-token system confusing for users</li>
+                    <li>Liquidity split between wrapped and unwrapped</li>
+                </ul>
+            </div>
+
+            <h4>Option 3: Use DOT with EIP-3009 Wrapper</h4>
+
+            <div class="phase-card">
+                <h4>Approach</h4>
+                <p>Since DOT is native to Polkadot, create an ERC-20 wrapped DOT with EIP-3009 support for X402 payments.</p>
+
+                <h4>Implementation Strategy</h4>
+                <ul class="milestone-list">
+                    <li>Create wrapped DOT ERC-20 contract</li>
+                    <li>Implement EIP-3009 interface</li>
+                    <li>Bridge to native DOT for redemption</li>
+                    <li>Use DOT as payment medium instead of stablecoin</li>
+                </ul>
+
+                <h4>Advantages</h4>
+                <ul class="milestone-list">
+                    <li>Native Polkadot token</li>
+                    <li>No external dependencies</li>
+                    <li>Full control over implementation</li>
+                    <li>Natural fit for Polkadot ecosystem</li>
+                </ul>
+
+                <h4>Disadvantages</h4>
+                <ul class="milestone-list">
+                    <li>Not a stablecoin - price volatility</li>
+                    <li>May not meet use case requirements</li>
+                    <li>Users need to handle price risk</li>
+                    <li>Less familiar for Web2 developers</li>
+                </ul>
+            </div>
+
+            <h3>Recommended Approach</h3>
+
+            <div class="success-box">
+                <h4>Deploy Custom EIP-3009 USDT (Option 1)</h4>
+                <p>For X402 integration on Passet Hub, we recommend deploying a custom USDT implementation based on USDT0 or txfusion/tether-l2, simplified for PolkaVM constraints. This provides the best balance of compatibility, control, and user experience.</p>
+                
+                <p style="margin-top: 15px;"><strong>Naming Convention:</strong> Use a clear name like "USDT-PH" (USDT Passet Hub) or "phUSDT" to distinguish from standard USDT while maintaining brand recognition.</p>
+                
+                <p style="margin-top: 15px;"><strong>Backing Strategy:</strong> Establish a clear backing mechanism through either:</p>
+                <ul class="milestone-list">
+                    <li>Bridge from Ethereum USDT (if technically feasible)</li>
+                    <li>Independent backing with transparent reserves</li>
+                    <li>Algorithmic stability mechanism</li>
+                    <li>Accept as independent stablecoin with market-driven value</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="eip3009-implementation">
+            <h2>EIP-3009 Implementation</h2>
+
+            <h3>Technical Specification</h3>
+
+            <p>EIP-3009 defines a standard interface for signature-based token transfers, enabling gasless transactions and seamless integration with payment protocols like X402. The implementation requires careful attention to security, particularly signature verification and replay protection.</p>
+
+            <h3>Core Contract Structure</h3>
+
+            <pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.28;
+
+contract USDTPH {
+    // Token metadata
+    string private constant NAME = "USDT Passet Hub";
+    string private constant SYMBOL = "USDT-PH";
+    string private constant VERSION = "1";
+    uint8 private constant DECIMALS = 6;
+    
+    // State variables
+    mapping(address => uint256) private _balances;
+    mapping(address => mapping(address => uint256)) private _allowances;
+    mapping(address => mapping(bytes32 => bool)) private _authorizationStates;
+    uint256 private _totalSupply;
+    
+    // EIP-712 type hashes
+    bytes32 private constant TRANSFER_WITH_AUTHORIZATION_TYPEHASH = keccak256(
+        "TransferWithAuthorization(address from,address to,uint256 value,uint256 validAfter,uint256 validBefore,bytes32 nonce)"
+    );
+    
+    // Events
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+    event AuthorizationUsed(address indexed authorizer, bytes32 indexed nonce);
+    
+    // EIP-712 domain separator (computed on-demand for PolkaVM)
+    function DOMAIN_SEPARATOR() public view returns (bytes32) {
+        return keccak256(abi.encode(
+            keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
+            keccak256(bytes(NAME)),
+            keccak256(bytes(VERSION)),
+            block.chainid,
+            address(this)
+        ));
+    }
+    
+    // EIP-3009: Transfer with authorization
+    function transferWithAuthorization(
+        address from,
+        address to,
+        uint256 value,
+        uint256 validAfter,
+        uint256 validBefore,
+        bytes32 nonce,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external {
+        require(block.timestamp > validAfter, "Authorization not yet valid");
+        require(block.timestamp < validBefore, "Authorization expired");
+        require(!_authorizationStates[from][nonce], "Authorization already used");
+        
+        bytes32 digest = keccak256(abi.encodePacked(
+            "\x19\x01",
+            DOMAIN_SEPARATOR(),
+            keccak256(abi.encode(
+                TRANSFER_WITH_AUTHORIZATION_TYPEHASH,
+                from,
+                to,
+                value,
+                validAfter,
+                validBefore,
+                nonce
+            ))
+        ));
+        
+        address signer = ecrecover(digest, v, r, s);
+        require(signer == from, "Invalid signature");
+        
+        _authorizationStates[from][nonce] = true;
+        _transfer(from, to, value);
+        
+        emit AuthorizationUsed(from, nonce);
+    }
+    
+    // Internal transfer logic
+    function _transfer(address from, address to, uint256 value) internal {
+        require(from != address(0), "Transfer from zero address");
+        require(to != address(0), "Transfer to zero address");
+        require(_balances[from] >= value, "Insufficient balance");
+        
+        _balances[from] -= value;
+        _balances[to] += value;
+        
+        emit Transfer(from, to, value);
+    }
+    
+    // Standard ERC-20 functions
+    function name() external pure returns (string memory) {
+        return NAME;
+    }
+    
+    function symbol() external pure returns (string memory) {
+        return SYMBOL;
+    }
+    
+    function decimals() external pure returns (uint8) {
+        return DECIMALS;
+    }
+    
+    function version() external pure returns (string memory) {
+        return VERSION;
+    }
+    
+    function totalSupply() external view returns (uint256) {
+        return _totalSupply;
+    }
+    
+    function balanceOf(address account) external view returns (uint256) {
+        return _balances[account];
+    }
+    
+    // ... additional ERC-20 functions
+}</code></pre>
+
+            <h3>PolkaVM Adaptations</h3>
+
+            <div class="warning-box">
+                <h4>Critical: No Constructor Storage Operations</h4>
+                <p>The contract uses constants and computes the domain separator on-demand to avoid storage operations in the constructor. This is essential for PolkaVM compatibility.</p>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Adaptation</th>
+                        <th>Standard Pattern</th>
+                        <th>PolkaVM Pattern</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Token Metadata</strong></td>
+                        <td>Storage variables set in constructor</td>
+                        <td>Constants defined at compile time</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Domain Separator</strong></td>
+                        <td>Computed once in constructor, cached</td>
+                        <td>Computed on-demand in view function</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Type Hashes</strong></td>
+                        <td>May be computed in constructor</td>
+                        <td>Defined as constants</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Inheritance</strong></td>
+                        <td>Multiple OpenZeppelin contracts</td>
+                        <td>Inline implementations, minimal inheritance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Libraries</strong></td>
+                        <td>SafeMath, ECDSA, etc.</td>
+                        <td>Inline logic, built-in overflow protection</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Security Considerations</h3>
+
+            <h4>Replay Protection</h4>
+
+            <p>The contract uses a nonce-based replay protection mechanism where each authorization can only be used once. The nonce is a bytes32 value chosen by the authorizer, providing flexibility in nonce management strategies.</p>
+
+            <pre><code>mapping(address => mapping(bytes32 => bool)) private _authorizationStates;
+
+function transferWithAuthorization(..., bytes32 nonce, ...) external {
+    require(!_authorizationStates[from][nonce], "Authorization already used");
+    // ... signature verification
+    _authorizationStates[from][nonce] = true;
+    // ... execute transfer
+}</code></pre>
+
+            <h4>Time-Bound Authorization</h4>
+
+            <p>Authorizations include validAfter and validBefore timestamps, creating a time window during which the authorization is valid. This prevents stale authorizations from being executed and provides additional security.</p>
+
+            <pre><code>require(block.timestamp > validAfter, "Authorization not yet valid");
+require(block.timestamp < validBefore, "Authorization expired");</code></pre>
+
+            <h4>Signature Verification</h4>
+
+            <p>The contract uses EIP-712 typed structured data for signatures, providing a secure and user-friendly signing experience. The signature covers all authorization parameters along with the domain separator.</p>
+
+            <pre><code>bytes32 digest = keccak256(abi.encodePacked(
+    "\x19\x01",
+    DOMAIN_SEPARATOR(),
+    keccak256(abi.encode(
+        TRANSFER_WITH_AUTHORIZATION_TYPEHASH,
+        from, to, value, validAfter, validBefore, nonce
+    ))
+));
+
+address signer = ecrecover(digest, v, r, s);
+require(signer == from, "Invalid signature");</code></pre>
+        </section>
+
+        <section id="facilitator-development">
+            <h2>Facilitator Development</h2>
+
+            <h3>Self-Hosted Facilitator Architecture</h3>
+
+            <p>Since Passet Hub is not supported by existing facilitator infrastructure, we must implement a self-hosted facilitator adapted for PolkaVM's unique characteristics. The facilitator serves as the bridge between HTTP payment requests and blockchain settlement.</p>
+
+            <h3>Core Components</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Technology</th>
+                        <th>Responsibilities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>HTTP Server</strong></td>
+                        <td>Node.js / Express</td>
+                        <td>Handle payment verification requests</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Signature Validator</strong></td>
+                        <td>ethers.js</td>
+                        <td>Verify EIP-712 signatures off-chain</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Blockchain Client</strong></td>
+                        <td>ethers.js / web3.js</td>
+                        <td>Submit transactions to Passet Hub</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gas Estimator</strong></td>
+                        <td>Custom logic</td>
+                        <td>Estimate PolkaVM resource costs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transaction Manager</strong></td>
+                        <td>Custom logic</td>
+                        <td>Handle nonce management, retries</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Database</strong></td>
+                        <td>PostgreSQL</td>
+                        <td>Track settlements, prevent replays</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>PolkaVM-Specific Adaptations</h3>
+
+            <h4>Multi-Dimensional Resource Metering</h4>
+
+            <p>Unlike Ethereum's single gas metric, PolkaVM uses three separate resource dimensions. The facilitator must handle this complexity when estimating costs and submitting transactions.</p>
+
+            <div class="phase-card">
+                <h4>Resource Dimensions</h4>
+                <ul class="milestone-list">
+                    <li><strong>ref_time:</strong> Computation time (similar to traditional gas)</li>
+                    <li><strong>proof_size:</strong> State proof size for validator verification</li>
+                    <li><strong>storage_deposit:</strong> State bloat management through deposits</li>
+                </ul>
+                
+                <p style="margin-top: 15px;"><strong>Implementation Note:</strong> The Ethereum RPC proxy automatically maps these three dimensions into a single gas value for compatibility. However, the facilitator should be aware of this multi-dimensional model for accurate cost estimation and monitoring.</p>
+            </div>
+
+            <h4>Existential Deposit Handling</h4>
+
+            <p>Passet Hub requires accounts to maintain a minimum balance (existential deposit) to remain active. The facilitator must ensure payment amounts account for this requirement, particularly when creating new recipient accounts.</p>
+
+            <pre><code>// Pseudo-code for existential deposit handling
+const EXISTENTIAL_DEPOSIT = ethers.utils.parseEther("0.01"); // Example value
+
+async function validatePayment(payment) {
+    const recipientBalance = await provider.getBalance(payment.to);
+    
+    if (recipientBalance.isZero()) {
+        // New account - ensure payment exceeds existential deposit
+        if (payment.value.lt(EXISTENTIAL_DEPOSIT)) {
+            throw new Error("Payment below existential deposit for new account");
+        }
+    }
+    
+    // ... additional validation
+}</code></pre>
+
+            <h3>Facilitator API</h3>
+
+            <h4>Verify Payment Endpoint</h4>
+
+            <pre><code>POST /verify
+Content-Type: application/json
+
+{
+    "from": "0x...",
+    "to": "0x...",
+    "value": "1000000",
+    "validAfter": 1699564800,
+    "validBefore": 1699651200,
+    "nonce": "0x...",
+    "signature": {
+        "v": 27,
+        "r": "0x...",
+        "s": "0x..."
+    },
+    "token": "0x..."
+}
+
+Response:
+{
+    "valid": true,
+    "message": "Payment verified"
+}</code></pre>
+
+            <h4>Submit Payment Endpoint</h4>
+
+            <pre><code>POST /submit
+Content-Type: application/json
+
+{
+    "from": "0x...",
+    "to": "0x...",
+    "value": "1000000",
+    "validAfter": 1699564800,
+    "validBefore": 1699651200,
+    "nonce": "0x...",
+    "signature": {
+        "v": 27,
+        "r": "0x...",
+        "s": "0x..."
+    },
+    "token": "0x..."
+}
+
+Response:
+{
+    "txHash": "0x...",
+    "status": "pending"
+}</code></pre>
+
+            <h4>Check Settlement Endpoint</h4>
+
+            <pre><code>GET /settlement/:txHash
+
+Response:
+{
+    "txHash": "0x...",
+    "status": "confirmed",
+    "blockNumber": 12345678,
+    "confirmations": 12
+}</code></pre>
+        </section>
+
+        <section id="passet-hub-integration">
+            <h2>Passet Hub Integration</h2>
+
+            <h3>Network Configuration</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Network Name</strong></td>
+                        <td>Passet Hub (Paseo TestNet)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chain ID</strong></td>
+                        <td>420420422 (0x1911f0a6)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RPC Endpoint</strong></td>
+                        <td>https://testnet-passet-hub-eth-rpc.polkadot.io</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Block Explorer</strong></td>
+                        <td>https://blockscout-passet-hub.parity-testnet.parity.io</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Faucet</strong></td>
+                        <td>https://faucet.polkadot.io/?parachain=1111</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Native Token</strong></td>
+                        <td>PAS</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Hardhat Configuration</h3>
+
+            <pre><code>require("@nomicfoundation/hardhat-toolbox");
+require("@parity/hardhat-polkadot");
+const { vars } = require("hardhat/config");
+
+module.exports = {
+    solidity: "0.8.28",
+    resolc: {
+        version: "0.3.0",
+        compilerSource: "npm"
+    },
+    networks: {
+        passetHub: {
+            polkavm: true,
+            url: "https://testnet-passet-hub-eth-rpc.polkadot.io",
+            accounts: [vars.get("PRIVATE_KEY")],
+            chainId: 420420422
+        }
+    }
+};</code></pre>
+
+            <h3>Deployment Workflow</h3>
+
+            <div class="phase-card">
+                <h4>Step 1: Deploy Custom USDT Token</h4>
+                <pre><code>npx hardhat compile
+npx hardhat ignition deploy ./ignition/modules/USDTPH.js --network passetHub</code></pre>
+                <p style="margin-top: 10px;">Save the deployed token address for facilitator configuration.</p>
+            </div>
+
+            <div class="phase-card">
+                <h4>Step 2: Deploy Payment Escrow Contract</h4>
+                <pre><code>npx hardhat ignition deploy ./ignition/modules/PaymentEscrow.js --network passetHub</code></pre>
+                <p style="margin-top: 10px;">Pass the token address as a constructor parameter.</p>
+            </div>
+
+            <div class="phase-card">
+                <h4>Step 3: Configure Facilitator</h4>
+                <pre><code>// .env file
+PASSET_HUB_RPC=https://testnet-passet-hub-eth-rpc.polkadot.io
+USDT_TOKEN_ADDRESS=0x...
+ESCROW_CONTRACT_ADDRESS=0x...
+FACILITATOR_PRIVATE_KEY=0x...
+CHAIN_ID=420420422</code></pre>
+            </div>
+
+            <div class="phase-card">
+                <h4>Step 4: Start Facilitator Service</h4>
+                <pre><code>npm install
+npm run build
+npm start</code></pre>
+                <p style="margin-top: 10px;">Verify the service is running and can communicate with Passet Hub.</p>
+            </div>
+
+            <h3>Testing on Passet Hub</h3>
+
+            <div class="milestone-list">
+                <li>Obtain PAS tokens from faucet for gas</li>
+                <li>Deploy USDT-PH token contract</li>
+                <li>Mint test tokens to test accounts</li>
+                <li>Test transferWithAuthorization function</li>
+                <li>Verify signature validation works correctly</li>
+                <li>Test facilitator payment verification</li>
+                <li>Test end-to-end X402 payment flow</li>
+                <li>Monitor gas costs and optimize</li>
+            </div>
+        </section>
+
+        <section id="implementation-roadmap">
+            <h2>Implementation Roadmap</h2>
+
+            <p>The following 6-week roadmap provides a structured approach to implementing X402 payments on Passet Hub. Each phase builds upon the previous one, with clear milestones and deliverables.</p>
+
+            <h3>Phase 1: Token Deployment & Facilitator Setup (Weeks 1-2)</h3>
+
+            <div class="phase-card">
+                <h4>Objectives</h4>
+                <ul class="milestone-list">
+                    <li>Deploy custom EIP-3009 compatible USDT on Passet Hub</li>
+                    <li>Set up self-hosted facilitator infrastructure</li>
+                    <li>Adapt facilitator for PolkaVM specifics</li>
+                    <li>Conduct basic end-to-end payment test</li>
+                </ul>
+
+                <h4>Tasks</h4>
+                <table style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Duration</th>
+                            <th>Deliverable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>USDT Contract Development</td>
+                            <td>3 days</td>
+                            <td>USDT-PH contract with EIP-3009 support</td>
+                        </tr>
+                        <tr>
+                            <td>PolkaVM Optimization</td>
+                            <td>2 days</td>
+                            <td>Contract adapted for constructor constraints</td>
+                        </tr>
+                        <tr>
+                            <td>Contract Deployment</td>
+                            <td>1 day</td>
+                            <td>Deployed and verified on Passet Hub</td>
+                        </tr>
+                        <tr>
+                            <td>Facilitator Setup</td>
+                            <td>2 days</td>
+                            <td>Forked and configured X402 facilitator</td>
+                        </tr>
+                        <tr>
+                            <td>PolkaVM Adaptations</td>
+                            <td>2 days</td>
+                            <td>Multi-dimensional gas handling implemented</td>
+                        </tr>
+                        <tr>
+                            <td>Basic Testing</td>
+                            <td>2 days</td>
+                            <td>End-to-end payment flow validated</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Success Criteria</h4>
+                <ul class="milestone-list">
+                    <li>USDT-PH token deploys successfully on Passet Hub</li>
+                    <li>transferWithAuthorization function works correctly</li>
+                    <li>Facilitator can verify and submit payments</li>
+                    <li>Basic X402 payment flow completes end-to-end</li>
+                </ul>
+            </div>
+
+            <h3>Phase 2: Smart Contract & Server Development (Weeks 3-4)</h3>
+
+            <div class="phase-card">
+                <h4>Objectives</h4>
+                <ul class="milestone-list">
+                    <li>Develop payment escrow contract</li>
+                    <li>Implement proof-of-payment verification</li>
+                    <li>Build HTTP 402 challenge/response server</li>
+                    <li>Integrate all components</li>
+                </ul>
+
+                <h4>Tasks</h4>
+                <table style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Duration</th>
+                            <th>Deliverable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Escrow Contract Development</td>
+                            <td>3 days</td>
+                            <td>Time-locked payment escrow with disputes</td>
+                        </tr>
+                        <tr>
+                            <td>Proof-of-Payment Logic</td>
+                            <td>2 days</td>
+                            <td>On-chain cryptographic verification</td>
+                        </tr>
+                        <tr>
+                            <td>HTTP 402 Server</td>
+                            <td>3 days</td>
+                            <td>Challenge/response server with security</td>
+                        </tr>
+                        <tr>
+                            <td>Facilitator Integration</td>
+                            <td>2 days</td>
+                            <td>Server integrated with facilitator</td>
+                        </tr>
+                        <tr>
+                            <td>Testing</td>
+                            <td>2 days</td>
+                            <td>Comprehensive integration tests</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Success Criteria</h4>
+                <ul class="milestone-list">
+                    <li>Escrow contract handles time-locked payments</li>
+                    <li>Proof-of-payment verification works on-chain</li>
+                    <li>HTTP 402 server issues challenges correctly</li>
+                    <li>All components integrate smoothly</li>
+                </ul>
+            </div>
+
+            <h3>Phase 3: Frontend & UX Implementation (Weeks 5-6)</h3>
+
+            <div class="phase-card">
+                <h4>Objectives</h4>
+                <ul class="milestone-list">
+                    <li>Design Web2-like onboarding flow</li>
+                    <li>Develop responsive, accessible UI</li>
+                    <li>Implement robust error handling</li>
+                    <li>Conduct user testing</li>
+                </ul>
+
+                <h4>Tasks</h4>
+                <table style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Duration</th>
+                            <th>Deliverable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>UX Design</td>
+                            <td>2 days</td>
+                            <td>Wireframes and user flow diagrams</td>
+                        </tr>
+                        <tr>
+                            <td>Frontend Development</td>
+                            <td>4 days</td>
+                            <td>React app with wallet integration</td>
+                        </tr>
+                        <tr>
+                            <td>Accessibility Implementation</td>
+                            <td>2 days</td>
+                            <td>WCAG 2.1 AA compliant interface</td>
+                        </tr>
+                        <tr>
+                            <td>Error Handling</td>
+                            <td>2 days</td>
+                            <td>User-friendly error messages and recovery</td>
+                        </tr>
+                        <tr>
+                            <td>User Testing</td>
+                            <td>2 days</td>
+                            <td>Feedback and refinements</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Success Criteria</h4>
+                <ul class="milestone-list">
+                    <li>Onboarding flow is intuitive and seamless</li>
+                    <li>UI is responsive across devices</li>
+                    <li>Accessibility standards met</li>
+                    <li>Error handling guides users effectively</li>
+                    <li>User testing feedback is positive</li>
+                </ul>
+            </div>
+
+            <h3>Timeline Summary</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Duration</th>
+                        <th>Key Deliverables</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Phase 1: Infrastructure</strong></td>
+                        <td>Weeks 1-2</td>
+                        <td>USDT-PH token, self-hosted facilitator</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 2: Smart Contracts</strong></td>
+                        <td>Weeks 3-4</td>
+                        <td>Escrow contract, HTTP 402 server</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 3: Frontend</strong></td>
+                        <td>Weeks 5-6</td>
+                        <td>Web2-like UI, user testing complete</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Duration</strong></td>
+                        <td><strong>6 Weeks</strong></td>
+                        <td><strong>Complete X402 payment system</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="testing-strategy">
+            <h2>Testing Strategy</h2>
+
+            <h3>Unit Tests</h3>
+
+            <h4>USDT-PH Token Tests</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test Category</th>
+                        <th>Test Cases</th>
+                        <th>Coverage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ERC-20 Functions</strong></td>
+                        <td>Transfer, approve, transferFrom work correctly</td>
+                        <td>Critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>EIP-3009 Functions</strong></td>
+                        <td>transferWithAuthorization, receiveWithAuthorization</td>
+                        <td>Critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Signature Verification</strong></td>
+                        <td>Valid signatures accepted, invalid rejected</td>
+                        <td>Critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nonce Management</strong></td>
+                        <td>Replay protection, nonce reuse prevented</td>
+                        <td>Critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Time Bounds</strong></td>
+                        <td>validAfter and validBefore enforced</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Domain Separator</strong></td>
+                        <td>Correct chain ID and contract address</td>
+                        <td>Medium</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Facilitator Tests</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test Category</th>
+                        <th>Test Cases</th>
+                        <th>Coverage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Payment Verification</strong></td>
+                        <td>Valid payments accepted, invalid rejected</td>
+                        <td>Critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Signature Validation</strong></td>
+                        <td>Off-chain signature verification</td>
+                        <td>Critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transaction Submission</strong></td>
+                        <td>Successful submission to Passet Hub</td>
+                        <td>Critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gas Estimation</strong></td>
+                        <td>Accurate PolkaVM resource estimation</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Error Handling</strong></td>
+                        <td>Network errors, contract errors handled</td>
+                        <td>High</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Integration Tests</h3>
+
+            <div class="phase-card">
+                <h4>End-to-End X402 Payment Flow</h4>
+                <ol>
+                    <li>Client requests protected resource</li>
+                    <li>Server responds with HTTP 402 challenge</li>
+                    <li>Client creates EIP-3009 payment signature</li>
+                    <li>Client resubmits with X-PAYMENT header</li>
+                    <li>Server verifies payment via facilitator</li>
+                    <li>Facilitator validates and submits to blockchain</li>
+                    <li>Transaction confirms on Passet Hub</li>
+                    <li>Server delivers resource with settlement proof</li>
+                    <li>Verify tokens transferred correctly</li>
+                    <li>Verify nonce marked as used</li>
+                </ol>
+            </div>
+
+            <h3>Security Tests</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Attack Vector</th>
+                        <th>Test</th>
+                        <th>Expected Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Replay Attack</strong></td>
+                        <td>Reuse same signature/nonce</td>
+                        <td>Second attempt rejected</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Signature Manipulation</strong></td>
+                        <td>Modify payment parameters after signing</td>
+                        <td>Signature verification fails</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Expired Authorization</strong></td>
+                        <td>Use authorization past validBefore</td>
+                        <td>Rejected as expired</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Premature Authorization</strong></td>
+                        <td>Use authorization before validAfter</td>
+                        <td>Rejected as not yet valid</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Insufficient Balance</strong></td>
+                        <td>Authorize transfer exceeding balance</td>
+                        <td>Transaction reverts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wrong Token</strong></td>
+                        <td>Submit payment with incorrect token</td>
+                        <td>Facilitator rejects</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Performance Tests</h3>
+
+            <div class="highlight-box">
+                <h4>Key Metrics</h4>
+                <ul class="milestone-list">
+                    <li><strong>Gas Cost:</strong> Measure gas for transferWithAuthorization on PolkaVM</li>
+                    <li><strong>Latency:</strong> Time from payment submission to settlement confirmation</li>
+                    <li><strong>Throughput:</strong> Payments per second the facilitator can process</li>
+                    <li><strong>Reliability:</strong> Success rate under normal and stress conditions</li>
+                    <li><strong>Cost Efficiency:</strong> Compare to alternative payment methods</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Manus AI | X402 Payment Protocol Architecture & Roadmap for Passet Hub</p>
+        <p style="margin-top: 10px; font-size: 0.9rem;">This report provides technical guidance for implementing X402 payments on Passet Hub. Specifications are based on research conducted in November 2025.</p>
+    </footer>
+</body>
+</html>
