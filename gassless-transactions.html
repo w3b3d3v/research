@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gasless Transactions - Architecture & Roadmap for Passet Hub</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --green: #96E150;
+            --purple: #7864FA;
+            --blue: #1E96FF;
+            --white: #FFFFFF;
+            --black: #000000;
+            --gray-light: #F5F5F5;
+            --gray-medium: #E0E0E0;
+            --gray-dark: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Barlow', sans-serif;
+            line-height: 1.6;
+            color: var(--gray-dark);
+            background-color: var(--white);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            color: var(--white);
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        
+        .toc {
+            background-color: var(--gray-light);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+        
+        .toc h2 {
+            color: var(--purple);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .toc ul {
+            list-style: none;
+        }
+        
+        .toc li {
+            margin-bottom: 10px;
+        }
+        
+        .toc a {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .toc a:hover {
+            color: var(--purple);
+        }
+        
+        section {
+            margin-bottom: 50px;
+        }
+        
+        h2 {
+            color: var(--purple);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--green);
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: var(--blue);
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        h4 {
+            color: var(--gray-dark);
+            font-size: 1.2rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background-color: var(--purple);
+            color: var(--white);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--gray-medium);
+        }
+        
+        tr:hover {
+            background-color: var(--gray-light);
+        }
+        
+        .highlight-box {
+            background-color: var(--gray-light);
+            border-left: 4px solid var(--green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .warning-box {
+            background-color: #FFF3CD;
+            border-left: 4px solid #FFC107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .success-box {
+            background-color: #D4EDDA;
+            border-left: 4px solid var(--green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .phase-card {
+            background-color: var(--white);
+            border: 2px solid var(--gray-medium);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .phase-card h4 {
+            color: var(--purple);
+            margin-top: 0;
+        }
+        
+        .milestone-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .milestone-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .milestone-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .tag-success {
+            background-color: var(--green);
+            color: var(--black);
+        }
+        
+        .tag-warning {
+            background-color: #FFC107;
+            color: var(--black);
+        }
+        
+        .tag-info {
+            background-color: var(--blue);
+            color: var(--white);
+        }
+        
+        pre {
+            background-color: var(--gray-dark);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+        
+        code {
+            font-family: 'Courier New', monospace;
+        }
+        
+        footer {
+            background-color: var(--gray-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gasless Transactions</h1>
+        <p>Architecture & Implementation Roadmap for Passet Hub</p>
+        <p style="font-size: 0.9rem; margin-top: 10px;">Prepared by Manus AI | November 2025</p>
+    </header>
+
+    <div class="container">
+        <nav class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#executive-summary">Executive Summary</a></li>
+                <li><a href="#what-are-gasless">What Are Gasless Transactions?</a></li>
+                <li><a href="#erc2771-standard">ERC-2771 Standard</a></li>
+                <li><a href="#forwarder-research">Forwarder Contract Research</a></li>
+                <li><a href="#polkavm-adaptations">PolkaVM-Specific Adaptations</a></li>
+                <li><a href="#architecture">System Architecture</a></li>
+                <li><a href="#implementation-roadmap">Implementation Roadmap</a></li>
+                <li><a href="#testing-strategy">Testing Strategy</a></li>
+                <li><a href="#deployment">Deployment Guide</a></li>
+            </ul>
+        </nav>
+
+        <section id="executive-summary">
+            <h2>Executive Summary</h2>
+            
+            <div class="highlight-box">
+                <p><strong>Goal:</strong> Enable Web2-like user experiences on Passet Hub where users can interact with blockchain applications without holding PAS tokens for gas fees.</p>
+            </div>
+
+            <p>Gasless transactions represent a fundamental shift in blockchain user experience by abstracting away the complexity of gas fees and transaction management. Through the implementation of the ERC-2771 meta-transaction standard, users can sign transactions off-chain while a relayer service submits them on-chain and covers the gas costs. This approach eliminates one of the primary barriers to mainstream blockchain adoption: the requirement for users to understand and manage native tokens for transaction fees.</p>
+
+            <p>This report presents a comprehensive architecture and implementation roadmap for deploying gasless transactions on Passet Hub, Polkadot's EVM-compatible smart contract platform. The implementation leverages proven patterns from Ethereum while adapting to PolkaVM's unique constraints, including constructor storage limitations and multi-dimensional resource metering. The proposed system includes three core components: a simplified forwarder contract optimized for PolkaVM, a relay service for transaction submission and gas sponsorship, and recipient contracts that extract the real sender from forwarded transactions.</p>
+
+            <div class="success-box">
+                <h4>Proven Viability</h4>
+                <p>Previous testing on Passet Hub has validated that simplified forwarder contracts can successfully deploy and execute gasless transactions. The key to success is avoiding storage operations in constructors and using inline logic with immutable variables.</p>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Status</th>
+                        <th>Timeline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Forwarder Contract</strong></td>
+                        <td><span class="tag tag-success">Validated</span></td>
+                        <td>Weeks 3-4</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Relay Service</strong></td>
+                        <td><span class="tag tag-info">Design Ready</span></td>
+                        <td>Weeks 5-6</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Integration & Testing</strong></td>
+                        <td><span class="tag tag-info">Planned</span></td>
+                        <td>Weeks 7-8</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="what-are-gasless">
+            <h2>What Are Gasless Transactions?</h2>
+
+            <h3>The Problem</h3>
+
+            <p>Traditional blockchain interactions require users to hold native tokens (like PAS on Passet Hub or ETH on Ethereum) to pay for transaction gas fees. This creates significant friction for new users who must first acquire tokens through exchanges, understand wallet management, and maintain sufficient balances for transactions. For many use cases, this complexity is a dealbreaker that prevents mainstream adoption.</p>
+
+            <h3>The Solution: Meta-Transactions</h3>
+
+            <p>Meta-transactions solve this problem by introducing a trusted intermediary called a relayer. Instead of submitting transactions directly to the blockchain, users sign transaction requests off-chain using standard cryptographic signatures. The relayer then submits these signed requests to a forwarder contract, paying the gas fees on behalf of the user. The forwarder verifies the signature and executes the requested transaction, with the target contract able to extract the real sender from the forwarded call.</p>
+
+            <div class="phase-card">
+                <h4>Gasless Transaction Flow</h4>
+                <ol style="padding-left: 20px;">
+                    <li>User creates transaction request (to, data, nonce, deadline)</li>
+                    <li>User signs request off-chain using EIP-712 typed data</li>
+                    <li>User sends signed request to relayer service</li>
+                    <li>Relayer validates request and submits to forwarder contract</li>
+                    <li>Relayer pays gas fees in PAS tokens</li>
+                    <li>Forwarder verifies signature matches claimed sender</li>
+                    <li>Forwarder executes call to target contract, appending real sender</li>
+                    <li>Target contract extracts real sender from calldata</li>
+                    <li>Transaction executes as if sent directly by user</li>
+                </ol>
+            </div>
+
+            <h3>Key Benefits</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Benefit</th>
+                        <th>Description</th>
+                        <th>Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Frictionless Onboarding</strong></td>
+                        <td>Users can interact immediately without acquiring PAS</td>
+                        <td>Dramatically reduced barrier to entry</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Web2-Like UX</strong></td>
+                        <td>No gas fee management or wallet funding required</td>
+                        <td>Familiar experience for mainstream users</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Flexible Sponsorship</strong></td>
+                        <td>Projects can sponsor specific actions or user segments</td>
+                        <td>Enables freemium models and user acquisition</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Batch Operations</strong></td>
+                        <td>Relayers can batch multiple user requests</td>
+                        <td>Improved efficiency and reduced costs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Security</strong></td>
+                        <td>Cryptographic signatures prevent unauthorized actions</td>
+                        <td>Same security as direct transactions</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Use Cases</h3>
+
+            <div class="highlight-box">
+                <h4>NFT Minting</h4>
+                <p>Allow users to mint NFTs without holding PAS tokens. The project sponsors the minting gas fees as a user acquisition cost, enabling seamless onboarding for collectors.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Gaming</h4>
+                <p>Enable in-game actions without requiring players to understand blockchain or manage gas. The game studio sponsors all transaction fees, providing a traditional gaming experience.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Social Applications</h4>
+                <p>Allow users to post content, like, comment, and interact without gas fees. The platform sponsors transactions for active users, similar to Web2 social networks.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>DeFi Onboarding</h4>
+                <p>Enable first-time users to try DeFi protocols without initial token purchases. Projects sponsor initial transactions to reduce onboarding friction.</p>
+            </div>
+        </section>
+
+        <section id="erc2771-standard">
+            <h2>ERC-2771 Standard</h2>
+
+            <h3>Overview</h3>
+
+            <p>ERC-2771 is an Ethereum standard that defines a secure protocol for native meta-transactions. It specifies the interface between forwarder contracts and recipient contracts, ensuring interoperability across different implementations. The standard has been widely adopted in the Ethereum ecosystem and is supported by major infrastructure providers including OpenZeppelin, Biconomy, and Gelato.</p>
+
+            <h3>Core Components</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Role</th>
+                        <th>Responsibilities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Forwarder</strong></td>
+                        <td>Trusted intermediary</td>
+                        <td>Verify signatures, execute calls, manage nonces</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Recipient</strong></td>
+                        <td>Target contract</td>
+                        <td>Extract real sender, trust forwarder, execute logic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Relayer</strong></td>
+                        <td>Off-chain service</td>
+                        <td>Submit transactions, pay gas, batch requests</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Signer</strong></td>
+                        <td>End user</td>
+                        <td>Sign requests off-chain, specify actions</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Request Structure</h3>
+
+            <p>ERC-2771 forward requests include the following fields, ensuring complete specification of the desired transaction while preventing replay attacks and unauthorized execution:</p>
+
+            <pre><code>struct ForwardRequest {
+    address from;        // Signer address (must match signature)
+    address to;          // Target contract address
+    uint256 value;       // Native token amount to forward
+    uint256 gas;         // Gas limit for the call
+    uint256 nonce;       // Unique identifier to prevent replay
+    uint256 deadline;    // Expiration timestamp
+    bytes data;          // Encoded function call data
+}</code></pre>
+
+            <h3>Signature Verification</h3>
+
+            <p>Signatures use EIP-712 typed structured data, providing a secure and user-friendly signing experience. The signature covers all request fields along with a domain separator that includes the forwarder address and chain ID, preventing cross-contract and cross-chain replay attacks.</p>
+
+            <pre><code>// EIP-712 Domain
+struct EIP712Domain {
+    string name;              // "SimpleForwarder"
+    string version;           // "1"
+    uint256 chainId;          // 420420422 (Passet Hub)
+    address verifyingContract; // Forwarder address
+}
+
+// Typed data hash
+hash = keccak256(abi.encodePacked(
+    "\x19\x01",
+    DOMAIN_SEPARATOR,
+    structHash
+))</code></pre>
+
+            <h3>Sender Extraction</h3>
+
+            <p>The ERC-2771 standard specifies that the forwarder appends the real sender address to the calldata when forwarding requests. Recipient contracts inherit from ERC2771Context, which overrides <code>msg.sender</code> to extract this appended address. This approach maintains backward compatibility while enabling gasless functionality.</p>
+
+            <pre><code>function _msgSender() internal view returns (address) {
+    if (msg.sender == trustedForwarder && msg.data.length >= 20) {
+        // Extract sender from last 20 bytes of calldata
+        return address(bytes20(msg.data[msg.data.length - 20:]));
+    }
+    return msg.sender; // Fallback to direct calls
+}</code></pre>
+        </section>
+
+        <section id="forwarder-research">
+            <h2>Forwarder Contract Research</h2>
+
+            <h3>OpenZeppelin ERC2771Forwarder</h3>
+
+            <p>OpenZeppelin provides a production-ready ERC2771Forwarder implementation that has been extensively audited and battle-tested across multiple networks. The implementation includes advanced features such as batch execution with refunding, comprehensive security checks, and gas-efficient nonce management. However, this implementation uses storage operations in the constructor and complex inheritance patterns that are incompatible with PolkaVM's current constraints.</p>
+
+            <h4>Key Features</h4>
+
+            <div class="phase-card">
+                <h4>Single Execution</h4>
+                <ul class="milestone-list">
+                    <li>Verify signature matches claimed sender</li>
+                    <li>Check deadline hasn't expired</li>
+                    <li>Validate nonce is current</li>
+                    <li>Execute call with specified gas limit</li>
+                    <li>Consume nonce on success</li>
+                    <li>Emit execution event</li>
+                </ul>
+            </div>
+
+            <div class="phase-card">
+                <h4>Batch Execution</h4>
+                <ul class="milestone-list">
+                    <li>Process multiple requests in single transaction</li>
+                    <li>Skip invalid requests if refund receiver provided</li>
+                    <li>Refund unused msg.value to specified address</li>
+                    <li>Revert entire batch if refund receiver is zero address</li>
+                    <li>Optimize gas costs through batching</li>
+                </ul>
+            </div>
+
+            <h4>Security Features</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Purpose</th>
+                        <th>Implementation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Nonce Management</strong></td>
+                        <td>Prevent replay attacks</td>
+                        <td>Per-user sequential nonces</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Deadline Validation</strong></td>
+                        <td>Prevent stale requests</td>
+                        <td>Timestamp-based expiration</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Signature Verification</strong></td>
+                        <td>Ensure authenticity</td>
+                        <td>EIP-712 typed data signatures</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Target Trust Check</strong></td>
+                        <td>Prevent unauthorized calls</td>
+                        <td>isTrustedForwarder() validation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Value Validation</strong></td>
+                        <td>Prevent value mismatch</td>
+                        <td>Strict msg.value checking</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Alternative Implementations</h3>
+
+            <h4>Biconomy Forwarder</h4>
+
+            <p>Biconomy provides a widely-used forwarder implementation that powers gasless transactions for numerous production applications. The contract includes additional features such as domain separator caching and optimized gas usage. However, like OpenZeppelin's implementation, it relies on constructor storage operations and is not compatible with PolkaVM without significant modifications.</p>
+
+            <h4>Gelato Relay</h4>
+
+            <p>Gelato offers a comprehensive relay infrastructure including forwarder contracts and a managed relay service. Their implementation focuses on high-throughput scenarios and includes advanced features like conditional execution and fee payment in ERC-20 tokens. The forwarder contract follows similar patterns to OpenZeppelin but with additional complexity that makes PolkaVM adaptation challenging.</p>
+
+            <h3>Lessons Learned</h3>
+
+            <div class="warning-box">
+                <h4>PolkaVM Incompatibility</h4>
+                <p>All standard Ethereum forwarder implementations fail to deploy on Passet Hub due to constructor storage operations. Previous testing confirmed that even production-grade, audited contracts from OpenZeppelin and Biconomy cannot be deployed without significant refactoring.</p>
+            </div>
+
+            <div class="success-box">
+                <h4>Simplified Pattern Success</h4>
+                <p>A simplified forwarder contract using only immutable variables and inline logic successfully deployed and operated on Passet Hub. This pattern maintains all core security features while working within PolkaVM constraints.</p>
+            </div>
+        </section>
+
+        <section id="polkavm-adaptations">
+            <h2>PolkaVM-Specific Adaptations</h2>
+
+            <h3>Constructor Storage Constraint</h3>
+
+            <p>The most significant challenge for deploying forwarder contracts on Passet Hub is the prohibition of storage operations (<code>sstore</code> and <code>sload</code>) in constructors. This limitation affects standard patterns used throughout the Ethereum ecosystem, including OpenZeppelin's base contracts. The root cause appears to be fundamental to PolkaVM's current implementation and affects all tested contract patterns.</p>
+
+            <h4>Standard Pattern (Fails on PolkaVM)</h4>
+
+            <pre><code>contract StandardForwarder {
+    string private _name;    // Storage variable
+    string private _version; // Storage variable
+    
+    constructor(string memory name, string memory version) {
+        _name = name;        // sstore - FAILS
+        _version = version;  // sstore - FAILS
+    }
+}</code></pre>
+
+            <h4>PolkaVM-Compatible Pattern</h4>
+
+            <pre><code>contract SimpleForwarder {
+    // Use constants instead of storage
+    string private constant NAME = "SimpleForwarder";
+    string private constant VERSION = "1";
+    
+    // No constructor needed, or empty constructor
+    constructor() {}
+    
+    // Compute values on-demand
+    function DOMAIN_SEPARATOR() public view returns (bytes32) {
+        return keccak256(abi.encode(
+            keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
+            keccak256(bytes(NAME)),
+            keccak256(bytes(VERSION)),
+            block.chainid,
+            address(this)
+        ));
+    }
+}</code></pre>
+
+            <h3>Memory and Size Constraints</h3>
+
+            <p>PolkaVM enforces stricter limits than standard EVM, with a maximum contract code size of approximately 100KB and a call stack depth limit of 5. These constraints require careful contract design and optimization, particularly when considering the inclusion of libraries and inherited contracts.</p>
+
+            <div class="highlight-box">
+                <h4>Optimization Strategies</h4>
+                <ul class="milestone-list">
+                    <li>Avoid OpenZeppelin dependencies (use inline implementations)</li>
+                    <li>Minimize external library usage</li>
+                    <li>Inline critical functions instead of using inheritance</li>
+                    <li>Use assembly for gas-sensitive operations</li>
+                    <li>Remove unnecessary functionality and comments</li>
+                </ul>
+            </div>
+
+            <h3>Multi-Dimensional Resource Metering</h3>
+
+            <p>Unlike Ethereum's single gas metric, PolkaVM uses three separate resource dimensions: <code>ref_time</code> (computation), <code>proof_size</code> (state proof size), and <code>storage_deposit</code> (state bloat management). The Ethereum RPC proxy automatically maps these to a single gas value for compatibility, but relay services should be aware of this multi-dimensional model for accurate cost estimation.</p>
+
+            <h3>Existential Deposit</h3>
+
+            <p>Passet Hub requires accounts to maintain a minimum balance (existential deposit) to remain active. This affects gasless transaction systems in two ways: new user accounts must receive sufficient initial balance, and forwarded transactions must account for this minimum when handling value transfers. The relay service should handle existential deposit requirements transparently.</p>
+
+            <h3>Complete Simplified Forwarder</h3>
+
+            <p>The following implementation has been validated on Passet Hub and successfully handles gasless transactions while working within all PolkaVM constraints:</p>
+
+            <pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.28;
+
+contract SimpleForwarder {
+    // Constants (no storage in constructor)
+    string private constant NAME = "SimpleForwarder";
+    string private constant VERSION = "1";
+    
+    // Nonce tracking (only storage that's allowed)
+    mapping(address => uint256) private _nonces;
+    
+    // Request structure
+    struct ForwardRequest {
+        address from;
+        address to;
+        uint256 value;
+        uint256 gas;
+        uint256 nonce;
+        uint256 deadline;
+        bytes data;
+    }
+    
+    // Events
+    event Executed(address indexed from, address indexed to, bool success);
+    
+    // Domain separator (computed on-demand)
+    function DOMAIN_SEPARATOR() public view returns (bytes32) {
+        return keccak256(abi.encode(
+            keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
+            keccak256(bytes(NAME)),
+            keccak256(bytes(VERSION)),
+            block.chainid,
+            address(this)
+        ));
+    }
+    
+    // Get nonce for address
+    function getNonce(address from) public view returns (uint256) {
+        return _nonces[from];
+    }
+    
+    // Verify request
+    function verify(
+        ForwardRequest calldata req,
+        bytes calldata signature
+    ) public view returns (bool) {
+        if (block.timestamp > req.deadline) return false;
+        if (req.nonce != _nonces[req.from]) return false;
+        
+        bytes32 digest = _getDigest(req);
+        address signer = _recoverSigner(digest, signature);
+        
+        return signer == req.from && signer != address(0);
+    }
+    
+    // Execute request
+    function execute(
+        ForwardRequest calldata req,
+        bytes calldata signature
+    ) public payable returns (bool success) {
+        require(verify(req, signature), "Invalid request");
+        require(msg.value == req.value, "Value mismatch");
+        
+        _nonces[req.from]++;
+        
+        (success,) = req.to.call{gas: req.gas, value: req.value}(
+            abi.encodePacked(req.data, req.from)
+        );
+        
+        emit Executed(req.from, req.to, success);
+    }
+    
+    // Internal: Get typed data hash
+    function _getDigest(ForwardRequest calldata req) internal view returns (bytes32) {
+        bytes32 structHash = keccak256(abi.encode(
+            keccak256("ForwardRequest(address from,address to,uint256 value,uint256 gas,uint256 nonce,uint256 deadline,bytes data)"),
+            req.from,
+            req.to,
+            req.value,
+            req.gas,
+            req.nonce,
+            req.deadline,
+            keccak256(req.data)
+        ));
+        
+        return keccak256(abi.encodePacked(
+            "\x19\x01",
+            DOMAIN_SEPARATOR(),
+            structHash
+        ));
+    }
+    
+    // Internal: Recover signer
+    function _recoverSigner(
+        bytes32 digest,
+        bytes calldata signature
+    ) internal pure returns (address) {
+        require(signature.length == 65, "Invalid signature length");
+        
+        bytes32 r;
+        bytes32 s;
+        uint8 v;
+        
+        assembly {
+            let ptr := signature.offset
+            r := calldataload(ptr)
+            s := calldataload(add(ptr, 32))
+            v := byte(0, calldataload(add(ptr, 64)))
+        }
+        
+        return ecrecover(digest, v, r, s);
+    }
+}</code></pre>
+        </section>
+
+        <section id="architecture">
+            <h2>System Architecture</h2>
+
+            <h3>Component Overview</h3>
+
+            <p>The gasless transaction system consists of three primary components that work together to enable seamless user experiences. Each component has distinct responsibilities and interfaces, allowing for modular development and deployment.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Technology</th>
+                        <th>Responsibilities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Forwarder Contract</strong></td>
+                        <td>Solidity 0.8.28</td>
+                        <td>Signature verification, nonce management, call forwarding</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Relay Service</strong></td>
+                        <td>Node.js / Python</td>
+                        <td>Request validation, gas estimation, transaction submission</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Client SDK</strong></td>
+                        <td>TypeScript</td>
+                        <td>Request creation, EIP-712 signing, relay communication</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Data Flow</h3>
+
+            <div class="phase-card">
+                <h4>End-to-End Transaction Flow</h4>
+                <ol style="padding-left: 20px;">
+                    <li><strong>User Action:</strong> User initiates action in dApp (e.g., mint NFT)</li>
+                    <li><strong>Request Creation:</strong> Client SDK creates ForwardRequest with current nonce</li>
+                    <li><strong>Signature:</strong> User signs request using EIP-712 (no gas required)</li>
+                    <li><strong>Relay Submission:</strong> Client sends signed request to relay service API</li>
+                    <li><strong>Validation:</strong> Relay validates signature, nonce, and deadline</li>
+                    <li><strong>Gas Estimation:</strong> Relay estimates gas cost for PolkaVM execution</li>
+                    <li><strong>Whitelist Check:</strong> Relay verifies user/contract is authorized</li>
+                    <li><strong>Transaction Submission:</strong> Relay calls forwarder.execute() on-chain</li>
+                    <li><strong>Forwarder Verification:</strong> Forwarder re-verifies signature on-chain</li>
+                    <li><strong>Call Forwarding:</strong> Forwarder executes call to target contract</li>
+                    <li><strong>Sender Extraction:</strong> Target extracts real sender from calldata</li>
+                    <li><strong>Execution:</strong> Target contract logic executes as if called directly</li>
+                    <li><strong>Confirmation:</strong> Relay returns transaction hash to client</li>
+                    <li><strong>UI Update:</strong> Client polls for confirmation and updates UI</li>
+                </ol>
+            </div>
+
+            <h3>Relay Service Architecture</h3>
+
+            <p>The relay service is a critical off-chain component that bridges users and the blockchain. It must be highly available, secure, and efficient to provide a good user experience while managing gas costs effectively.</p>
+
+            <h4>Core Modules</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>Function</th>
+                        <th>Key Features</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>API Server</strong></td>
+                        <td>HTTP endpoints for request submission</td>
+                        <td>Rate limiting, authentication, request validation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Validator</strong></td>
+                        <td>Off-chain request verification</td>
+                        <td>Signature check, nonce validation, deadline verification</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gas Estimator</strong></td>
+                        <td>Predict transaction costs</td>
+                        <td>PolkaVM-specific estimation, safety margins</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Whitelist Manager</strong></td>
+                        <td>Access control</td>
+                        <td>User/contract authorization, rate limits per user</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transaction Submitter</strong></td>
+                        <td>On-chain transaction management</td>
+                        <td>Nonce management, retry logic, confirmation tracking</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Monitoring</strong></td>
+                        <td>System health and metrics</td>
+                        <td>Gas usage tracking, error rates, latency monitoring</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Whitelist Strategies</h4>
+
+            <div class="highlight-box">
+                <h4>User-Based Whitelist</h4>
+                <p>Authorize specific user addresses to use gasless transactions. Useful for beta programs, premium users, or verified accounts. Can include per-user rate limits and daily gas budgets.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Contract-Based Whitelist</h4>
+                <p>Authorize specific target contracts for gasless calls. Useful for sponsoring specific actions (e.g., NFT minting) while preventing abuse through unauthorized contract calls.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Function-Based Whitelist</h4>
+                <p>Authorize specific function selectors on whitelisted contracts. Provides fine-grained control over which actions are sponsored (e.g., allow mint() but not transfer()).</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Hybrid Approach</h4>
+                <p>Combine multiple whitelist strategies for maximum flexibility. For example, allow all users to call specific functions on specific contracts, with higher limits for verified users.</p>
+            </div>
+
+            <h3>Client SDK</h3>
+
+            <p>The client SDK abstracts the complexity of creating and signing forward requests, providing a simple API for dApp developers. It handles EIP-712 signature generation, nonce management, and communication with the relay service.</p>
+
+            <pre><code>// Example SDK usage
+import { GaslessProvider } from '@kitdot/gasless';
+
+const provider = new GaslessProvider({
+    relayUrl: 'https://relay.example.com',
+    forwarderAddress: '0x...',
+    signer: ethers.signer
+});
+
+// Execute gasless transaction
+const tx = await provider.sendTransaction({
+    to: nftContract.address,
+    data: nftContract.interface.encodeFunctionData('mint')
+});
+
+await tx.wait();</code></pre>
+        </section>
+
+        <section id="implementation-roadmap">
+            <h2>Implementation Roadmap</h2>
+
+            <p>The following 8-week roadmap provides a structured approach to implementing gasless transactions on Passet Hub. Each phase builds upon the previous one, with clear milestones and deliverables.</p>
+
+            <h3>Phase 1: Foundational Research & Prototyping (Weeks 1-2)</h3>
+
+            <div class="phase-card">
+                <h4>Objectives</h4>
+                <ul class="milestone-list">
+                    <li>Set up Passet Hub development environment</li>
+                    <li>Validate core gasless transaction concepts</li>
+                    <li>Document PolkaVM-specific behaviors</li>
+                    <li>Establish baseline for future development</li>
+                </ul>
+
+                <h4>Tasks</h4>
+                <table style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Duration</th>
+                            <th>Deliverable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Environment Setup</td>
+                            <td>2 days</td>
+                            <td>Configured Hardhat project with Passet Hub network</td>
+                        </tr>
+                        <tr>
+                            <td>Basic Contract Testing</td>
+                            <td>2 days</td>
+                            <td>Deployed test contracts, documented constraints</td>
+                        </tr>
+                        <tr>
+                            <td>Simplified Forwarder Prototype</td>
+                            <td>3 days</td>
+                            <td>Working prototype with signature verification</td>
+                        </tr>
+                        <tr>
+                            <td>Meta-Transaction Flow Test</td>
+                            <td>2 days</td>
+                            <td>End-to-end test of sponsored transaction</td>
+                        </tr>
+                        <tr>
+                            <td>Documentation</td>
+                            <td>1 day</td>
+                            <td>Research findings and PolkaVM behavior notes</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Success Criteria</h4>
+                <ul class="milestone-list">
+                    <li>Simplified forwarder deploys successfully on Passet Hub</li>
+                    <li>Signature verification works correctly</li>
+                    <li>Meta-transaction flow executes end-to-end</li>
+                    <li>PolkaVM constraints documented</li>
+                </ul>
+            </div>
+
+            <h3>Phase 2: Smart Contract Development (Weeks 3-4)</h3>
+
+            <div class="phase-card">
+                <h4>Objectives</h4>
+                <ul class="milestone-list">
+                    <li>Develop production-ready forwarder contract</li>
+                    <li>Implement comprehensive security features</li>
+                    <li>Create sample recipient contracts</li>
+                    <li>Write thorough test suite</li>
+                </ul>
+
+                <h4>Tasks</h4>
+                <table style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Duration</th>
+                            <th>Deliverable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Forwarder Contract Development</td>
+                            <td>3 days</td>
+                            <td>Complete SimpleForwarder.sol with all features</td>
+                        </tr>
+                        <tr>
+                            <td>Nonce Management</td>
+                            <td>2 days</td>
+                            <td>Robust nonce system preventing replay attacks</td>
+                        </tr>
+                        <tr>
+                            <td>ERC2771Context Implementation</td>
+                            <td>2 days</td>
+                            <td>Simplified context contract for recipients</td>
+                        </tr>
+                        <tr>
+                            <td>Sample Contracts</td>
+                            <td>2 days</td>
+                            <td>NFT and token contracts using ERC2771Context</td>
+                        </tr>
+                        <tr>
+                            <td>Unit Tests</td>
+                            <td>3 days</td>
+                            <td>Comprehensive test suite with >90% coverage</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Success Criteria</h4>
+                <ul class="milestone-list">
+                    <li>All contracts deploy successfully on Passet Hub</li>
+                    <li>Test suite passes with >90% coverage</li>
+                    <li>Security features (nonce, deadline, signature) validated</li>
+                    <li>Sample contracts demonstrate real-world usage</li>
+                </ul>
+            </div>
+
+            <h3>Phase 3: Relay Service Implementation (Weeks 5-6)</h3>
+
+            <div class="phase-card">
+                <h4>Objectives</h4>
+                <ul class="milestone-list">
+                    <li>Build backend relay service</li>
+                    <li>Implement gas estimation for PolkaVM</li>
+                    <li>Develop whitelist management system</li>
+                    <li>Create monitoring and analytics</li>
+                </ul>
+
+                <h4>Tasks</h4>
+                <table style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Duration</th>
+                            <th>Deliverable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>API Server Setup</td>
+                            <td>2 days</td>
+                            <td>Express/Fastify server with REST endpoints</td>
+                        </tr>
+                        <tr>
+                            <td>Request Validation</td>
+                            <td>2 days</td>
+                            <td>Off-chain signature and nonce verification</td>
+                        </tr>
+                        <tr>
+                            <td>Gas Estimation Module</td>
+                            <td>3 days</td>
+                            <td>PolkaVM-aware gas estimation with safety margins</td>
+                        </tr>
+                        <tr>
+                            <td>Whitelist System</td>
+                            <td>2 days</td>
+                            <td>Database-backed whitelist with rate limiting</td>
+                        </tr>
+                        <tr>
+                            <td>Transaction Submission</td>
+                            <td>2 days</td>
+                            <td>Reliable submission with retry logic</td>
+                        </tr>
+                        <tr>
+                            <td>Monitoring</td>
+                            <td>1 day</td>
+                            <td>Metrics dashboard and alerting</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Success Criteria</h4>
+                <ul class="milestone-list">
+                    <li>Relay service accepts and validates requests</li>
+                    <li>Gas estimation accurate within 10%</li>
+                    <li>Whitelist system enforces access control</li>
+                    <li>Transaction submission reliable with error handling</li>
+                    <li>Monitoring provides visibility into system health</li>
+                </ul>
+            </div>
+
+            <h3>Phase 4: Integration & End-to-End Testing (Weeks 7-8)</h3>
+
+            <div class="phase-card">
+                <h4>Objectives</h4>
+                <ul class="milestone-list">
+                    <li>Integrate all components</li>
+                    <li>Develop client SDK</li>
+                    <li>Create frontend demo application</li>
+                    <li>Conduct comprehensive testing</li>
+                    <li>Optimize performance and costs</li>
+                </ul>
+
+                <h4>Tasks</h4>
+                <table style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Duration</th>
+                            <th>Deliverable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Client SDK Development</td>
+                            <td>3 days</td>
+                            <td>TypeScript SDK with EIP-712 signing</td>
+                        </tr>
+                        <tr>
+                            <td>Frontend Demo</td>
+                            <td>3 days</td>
+                            <td>React app demonstrating gasless NFT minting</td>
+                        </tr>
+                        <tr>
+                            <td>End-to-End Testing</td>
+                            <td>3 days</td>
+                            <td>Complete user flow testing on Passet Hub</td>
+                        </tr>
+                        <tr>
+                            <td>Performance Optimization</td>
+                            <td>2 days</td>
+                            <td>Optimized gas costs and response times</td>
+                        </tr>
+                        <tr>
+                            <td>Documentation</td>
+                            <td>3 days</td>
+                            <td>Complete developer docs and tutorials</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Success Criteria</h4>
+                <ul class="milestone-list">
+                    <li>Demo app provides seamless gasless experience</li>
+                    <li>All components integrate smoothly</li>
+                    <li>End-to-end tests pass consistently</li>
+                    <li>Gas costs optimized and predictable</li>
+                    <li>Documentation enables developer adoption</li>
+                </ul>
+            </div>
+
+            <h3>Timeline Summary</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Duration</th>
+                        <th>Key Deliverables</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Phase 1: Research</strong></td>
+                        <td>Weeks 1-2</td>
+                        <td>Validated prototype, PolkaVM documentation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 2: Contracts</strong></td>
+                        <td>Weeks 3-4</td>
+                        <td>Production forwarder, sample contracts, tests</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 3: Relay Service</strong></td>
+                        <td>Weeks 5-6</td>
+                        <td>Backend service, gas estimation, whitelist</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 4: Integration</strong></td>
+                        <td>Weeks 7-8</td>
+                        <td>Client SDK, demo app, documentation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Duration</strong></td>
+                        <td><strong>8 Weeks</strong></td>
+                        <td><strong>Complete gasless transaction system</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="testing-strategy">
+            <h2>Testing Strategy</h2>
+
+            <h3>Unit Tests</h3>
+
+            <p>Comprehensive unit tests ensure each component functions correctly in isolation. The test suite should achieve >90% code coverage and validate all edge cases and failure modes.</p>
+
+            <h4>Forwarder Contract Tests</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test Category</th>
+                        <th>Test Cases</th>
+                        <th>Coverage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Signature Verification</strong></td>
+                        <td>Valid signature accepted, invalid rejected, wrong signer rejected</td>
+                        <td>Critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nonce Management</strong></td>
+                        <td>Sequential nonces enforced, replay prevented, per-user isolation</td>
+                        <td>Critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Deadline Validation</strong></td>
+                        <td>Expired requests rejected, valid deadlines accepted</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Value Handling</strong></td>
+                        <td>Value forwarded correctly, mismatch rejected</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gas Limits</strong></td>
+                        <td>Gas limit respected, out-of-gas handled</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Domain Separator</strong></td>
+                        <td>Correct chain ID, correct contract address</td>
+                        <td>Medium</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Relay Service Tests</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test Category</th>
+                        <th>Test Cases</th>
+                        <th>Coverage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Request Validation</strong></td>
+                        <td>Valid requests accepted, invalid rejected, malformed rejected</td>
+                        <td>Critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Whitelist Enforcement</strong></td>
+                        <td>Authorized users accepted, unauthorized rejected, rate limits enforced</td>
+                        <td>Critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gas Estimation</strong></td>
+                        <td>Accurate estimates, safety margins applied, edge cases handled</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transaction Submission</strong></td>
+                        <td>Successful submission, retry on failure, nonce management</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Error Handling</strong></td>
+                        <td>Network errors handled, contract errors reported, timeouts handled</td>
+                        <td>High</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Integration Tests</h3>
+
+            <p>Integration tests validate that all components work together correctly, testing the complete flow from user signature to on-chain execution.</p>
+
+            <div class="phase-card">
+                <h4>End-to-End Test Scenarios</h4>
+                <ul class="milestone-list">
+                    <li>User signs request, relay submits, transaction executes successfully</li>
+                    <li>Multiple users submit concurrent requests without nonce conflicts</li>
+                    <li>Expired request rejected by both relay and forwarder</li>
+                    <li>Invalid signature rejected by both relay and forwarder</li>
+                    <li>Unauthorized user rejected by relay whitelist</li>
+                    <li>Gas estimation accurate for various transaction types</li>
+                    <li>Value transfers work correctly through forwarder</li>
+                    <li>Recipient contract correctly extracts real sender</li>
+                </ul>
+            </div>
+
+            <h3>Security Tests</h3>
+
+            <p>Security tests attempt to exploit potential vulnerabilities and ensure the system is resilient against attacks.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Attack Vector</th>
+                        <th>Test</th>
+                        <th>Expected Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Replay Attack</strong></td>
+                        <td>Submit same signed request twice</td>
+                        <td>Second submission rejected (nonce consumed)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Signature Manipulation</strong></td>
+                        <td>Modify request after signing</td>
+                        <td>Signature verification fails</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cross-Chain Replay</strong></td>
+                        <td>Use signature from different chain</td>
+                        <td>Domain separator mismatch, rejected</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gas Griefing</strong></td>
+                        <td>Request excessive gas limit</td>
+                        <td>Relay caps gas or rejects request</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Value Mismatch</strong></td>
+                        <td>Send different msg.value than requested</td>
+                        <td>Forwarder rejects with value mismatch error</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unauthorized Target</strong></td>
+                        <td>Call non-whitelisted contract</td>
+                        <td>Relay rejects based on whitelist</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Performance Tests</h3>
+
+            <p>Performance tests ensure the system can handle production load and identify optimization opportunities.</p>
+
+            <div class="highlight-box">
+                <h4>Key Metrics</h4>
+                <ul class="milestone-list">
+                    <li><strong>Gas Cost:</strong> Measure gas used per transaction, compare to direct calls</li>
+                    <li><strong>Latency:</strong> Time from user signature to on-chain confirmation</li>
+                    <li><strong>Throughput:</strong> Requests per second the relay can handle</li>
+                    <li><strong>Reliability:</strong> Success rate under normal and stress conditions</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="deployment">
+            <h2>Deployment Guide</h2>
+
+            <h3>Prerequisites</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Requirement</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Development Tools</strong></td>
+                        <td>Node.js 18+, Hardhat, TypeScript</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Passet Hub Access</strong></td>
+                        <td>RPC endpoint, funded wallet with PAS tokens</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Infrastructure</strong></td>
+                        <td>Server for relay service, database for whitelist</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Monitoring</strong></td>
+                        <td>Logging system, metrics dashboard</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Deployment Steps</h3>
+
+            <div class="phase-card">
+                <h4>1. Deploy Forwarder Contract</h4>
+                <pre><code>npx hardhat compile
+npx hardhat ignition deploy ./ignition/modules/SimpleForwarder.js --network passetHub</code></pre>
+                <p style="margin-top: 10px;">Save the deployed forwarder address for relay service configuration.</p>
+            </div>
+
+            <div class="phase-card">
+                <h4>2. Deploy Sample Recipient Contracts</h4>
+                <pre><code>npx hardhat ignition deploy ./ignition/modules/GaslessNFT.js --network passetHub</code></pre>
+                <p style="margin-top: 10px;">Pass the forwarder address as a constructor parameter.</p>
+            </div>
+
+            <div class="phase-card">
+                <h4>3. Configure Relay Service</h4>
+                <pre><code>// .env file
+PASSET_HUB_RPC=https://testnet-passet-hub-eth-rpc.polkadot.io
+FORWARDER_ADDRESS=0x...
+RELAY_PRIVATE_KEY=0x...
+WHITELIST_ENABLED=true
+DATABASE_URL=postgresql://...</code></pre>
+            </div>
+
+            <div class="phase-card">
+                <h4>4. Start Relay Service</h4>
+                <pre><code>npm install
+npm run build
+npm start</code></pre>
+                <p style="margin-top: 10px;">Verify the service is running and accepting requests.</p>
+            </div>
+
+            <div class="phase-card">
+                <h4>5. Configure Monitoring</h4>
+                <ul class="milestone-list">
+                    <li>Set up logging aggregation (e.g., Elasticsearch, CloudWatch)</li>
+                    <li>Configure metrics collection (e.g., Prometheus)</li>
+                    <li>Create dashboards for key metrics</li>
+                    <li>Set up alerts for errors and anomalies</li>
+                </ul>
+            </div>
+
+            <h3>Post-Deployment Checklist</h3>
+
+            <div class="milestone-list">
+                <li>Verify forwarder contract on block explorer</li>
+                <li>Test signature verification with sample requests</li>
+                <li>Validate relay service accepts and processes requests</li>
+                <li>Confirm gas estimation is accurate</li>
+                <li>Test whitelist enforcement</li>
+                <li>Verify monitoring and alerting</li>
+                <li>Document API endpoints for developers</li>
+                <li>Create example integrations</li>
+                <li>Prepare troubleshooting guide</li>
+            </div>
+
+            <h3>Maintenance</h3>
+
+            <p>Ongoing maintenance ensures the system remains reliable and cost-effective. Key maintenance tasks include:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Frequency</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Monitor Gas Costs</strong></td>
+                        <td>Daily</td>
+                        <td>Track spending, optimize if needed</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Review Whitelist</strong></td>
+                        <td>Weekly</td>
+                        <td>Add/remove users, adjust limits</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Check Error Rates</strong></td>
+                        <td>Daily</td>
+                        <td>Identify and fix issues</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Update Dependencies</strong></td>
+                        <td>Monthly</td>
+                        <td>Security patches, new features</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Backup Database</strong></td>
+                        <td>Daily</td>
+                        <td>Prevent data loss</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance Review</strong></td>
+                        <td>Monthly</td>
+                        <td>Optimize bottlenecks</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Manus AI | Gasless Transactions Architecture & Roadmap for Passet Hub</p>
+        <p style="margin-top: 10px; font-size: 0.9rem;">This report provides technical guidance for implementing gasless transactions on Passet Hub. Specifications are based on research conducted in November 2025.</p>
+    </footer>
+</body>
+</html>
